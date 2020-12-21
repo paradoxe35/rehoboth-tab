@@ -18,7 +18,11 @@ const config = {
     jsx: "preact",
     cors: true,
     optimizeDeps: {
-        include: ["react-icons/fi"],
+        include: [
+            "react-icons/fi",
+            "swiper/react",
+            "/@/sass/_variables.scss"
+        ],
     },
     root,
     configureServer: [

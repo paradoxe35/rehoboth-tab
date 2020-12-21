@@ -6,7 +6,7 @@ body {
 }
 
 a {
-    color: #34b7a7;
+    color: $primary;
     text-decoration: none;
 }
 
@@ -34,4 +34,23 @@ h6 {
     &-pointer {
         cursor: pointer;
     }
+}
+
+.letter-spacing-3 {
+    letter-spacing: .3em;
+}
+
+.label-heading, .subtitle {
+    text-transform: uppercase;
+    color: #868e96;
+}
+
+.font-weight-light {
+    font-weight: 300!important;
+}
+
+.subtitle {
+    margin-bottom: 0;
+    letter-spacing: .2em;
+    font-weight: 700;
 }

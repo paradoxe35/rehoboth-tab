@@ -1,19 +1,27 @@
 import './styles/header.scss'
-import React, { useRef } from "react";
+import React from "react";
 import { Helmet } from "react-helmet";
 import NavBar from "./headers/NavMenu";
 import BackToTop from './BackToTop';
+import styled from 'styled-components'
+
+const Header = styled.header`
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1030;
+`
 
 const Layout = ({ children, title = '' }) => {
-    const linkRef = useRef(null)
-
     return <>
         <Helmet>
             <title>{title ? title + '-' : ''} {"Rehoboth"}</title>
         </Helmet>
-        <header className="app--header">
+        <Header className="app--header">
             <NavBar />
-        </header>
+        </Header>
         <main>
             {children}
         </main>

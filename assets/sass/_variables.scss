@@ -1,0 +1,16 @@
+// sass vars
+$primary: #bcac76;
+$primary-hover: #9a884b;
+$secondary: #877f64;
+
+// css vars
+:root {
+    --primary: #bcac76;
+    --primary-hover: #9a884b;
+    --secondary: #877f64;
+}
+
+:export {
+    primaryColor: $primary;
+    primaryHover: $primary-hover;
+}

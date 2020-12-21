@@ -1,3 +1,5 @@
+@import "../../sass/variables";
+
 /*--------------------------------------------------------------
   # Navigation Menu
   --------------------------------------------------------------*/
@@ -35,7 +37,7 @@
     height: 2px;
     bottom: -5px;
     left: 0;
-    background-color: #34b7a7;
+    background-color: $primary;
     visibility: hidden;
     width: 0px;
     transition: all 0.3s ease-in-out 0s;
@@ -90,7 +92,7 @@
 .nav-menu .drop-down ul a:hover,
 .nav-menu .drop-down ul .active > a,
 .nav-menu .drop-down ul li:hover > a {
-    color: #34b7a7;
+    color: $primary;
 }
 
 .nav-menu .drop-down > a:after {
@@ -150,7 +152,7 @@
 }
 
 .mobile-nav-toggle i {
-    color: #34b7a7;
+    color: $primary;
 }
 
 .mobile-nav {
@@ -187,7 +189,7 @@
 .mobile-nav a:hover,
 .mobile-nav .active > a,
 .mobile-nav li:hover > a {
-    color: #34b7a7;
+    color: $primary;
     text-decoration: none;
 }
 

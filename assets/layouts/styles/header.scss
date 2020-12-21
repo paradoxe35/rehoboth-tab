@@ -1,5 +1,12 @@
+@import "../../sass/variables";
+
+.nav--silence {
+    .app--header {
+        box-shadow: 0px 0px 25px 0 rgba(0, 0, 0, 0.08);
+    }
+}
+
 .app--header {
-    background: #e9e8e6;
     box-shadow: 0px 0px 25px 0 rgba(0, 0, 0, 0.08);
     z-index: 997;
     padding: 15px 0;
@@ -40,7 +47,7 @@
     }
 
     .header-social-links a:hover {
-        color: #34b7a7;
+        color: $primary;
     }
 
     @media (max-width: 992px) {

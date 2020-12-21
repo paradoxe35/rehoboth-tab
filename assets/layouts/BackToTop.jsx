@@ -21,11 +21,11 @@ const Svg = styled(FiArrowUp)`
     height: 40px;
     padding: 9px 9px;
     border-radius: 50px;
-    background: #34b7a7;
+    background: var(--primary);
     color: #fff;
     transition: all 0.4s;
     &:hover {
-        background: #3dc8b7;
+        background: var(--primary-hover);
         color: #fff;
     }
 `
