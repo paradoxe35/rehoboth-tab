@@ -2,7 +2,6 @@ import React, { useEffect, useRef } from "react";
 import { FiArrowUp } from "react-icons/fi"
 import { fadeIn, fadeOut, throttle } from "/@/functions/functions";
 import styled from 'styled-components'
-import ueScroll from "../plugins/ue-scroll";
 
 const Link = styled.a`
     position: fixed;
@@ -31,8 +30,6 @@ const Svg = styled(FiArrowUp)`
     }
 `
 
-
-
 const BackToTop = () => {
 
     const linkRef = useRef(null)
@@ -42,15 +39,15 @@ const BackToTop = () => {
             /** @type { HTMLElement } */
             const el = linkRef.current
             const toggleIcon = function () {
-                if (this.scrollY > 100) {
+                if (window.scrollY > 100) {
                     fadeIn(el);
                 } else {
                     fadeOut(el);
                 }
             }
-            window.addEventListener("load", toggleIcon)
+            toggleIcon()
             window.addEventListener("scroll", throttle(toggleIcon, 50))
-            ueScroll.init(el)
+            el.addEventListener('click', () => window.scrollTo({ top: 0, behavior: "smooth" }))
         }
     }, [linkRef.current])
 

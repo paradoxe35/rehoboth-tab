@@ -3,7 +3,7 @@ import { InertiaLink, usePage } from '@inertiajs/inertia-react'
 import { FiFacebook, FiTwitter, FiInstagram } from "react-icons/fi";
 import styled from 'styled-components'
 import { useTranslation } from "react-i18next";
-import Cross from './cross.svg'
+import Cross from '/@/images/logo/cross.svg'
 
 const Logo = styled.h1`
     font-size: 32px;
@@ -115,8 +115,8 @@ const NavBar = () => {
         <div className="container d-flex justify-content-between align-items-center">
             <Logo>
                 <InertiaLink href="/">
-                    {appName}
                     <img src={Cross} alt={t("La Croix")} />
+                    {appName}
                 </InertiaLink>
             </Logo>
 

@@ -6,6 +6,7 @@
 
 :root {
     --bs-grey-light: #{$grey-light};
+    --bs-grey-light-1: #{$grey-light-1};
     --bs-primary-hover: #{$primary-hover};
-    --bs-bg-color-hero: rgba(5, 13, 24, 0.342);
+    --bs-bg-color-hero: #{$bg-color-hero};
 }

@@ -1,167 +1,28 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect } from 'react'
 import BodyClassName from 'react-body-classname';
-
-import SwiperCore, { Navigation, Pagination, Parallax, Autoplay, A11y } from 'swiper';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { InertiaLink } from '@inertiajs/inertia-react'
-import styled from 'styled-components'
-
-import Home2 from './images/image1.jpg';
-import Home1 from './images/image2.jpg';
-import Home3 from './images/image3.jpg';
-import { useTranslation } from 'react-i18next';
-
-SwiperCore.use([Navigation, Pagination, Parallax, Autoplay, A11y]);
-
-const classes = {
-    height: "100vh",
-    minHeight: "600px",
-    backgroundPosition: "50% 0",
-    backgroundRepeat: "no-repeat",
-    backgroundSize: "cover",
-}
-
-/** @type { React.FunctionComponent<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> } */
-const Div = ({ className }) => <div className={`d-none d-lg-block text-light ${className}`} />
-
-const SwiperButton = styled(Div)`
-    transition: all .2s ease-in-out;
-    opacity: .3;
-    &:hover {
-        opacity: .7;
-    }
-`
-
-const SwiperButtonPrev = styled(SwiperButton)`
-    left: 30px !important;
-`
-
-const SwiperButtonNext = styled(SwiperButton)`
-    right: 30px !important;
-`
+import AbountChurch from '/@/views/Home/AbountChurch';
+import HomeHero from '/@/views/Home/HomeHero';
+import LatestBlog from '/@/views/Home/LatestBlog';
+import LatestSermons from '/@/views/Home/LatestSermons';
+import NewsLetter from '/@/views/Home/Newsletter';
+import UpcomingEvent from '/@/views/Home/UpcomingEvents';
 
 
-const BodyHero = () => {
-    const slides = "swiper--slide--item"
-    const { t } = useTranslation()
+// import aos from 'aos'
+// import 'aos/dist/aos.css'
 
-    useEffect(() => {
-        Array.from(document.querySelectorAll(`.${slides}`))
-            .forEach(
-                /** @param { HTMLElement } el */
-                (el) => {
-                    window.addEventListener("resize", function () {
-                        const width = document.body.clientWidth
-                        el.style.width = width + "px"
-                    })
-                })
-    }, [])
-
-    return <Swiper
-        slidesPerView={1}
-        allowTouchMove
-        navigation={{
-            nextEl: '.swiper-button-next',
-            prevEl: '.swiper-button-prev',
-        }}
-        autoplay={{
-            delay: 10500,
-            disableOnInteraction: false,
-        }}
-        speed={1500}
-        loop={true}
-        pagination={{
-            clickable: true,
-            dynamicBullets: true
-        }}
-        parallax={true}>
-
-        <SwiperButtonNext className="swiper-button-next" />
-        <SwiperButtonPrev className="swiper-button-prev" />
-
-        <SwiperSlide className={slides} style={{ backgroundImage: `url(${Home1})`, ...classes }}>
-            <SwiperSlideContent
-                subtitle={t("Abandon total")}
-                title={t("À Dieu")}
-                action={{ text: t("Lire plus"), href: "#" }}
-                subtitleColor="text-primary"
-                description={"La première étape pour surmonter tout type de situation qui tient dans l'esclavage."}
-            />
-        </SwiperSlide>
-
-        <SwiperSlide className={slides} style={{ backgroundImage: `url(${Home2})`, ...classes }}>
-            <SwiperSlideContent
-                subtitle={t("Mettez votre foi")}
-                title={t("En action")}
-                action={{ text: "Lire plus", href: "#" }}
-                colClass="offset-lg-6"
-                subtitleColor="text-primary"
-                description={t("Mettez votre foi en action aujourd'hui et laissez vos actions être alimentées par votre foi.")}
-            />
-        </SwiperSlide>
-
-        <SwiperSlide className={slides} style={{ backgroundImage: `url(${Home3})`, ...classes }}>
-            <SwiperSlideContent
-                subtitle={t("Il y a une place")}
-                title={t("Pour tout le monde")}
-                action={{ text: "Lire plus", href: "#" }}
-                subtitleColor="text-primary"
-                description={t("Peu importe d'où tu viens, le puits de la parole est ouvert à tous.")}
-            />
-        </SwiperSlide>
-    </Swiper>
-}
-
-
-const DivContainer = styled.div`
-    h2.display-1, a.btn, p.text-description {
-        color: var(--bs-grey-light);
-    }
-`
-
-const SwiperSlideContent = ({
-    subtitle = null,
-    title = null,
-    description = null,
-    action = { href: '#', text: null },
-    flexClass = '',
-    colClass = '',
-    subtitleClass = '',
-    titleClass = '',
-    subtitleColor = ''
-}) => {
-    return <DivContainer className="h-100 px-lg-6 px-lg-7 container">
-        <div data-swiper-parallax="-500" className={`h-100 align-items-center ${flexClass} row`}>
-            <div className={`col-lg-6 ${colClass}`}>
-                {
-                    subtitle &&
-                    <p className={`subtitle letter-spacing-3 ${!subtitleColor ? 'font-weight-light' : ''}  ${subtitleClass} ${subtitleColor || 'text-dark'} mb-3`}>
-                        {subtitle}
-                    </p>
-                }
-                {
-                    title &&
-                    <h2 className={`display-1 font-weight-bold ${titleClass} mb-3`} style={{ lineHeight: 1 }}>
-                        {title}
-                    </h2>
-                }
-                {
-                    description &&
-                    <p className="text-description mb-5">{description}</p>
-                }
-                {
-                    action.text &&
-                    <InertiaLink href={action.href} className="btn btn-dark">{action.text}</InertiaLink>
-                }
-            </div>
-        </div>
-    </DivContainer>
-}
 
 
 const Home = () => {
     return <BodyClassName className="nav--muted">
-        <BodyHero />
+        <>
+            <HomeHero />
+            <UpcomingEvent />
+            <AbountChurch />
+            <LatestSermons />
+            <LatestBlog />
+            <NewsLetter />
+        </>
     </BodyClassName>
 }
 

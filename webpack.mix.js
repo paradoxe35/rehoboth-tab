@@ -5,6 +5,7 @@ const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 
 require('laravel-mix-clean');
 require('laravel-mix-versionhash')
+// require('laravel-mix-imagemin');
 
 /*
  |--------------------------------------------------------------------------
@@ -20,6 +21,7 @@ require('laravel-mix-versionhash')
 mix.react('assets/App.jsx', 'main.js')
     .setPublicPath('public/assets/')
     .setResourceRoot('/assets/')
+    // .imagemin('public/assets/images/*')
     .options({
         terser: {
             extractComments: false,

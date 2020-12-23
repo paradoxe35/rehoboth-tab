@@ -1,0 +1,248 @@
+import React, { useCallback, useState } from 'react'
+import Card from '/@/components/Card'
+import styled from 'styled-components'
+import { useTranslation } from 'react-i18next'
+import { InertiaLink } from '@inertiajs/inertia-react'
+import Countdown from 'react-countdown';
+import NoContainerPadding from '/@/components/NoContainerPadding'
+import { withTranslation } from 'react-i18next'
+
+
+const CardItemStyled = styled(Card)`
+    margin-top: auto;
+    margin-bottom: auto;
+`
+
+const EventParentStyled = styled(NoContainerPadding)`
+    background-color: rgba(154, 136, 75, 0.137);
+    height: auto;
+    min-height: 297px;
+`
+
+const H3Styled = styled.h3`
+    font-weight: 500;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    margin: 0;
+`
+
+const SpanStyled = styled.span`
+    font-size: 15px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    font-weight: 400;
+`
+
+
+const CardItemImgStyled = styled.img`
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+`
+
+const TimeStyled = styled.span`
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-size: 0.7rem;
+`
+
+const CardItemContentOverlayStyled = styled.div`
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    padding: 10px 20px 10px 20px;;
+    overflow: hidden;
+    transform: translateY(0);
+    opacity: 1;
+    visibility:visible;
+    width: 100%;
+    height: 84px;
+    transition: all .3s;
+    background: rgba(255,255,255,.9);
+    z-index: 20;
+    h5:hover{
+        text-decoration: underline;
+    }
+`
+
+const CardItemDataStyled = styled(CardItemStyled)`
+    .mask {
+        opacity: 0;
+        -webkit-transition: all .3s ease-in-out;
+        transition: all .3s ease-in-out;
+    }
+    &:hover {
+        .mask {
+            opacity: 1;
+        }
+    }
+`
+
+const CountdownParentStyled = styled(NoContainerPadding)`
+    background-color: rgba(255, 253, 253, 0.856);
+    height: auto;
+`
+
+const CountdownRowStyled = styled.div`
+    height: auto;
+    min-height: 196px;
+`
+
+const datas = [
+    {
+        title: "Family Baptism Class",
+        date: "February 6, 2017",
+        image: "http://www.satriathemes.club/blessing/img/events/pic%20(1).jpg"
+    },
+    {
+        title: "Transforming Live",
+        date: "February 10, 2017",
+        image: "http://www.satriathemes.club/blessing/img/events/pic%20(2).jpg"
+    },
+    {
+        title: "Relationship With God",
+        date: "February 20, 2017",
+        image: "http://www.satriathemes.club/blessing/img/events/pic%20(3).jpg"
+    }
+].slice(0, 3)
+
+
+
+const CardItemLabel = ({ col = 3 }) => {
+    const { t } = useTranslation()
+
+    return <div className={`col-lg-${col} d-flex justify-content-center align-items-center`}>
+        <div className="text-center my-4">
+            <SpanStyled>
+                <InertiaLink
+                    preserveScroll
+                    className="text-secondary text-decoration-underline"
+                    href={route("events").toString()}>
+                    {t("événements")}
+                </InertiaLink>
+            </SpanStyled>
+            <H3Styled className="text-muted">
+                {t("à venir")}
+            </H3Styled>
+        </div>
+    </div>
+}
+
+
+
+const CardItemData = ({ col = 3, data, showOnlySm = false, showOnlyMd = false, canShowInMd = false }) => {
+    return <div className={`col-lg-${col} ${showOnlyMd || canShowInMd ? 'col-md-6' : ''} ${(!showOnlySm && !showOnlyMd) || 'd-none'} ${showOnlySm ? 'd-lg-block' : ''} ${showOnlyMd ? 'd-md-block' : ''}`}>
+        <CardItemDataStyled border={true} cardClass="p-0" bodyClass="p-1">
+
+            <CardItemImgStyled src={data.image} alt={data.title} />
+
+            <CardItemContentOverlayStyled>
+                <TimeStyled className="text-muted">
+                    {data.date}
+                </TimeStyled>
+                <h5>{data.title}</h5>
+            </CardItemContentOverlayStyled>
+
+        </CardItemDataStyled>
+    </div>
+}
+
+const H3CDStyled = styled.h3`
+    font-weight: 600;
+    border-bottom: solid 2px var(--bs-primary);
+    display: inline-block;
+    a{
+        color: inherit;
+    }
+`
+
+
+const CountdownRow = ({ amount, title }) => {
+    return <>
+        <div className="col-3 text-center mb-4 mb-sm-0">
+            <h6 className="h4 mb-2"><b>{amount}</b>&nbsp;</h6>
+            <span className="text-muted">{title}</span>
+        </div>
+    </>
+}
+
+
+const rendererCountdown = ({ days, hours, minutes, seconds, completed }) => {
+    const { t } = useTranslation()
+
+    if (!completed) {
+        return <>
+            <div className="row justify-content-between align-items-center">
+                <CountdownRow amount={days} title={t("Jours")} />
+                <CountdownRow amount={hours} title={t("Heures")} />
+                <CountdownRow amount={minutes} title={t("Minutes")} />
+                <CountdownRow amount={seconds} title={t("Secondes")} />
+            </div>
+        </>;
+    }
+};
+
+const FirstEventCountdown = withTranslation()(({ datas = [], t }) => {
+    const data = datas[0];
+    const [isReady, setIsReady] = useState(data.ready || false)
+    const handleComplete = useCallback(() => setIsReady(true), [setIsReady])
+
+    return <CountdownParentStyled>
+        <div className="container">
+            <CountdownRowStyled className="row align-items-center">
+                <div className="col-lg-6 h-100 mt-md-3 mt-lg-0">
+                    <span className="d-block subtitle mb-2">
+                        <small>{!isReady ? t("Bientôt un événement") : t("Événement prêt")}</small>
+                    </span>
+                    <H3CDStyled className="h2 my-auto mb-2">
+                        <InertiaLink href="/">
+                            {data.title}
+                        </InertiaLink>
+                    </H3CDStyled>
+                    <TimeStyled className="text-muted d-block">
+                        {data.date}
+                    </TimeStyled>
+                </div>
+                <div className="col-lg-6 my-3">
+                    {
+                        !isReady &&
+                        <Countdown
+                            onComplete={handleComplete}
+                            renderer={rendererCountdown}
+                            date={Date.now() + 10000000}
+                        />
+                    }
+                </div>
+            </CountdownRowStyled>
+        </div>
+    </CountdownParentStyled>
+})
+
+const UpcomingEvent = () => {
+    return <div className="container-fluid">
+        {!!datas.length && <FirstEventCountdown datas={datas} />}
+        {datas.length > 1 && (
+            <EventParentStyled className="row justify-content-center align-items-center pb-3">
+                {
+                    [null, ...datas]
+                        .map((data, i) => {
+                            const col = datas.length > 1 && datas.length < 3 ? 4 : 3
+                            return i === 0 ?
+                                <CardItemLabel col={col} /> :
+                                <CardItemData
+                                    canShowInMd={i == 1}
+                                    showOnlyMd={i == 2}
+                                    showOnlySm={i == 3}
+                                    col={col}
+                                    data={data} />
+                        })
+                }
+            </EventParentStyled>
+        )}
+    </div>
+}
+
+
+
+
+export default UpcomingEvent

@@ -3,6 +3,8 @@ import { Helmet } from "react-helmet";
 import NavBar from "./headers/NavMenu";
 import BackToTop from './BackToTop';
 import styled from 'styled-components'
+import { usePage } from '@inertiajs/inertia-react'
+
 
 const Header = styled.header`
     position: absolute;
@@ -17,9 +19,12 @@ const Header = styled.header`
 `
 
 const Layout = ({ children, title = '' }) => {
+    // @ts-ignore
+    const { appName } = usePage().props
+
     return <>
         <Helmet>
-            <title>{title ? title + '-' : ''} {"Rehoboth"}</title>
+            <title>{title ? title + ' - ' : ''} {appName}</title>
         </Helmet>
         <Header className="app--header">
             <NavBar />
