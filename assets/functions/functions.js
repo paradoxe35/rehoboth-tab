@@ -5,7 +5,7 @@
  * @param { string } displayStyle 
  */
 export function fadeOut(el, smooth = true, displayStyle = 'none') {
-    if (!el || el.style.display == "none")
+    if (!el || isHidden(el))
         return;
 
     if (smooth) {
@@ -35,7 +35,7 @@ export function fadeOut(el, smooth = true, displayStyle = 'none') {
  * @param { string } displayStyle 
  */
 export function fadeIn(el, smooth = true, displayStyle = 'block') {
-    if (!el || el.style.display == "block")
+    if (!el || !isHidden(el))
         return;
 
     el.style.opacity = 0;
@@ -94,4 +94,9 @@ export function throttle(callback, delay) {
             callback.apply(context, args);
         }
     };
+}
+
+export function isHidden(el) {
+    const style = window.getComputedStyle(el);
+    return (style.display === 'none')
 }

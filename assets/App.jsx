@@ -1,4 +1,6 @@
 import './style.scss'
+
+import "./utils/devtool"
 import { App as InertiaApp } from '@inertiajs/inertia-react'
 import React from 'react'
 import { render } from 'react-dom'
@@ -11,7 +13,10 @@ import { i18nReactInit } from './i18n/i18n'
 
 i18nReactInit(document.querySelector('html').lang || 'fr')
 
-InertiaProgress.init()
+InertiaProgress.init({
+  color: 'var(--bs-primary)',
+})
+
 const el = document.getElementById('app')
 
 const resolveComponent = name => {

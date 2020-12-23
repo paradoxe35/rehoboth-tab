@@ -1,7 +1,5 @@
 {
-    "presets": [
-        "@babel/env"
-    ],
+    "presets": ["@babel/env"],
     "plugins": [
         [
             "@babel/plugin-transform-react-jsx",
@@ -17,6 +15,7 @@
                 "import": "h, Fragment",
                 "export": "h, Fragment"
             }
-        ]
+        ],
+        "@babel/plugin-syntax-dynamic-import"
     ]
 }

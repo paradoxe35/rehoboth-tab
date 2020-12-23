@@ -20,8 +20,7 @@ const config = {
     optimizeDeps: {
         include: [
             "react-icons/fi",
-            "swiper/react",
-            "/@/sass/_variables.scss"
+            "swiper/react"
         ],
     },
     root,
@@ -40,7 +39,7 @@ const config = {
         function ({ app }) {
             app.use(async (ctx, next) => {
                 await next()
-                if (/\.(svg|png|jp(e)?g|gif)\?\import$/.test(ctx.url)) {
+                if (/\.(svg|png|jp(e)?g|gif|woff|woff2|eot|ttf|otf)\?\import\\?(.*)$/.test(ctx.url)) {
                     const code = `${ctx.body}`
                     const getPath = code.split('')
                         .reduce((acc, c) => {

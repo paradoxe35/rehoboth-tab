@@ -1,56 +1,65 @@
-@import url(https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i);
+// @import url(https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i);
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+
+html {
+    line-height: 1.15;
+    -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
 
 body {
-    font-family: "Open Sans", sans-serif;
+    font-family: Poppins, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
+        Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue,
+        sans-serif;
+    padding: 0;
+    margin: 0;
     color: #444444;
 }
 
 a {
     color: $primary;
     text-decoration: none;
-}
-
-a:hover {
-    color: #51cdbe;
-    text-decoration: none;
-}
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-    font-family: "Raleway", sans-serif;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-    :root {
-        scroll-behavior: auto;
+    &:hover {
+        color: $secondary;
+        text-decoration: none;
     }
 }
 
-.cursor{
+.nav--muted {
+    .app--header {
+        box-shadow: none;
+    }
+}
+
+.cursor {
     &-pointer {
         cursor: pointer;
     }
 }
 
 .letter-spacing-3 {
-    letter-spacing: .3em;
+    letter-spacing: 0.3em;
 }
 
-.label-heading, .subtitle {
+.label-heading,
+.subtitle {
     text-transform: uppercase;
     color: #868e96;
 }
 
 .font-weight-light {
-    font-weight: 300!important;
+    font-weight: 300 !important;
 }
 
 .subtitle {
     margin-bottom: 0;
-    letter-spacing: .2em;
+    letter-spacing: 0.2em;
     font-weight: 700;
+}
+
+.display-1,
+.display-2 {
+    font-weight: 400;
+    line-height: 1.3;
 }

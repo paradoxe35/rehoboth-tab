@@ -10,6 +10,7 @@ const Link = styled.a`
     right: 15px;
     bottom: 15px;
     z-index: 99999;
+    cursor: pointer;
 `
 
 const Svg = styled(FiArrowUp)`
@@ -21,11 +22,11 @@ const Svg = styled(FiArrowUp)`
     height: 40px;
     padding: 9px 9px;
     border-radius: 50px;
-    background: var(--primary);
+    background: var(--bs-primary);
     color: #fff;
     transition: all 0.4s;
     &:hover {
-        background: var(--primary-hover);
+        background: var(--bs-primary-hover);
         color: #fff;
     }
 `
@@ -54,7 +55,7 @@ const BackToTop = () => {
     }, [linkRef.current])
 
     return <>
-        <Link href="#" ref={linkRef}>
+        <Link ref={linkRef}>
             <Svg />
         </Link>
     </>

@@ -17,7 +17,7 @@ require('laravel-mix-versionhash')
  |
  */
 
-mix.react('assets/App.jsx', 'app.js')
+mix.react('assets/App.jsx', 'main.js')
     .setPublicPath('public/assets/')
     .setResourceRoot('/assets/')
     .options({
@@ -30,8 +30,8 @@ mix.react('assets/App.jsx', 'app.js')
             splitChunks: {
                 cacheGroups: {
                     styles: {
-                        name: 'styles',
-                        test: /\.(s)?css$/,
+                        name: 'main-style',
+                        test: /\.scss$/,
                         chunks: 'all',
                         enforce: true,
                     },
@@ -39,6 +39,17 @@ mix.react('assets/App.jsx', 'app.js')
             },
             minimizer: [
                 new CssMinimizerPlugin(),
+            ],
+        },
+        plugins: [
+            new MiniCssExtractPlugin()
+        ],
+        module: {
+            rules: [
+                {
+                    test: /\.scss$/,
+                    use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader'],
+                },
             ],
         },
         resolve: {
@@ -49,22 +60,18 @@ mix.react('assets/App.jsx', 'app.js')
                 "react-dom": "preact/compat",
             },
         },
-        plugins: [
-            new MiniCssExtractPlugin()
-        ],
-        module: {
-            rules: [
-                {
-                    test: /\.(s)?css$/,
-                    use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader'],
-                },
-            ],
-        },
         output: {
             publicPath: '/assets/',
         }
     })
-    .extract()
+    .extract([
+        "preact",
+        "bootstrap",
+        "@popperjs/core",
+        "@inertiajs/inertia",
+        "@inertiajs/inertia-react",
+        "@inertiajs/progress",
+    ])
     .version()
     .sourceMaps(false)
     .clean()

@@ -15,7 +15,7 @@ export const i18nReactInit = (locale) => {
                     translation: en
                 }
             },
-            debug: process.env.NODE_ENV === "development",
+            debug: false,
             lng: locale,
             fallbackLng: locale,
             interpolation: {
