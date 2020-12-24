@@ -151,7 +151,7 @@ const SwiperSlideContent = ({
                 }
                 {
                     action.text &&
-                    <InertiaLink href={action.href} className="btn btn-dark">{action.text}</InertiaLink>
+                    <InertiaLink href={action.href} className="btn btn-dark text-secondary">{action.text}</InertiaLink>
                 }
             </div>
         </div>

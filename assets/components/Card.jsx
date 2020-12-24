@@ -8,7 +8,4 @@ const Card = ({ cardClass = '', bodyClass = "", children, border = false, classN
     </div>
 }
 
-
-
-
 export default Card

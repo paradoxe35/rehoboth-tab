@@ -1,8 +1,8 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 
 const NewsLetter = () => {
-    return <>
-    </>
+    return <div>
+    </div>
 }
 
 

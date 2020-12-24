@@ -1,37 +1,21 @@
 import React, { useCallback, useState } from 'react'
-import Card from '/@/components/Card'
 import styled from 'styled-components'
 import { useTranslation } from 'react-i18next'
 import { InertiaLink } from '@inertiajs/inertia-react'
 import Countdown from 'react-countdown';
 import NoContainerPadding from '/@/components/NoContainerPadding'
 import { withTranslation } from 'react-i18next'
+import SubtitleLead from '/@/components/SubtitleLead'
+import {
+    LatestSectioCardItemStyled,
+    LatestSectionH3Styled,
+    LatestSectionItemData,
+    LatestSectionItemLabel,
+    LatestSectionParentStyled,
+    LatestSectionSpanStyled
+} from './components/LatestSectionCard';
+import H5TitleLink from '/@/components/H5TitleLink';
 
-
-const CardItemStyled = styled(Card)`
-    margin-top: auto;
-    margin-bottom: auto;
-`
-
-const EventParentStyled = styled(NoContainerPadding)`
-    background-color: rgba(154, 136, 75, 0.137);
-    height: auto;
-    min-height: 297px;
-`
-
-const H3Styled = styled.h3`
-    font-weight: 500;
-    letter-spacing: 5px;
-    text-transform: uppercase;
-    margin: 0;
-`
-
-const SpanStyled = styled.span`
-    font-size: 15px;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    font-weight: 400;
-`
 
 
 const CardItemImgStyled = styled.img`
@@ -60,22 +44,6 @@ const CardItemContentOverlayStyled = styled.div`
     transition: all .3s;
     background: rgba(255,255,255,.9);
     z-index: 20;
-    h5:hover{
-        text-decoration: underline;
-    }
-`
-
-const CardItemDataStyled = styled(CardItemStyled)`
-    .mask {
-        opacity: 0;
-        -webkit-transition: all .3s ease-in-out;
-        transition: all .3s ease-in-out;
-    }
-    &:hover {
-        .mask {
-            opacity: 1;
-        }
-    }
 `
 
 const CountdownParentStyled = styled(NoContainerPadding)`
@@ -111,28 +79,31 @@ const datas = [
 const CardItemLabel = ({ col = 3 }) => {
     const { t } = useTranslation()
 
-    return <div className={`col-lg-${col} d-flex justify-content-center align-items-center`}>
-        <div className="text-center my-4">
-            <SpanStyled>
-                <InertiaLink
-                    preserveScroll
-                    className="text-secondary text-decoration-underline"
-                    href={route("events").toString()}>
-                    {t("événements")}
-                </InertiaLink>
-            </SpanStyled>
-            <H3Styled className="text-muted">
-                {t("à venir")}
-            </H3Styled>
-        </div>
-    </div>
+    return <LatestSectionItemLabel col={col}>
+        <LatestSectionSpanStyled>
+            <InertiaLink
+                preserveScroll
+                className="text-secondary text-decoration-underline"
+                href={route("events").toString()}>
+                {t("événements")}
+            </InertiaLink>
+        </LatestSectionSpanStyled>
+        <LatestSectionH3Styled className="text-muted">
+            {t("à venir")}
+        </LatestSectionH3Styled>
+    </LatestSectionItemLabel>
 }
 
 
 
 const CardItemData = ({ col = 3, data, showOnlySm = false, showOnlyMd = false, canShowInMd = false }) => {
-    return <div className={`col-lg-${col} ${showOnlyMd || canShowInMd ? 'col-md-6' : ''} ${(!showOnlySm && !showOnlyMd) || 'd-none'} ${showOnlySm ? 'd-lg-block' : ''} ${showOnlyMd ? 'd-md-block' : ''}`}>
-        <CardItemDataStyled border={true} cardClass="p-0" bodyClass="p-1">
+    return <LatestSectionItemData
+        col={col}
+        showOnlySm={showOnlySm}
+        showOnlyMd={showOnlyMd}
+        canShowInMd={canShowInMd}>
+
+        <LatestSectioCardItemStyled border={true} cardClass="p-0" bodyClass="p-1">
 
             <CardItemImgStyled src={data.image} alt={data.title} />
 
@@ -140,11 +111,16 @@ const CardItemData = ({ col = 3, data, showOnlySm = false, showOnlyMd = false, c
                 <TimeStyled className="text-muted">
                     {data.date}
                 </TimeStyled>
-                <h5>{data.title}</h5>
-            </CardItemContentOverlayStyled>
 
-        </CardItemDataStyled>
-    </div>
+                <H5TitleLink href="#">
+                    {data.title}
+                </H5TitleLink>
+
+            </CardItemContentOverlayStyled>
+        </LatestSectioCardItemStyled>
+
+    </LatestSectionItemData >
+
 }
 
 const H3CDStyled = styled.h3`
@@ -187,13 +163,13 @@ const FirstEventCountdown = withTranslation()(({ datas = [], t }) => {
     const [isReady, setIsReady] = useState(data.ready || false)
     const handleComplete = useCallback(() => setIsReady(true), [setIsReady])
 
-    return <CountdownParentStyled>
+    return <CountdownParentStyled data-aos="fade-up">
         <div className="container">
             <CountdownRowStyled className="row align-items-center">
-                <div className="col-lg-6 h-100 mt-md-3 mt-lg-0">
-                    <span className="d-block subtitle mb-2">
-                        <small>{!isReady ? t("Bientôt un événement") : t("Événement prêt")}</small>
-                    </span>
+                <div className="col-lg-6 h-100 mt-3 mt-lg-0">
+                    <SubtitleLead>
+                        {!isReady ? t("Bientôt un événement") : t("Événement prêt")}
+                    </SubtitleLead>
                     <H3CDStyled className="h2 my-auto mb-2">
                         <InertiaLink href="/">
                             {data.title}
@@ -222,7 +198,7 @@ const UpcomingEvent = () => {
     return <div className="container-fluid">
         {!!datas.length && <FirstEventCountdown datas={datas} />}
         {datas.length > 1 && (
-            <EventParentStyled className="row justify-content-center align-items-center pb-3">
+            <LatestSectionParentStyled data-aos="fade-up" className="row justify-content-center align-items-center pb-3">
                 {
                     [null, ...datas]
                         .map((data, i) => {
@@ -237,7 +213,7 @@ const UpcomingEvent = () => {
                                     data={data} />
                         })
                 }
-            </EventParentStyled>
+            </LatestSectionParentStyled>
         )}
     </div>
 }

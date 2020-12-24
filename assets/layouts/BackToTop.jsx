@@ -22,11 +22,11 @@ const Svg = styled(FiArrowUp)`
     padding: 9px 9px;
     border-radius: 50px;
     background: var(--bs-primary);
-    color: #fff;
+    color: var(--bs-light);
     transition: all 0.4s;
     &:hover {
         background: var(--bs-primary-hover);
-        color: #fff;
+        color: var(--bs-light);
     }
 `
 
@@ -39,7 +39,7 @@ const BackToTop = () => {
             /** @type { HTMLElement } */
             const el = linkRef.current
             const toggleIcon = function () {
-                if (window.scrollY > 100) {
+                if (window.scrollY > 400) {
                     fadeIn(el);
                 } else {
                     fadeOut(el);
