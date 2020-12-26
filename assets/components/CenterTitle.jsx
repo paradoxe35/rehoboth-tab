@@ -11,7 +11,7 @@ const H2Styled = styled.h2`
         height: 1px;
         position: relative;
         vertical-align: middle;
-        width: 50%;
+        width: 30%;
     }
     &:before {
         right: 0.5em;

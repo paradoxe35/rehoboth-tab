@@ -7,10 +7,11 @@ import LatestBlog from '/@/views/Home/LatestBlog';
 import LatestSermons from '/@/views/Home/LatestSermons';
 import NewsLetter from '/@/views/Home/Newsletter';
 import UpcomingEvent from '/@/views/Home/UpcomingEvents';
-
+import OurPrograms from '/@/views/Home/OurPrograms';
 
 import aos from 'aos'
 import 'aos/dist/aos.css'
+
 
 
 
@@ -26,6 +27,7 @@ const Home = () => {
             <LatestSermons />
             <FromGallery />
             <LatestBlog />
+            <OurPrograms />
             <NewsLetter />
         </>
     </BodyClassName>

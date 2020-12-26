@@ -4,6 +4,7 @@ import NavBar from "./headers/NavMenu";
 import BackToTop from './BackToTop';
 import styled from 'styled-components'
 import { usePage } from '@inertiajs/inertia-react'
+import Footer from "./Footer/Footer";
 
 
 const Header = styled.header`
@@ -33,6 +34,7 @@ const Layout = ({ children, title = '' }) => {
             {children}
         </main>
         <BackToTop />
+        <Footer />
     </>
 }
 

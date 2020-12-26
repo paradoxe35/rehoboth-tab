@@ -80,7 +80,6 @@ const HomeHero = () => {
 
         <SwiperSlide className={slides} style={{ backgroundImage: `url(${Home1})`, ...classes }}>
             <SwiperSlideContent
-                data-aos="fade-up"
                 subtitle={t("Il y a une place")}
                 title={t("Pour tout le monde")}
                 action={{ text: "Lire plus", href: "#" }}

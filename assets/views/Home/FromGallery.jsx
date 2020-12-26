@@ -206,7 +206,7 @@ const FromGallery = () => {
 
                         <Titles />
 
-                        <Card border={false} bodyClass="p-0">
+                        <Card border={false} bodyClass="p-0" className="bg-transparent">
                             <ContentMasonryWrapper />
                         </Card>
 

@@ -3,28 +3,8 @@ import { InertiaLink, usePage } from '@inertiajs/inertia-react'
 import { FiFacebook, FiTwitter, FiInstagram } from "react-icons/fi";
 import styled from 'styled-components'
 import { useTranslation } from "react-i18next";
-import Cross from '/@/images/logo/cross.svg'
+import LogoApp from './LogoApp';
 
-const Logo = styled.h1`
-    font-size: 32px;
-    margin: 0;
-    padding: 0;
-    line-height: 1;
-    font-weight: 500;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    a {
-        color: var(--bs-light);
-    }
-    img {
-        max-height: 40px;
-    }
-    @media (max-width: 992px) {
-        & {
-            font-size: 28px;
-        }
-    }
-`
 
 const SocialLinks = styled.div`
     padding-left: 20px;
@@ -113,12 +93,7 @@ const NavBar = () => {
 
     return <>
         <div className="container d-flex justify-content-between align-items-center">
-            <Logo>
-                <InertiaLink href="/">
-                    <img src={Cross} alt={t("La Croix")} />
-                    {appName}
-                </InertiaLink>
-            </Logo>
+            <LogoApp />
 
             <Nav className="d-none d-lg-block">
                 <ul>

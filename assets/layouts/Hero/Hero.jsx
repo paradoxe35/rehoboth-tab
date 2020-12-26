@@ -6,11 +6,13 @@ import Image from '/@/images/hero/hero.jpg'
 import { usePage } from '@inertiajs/inertia-react'
 
 const Div = styled.div`
-    h1.display-6 {
-        color: var(--bs-grey-light-1);
+    z-index: 20;
+    h1.h3 {
+        color: #ddd;
         border-top: solid 1px rgba(255,255,255,.2);
         border-bottom: solid 1px rgba(255,255,255,.2);
         display: block;
+        z-index: 20;
         padding: 10px;
     }
 `
@@ -30,6 +32,7 @@ const DivContainer = styled.div`
         top: 0;
         left: 0;
         right: 0;
+        z-index: 9;
     }
 `
 
@@ -61,7 +64,7 @@ const Hero = ({ title = '', imageSrc = null, children, headTitle = null }) => {
                 <Div className="h-100 px-lg-6 px-lg-7 container">
                     <div className="h-100  align-items-center justify-content-center text-center row">
                         <div className="col-lg-6">
-                            <h1 className="display-6 font-weight-bold mb-3" style={{ lineHeight: 1 }}>
+                            <h1 className="h3 font-weight-bold mb-3" style={{ lineHeight: 1 }}>
                                 {title}
                             </h1>
                         </div>

@@ -38,7 +38,7 @@ export const LatestSectionItemData = ({ col, showOnlySm, showOnlyMd, canShowInMd
 }
 
 export const LatestSectionItemLabel = ({ col, children }) => {
-    return <div data-aos="fade-left" className={`col-lg-${col} d-flex justify-content-center align-items-center`}>
+    return <div data-aos="fade-right" className={`col-lg-${col} d-flex justify-content-center align-items-center`}>
         <div className="text-center my-4">
             {children}
         </div>

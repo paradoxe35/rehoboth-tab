@@ -119,8 +119,6 @@ const LatestBlog = () => {
                     })
             }
         </LatestSectionParentStyled>
-
-        <br /><br /><br /><br /><br /><br /><br /><br /><br />
     </div>
 }
 
