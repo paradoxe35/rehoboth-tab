@@ -19,6 +19,8 @@ require('laravel-mix-versionhash')
  */
 
 mix.react('assets/App.jsx', 'main.js')
+    .react('assets/Admin.js', 'admin.js')
+    .js("assets/modules/livewire-frame.js", "livewire-frame.js")
     .setPublicPath('public/assets/')
     .setResourceRoot('/assets/')
     // .imagemin('public/assets/images/*')
@@ -68,7 +70,6 @@ mix.react('assets/App.jsx', 'main.js')
     })
     .extract([
         "preact",
-        "bootstrap",
         "@popperjs/core",
         "@inertiajs/inertia",
         "@inertiajs/inertia-react",
