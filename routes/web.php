@@ -33,10 +33,26 @@ Route::get('/gallery', [GalleryController::class, 'index'])->name('gallery');
 
 Route::get('/contact', [ContactController::class, 'index'])->name('contact');
 
-Auth::routes(['login' => true, 'regiter' => false, 'verify' => false, 'reset' => false, 'confirm' => false]);
 
 Route::middleware(['auth'])
     ->prefix('livewire')
     ->group(function () {
         Route::get('', LivewireController::class)->name('livewire');
+    });
+
+Route::prefix('dash')
+    ->group(function () {
+        Route::redirect('/', '/dash/login');
+
+        Auth::routes([
+            'login' => true,
+            'register' => false,
+            'verify' => false,
+            'reset' => false,
+            'confirm' => false
+        ]);
+
+        Route::namespace('Admin')
+            ->group(function () {
+            });
     });

@@ -50,7 +50,7 @@ const TimeDaytyled = styled.div`
 `
 
 const DayWeek = ({ data }) => {
-    return <ItemRowStyled>
+    return <ItemRowStyled data-aos="fade-up">
         <div className="d-flex justify-content-between mb-3">
             <TimeDaytyled className=" p-3 text-center">
                 <div>{data.from}</div>
@@ -67,7 +67,7 @@ const DayWeek = ({ data }) => {
 const OurPrograms = () => {
     const { t } = useTranslation()
 
-    return <div className="container py-3" data-aos="fade-up">
+    return <div className="container py-3">
         <CenterTitle className="h4 my-5" data-aos="fade-up">
             {t("Nos Programmes")}
         </CenterTitle>

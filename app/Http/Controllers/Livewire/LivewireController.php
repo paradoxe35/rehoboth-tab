@@ -25,6 +25,6 @@ class LivewireController extends Controller
             ->values()
             ->toArray();
 
-        return view('livewire-app', compact('component', 'attribute'));
+        return view('app-livewire', compact('component', 'attribute'));
     }
 }

@@ -18,8 +18,6 @@
     @endforeach
 
     @else
-    <link href="{{ mix('main-style.css', 'assets') }}" rel="stylesheet">
-    <script src="{{ mix('main-style.js', 'assets') }}" defer></script>
     <script src="{{ mix('manifest.js', 'assets') }}" defer></script>
     <script src="{{ mix('vendor.js', 'assets') }}" defer></script>
     <script type="module" src="{{ mix('admin.js', 'assets') }}" defer></script>
@@ -27,7 +25,7 @@
 </head>
 
 <body>
-
+    @yield('body')
 </body>
 
 </html>
