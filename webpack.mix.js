@@ -70,7 +70,6 @@ mix.react('assets/App.jsx', 'main.js')
     })
     .extract([
         "preact",
-        "@popperjs/core",
         "@inertiajs/inertia",
         "@inertiajs/inertia-react",
         "@inertiajs/progress",

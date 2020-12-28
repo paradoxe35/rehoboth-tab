@@ -8,23 +8,27 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
 
+    @yield('head-meta')
+    @yield('head-secondary')
+
     @if (app()->environment() === "local")
 
     <script type="module" src="{{ env('DEV_SERVER') }}/vite/client"></script>
     @foreach (explode(',', env('DEV_SERVER_ADMIN_ENTRIES')) as $entry)
-        @if ($entry)
-        <script type="module" src="{{ env('DEV_SERVER') }}/{{ $entry }}" defer></script>
-        @endif
+    @if ($entry)
+    <script type="module" src="{{ env('DEV_SERVER') }}/{{ $entry }}" defer></script>
+    @endif
     @endforeach
 
     @else
     <script src="{{ mix('manifest.js', 'assets') }}" defer></script>
-    <script src="{{ mix('vendor.js', 'assets') }}" defer></script>
     <script type="module" src="{{ mix('admin.js', 'assets') }}" defer></script>
     @endif
+
+
 </head>
 
-<body>
+<body @yield('body-attr') class="@yield('body-class')">
     @yield('body')
 </body>
 

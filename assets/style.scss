@@ -1,7 +1,7 @@
-@import "./sass/variables";
-@import "./sass/custom";
+@import "./styles/variables";
+@import "./styles/custom";
 @import "bootstrap/scss/bootstrap.scss";
-@import "./sass/global";
+@import "./styles/global";
 
 //pages
 @import "./pages/Home/home";

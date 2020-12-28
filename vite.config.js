@@ -20,7 +20,10 @@ const config = {
     optimizeDeps: {
         include: [
             "react-icons/fi",
-            "swiper/react"
+            "swiper/react",
+            "gia/Component",
+            "gia/loadComponents",
+            "gia/config"
         ],
     },
     root,
