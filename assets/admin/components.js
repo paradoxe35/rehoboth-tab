@@ -1,7 +1,10 @@
-import SidebarComponent from "./components/Sidebar"
+import HomePage from "./pages/HomePage"
+import Sidebar from "./components/Sidebar"
 
-const components = {
-    SidebarComponent
+
+const controllers = {
+    Sidebar,
+    HomePage
 }
 
-export default components
+export default controllers

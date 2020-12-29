@@ -8,6 +8,11 @@ body {
     vertical-align: text-bottom;
 }
 
+.turbolinks-progress-bar {
+    height: 3px;
+    background-color: var(--bs-primary);
+}
+
 /*
    * Sidebar
    */

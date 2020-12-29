@@ -2,6 +2,5 @@
 
 
 @section('content')
-Home
-<div g-component="HomePage"></div>
+Messages
 @endsection

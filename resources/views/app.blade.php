@@ -37,7 +37,8 @@
 
     @else
     <link href="{{ mix('main-style.css', 'assets') }}" rel="stylesheet">
-    <script src="{{ mix('main-style.js', 'assets') }}" defer></script>
+    <script src="{{ mix('main-style.js', 'assets') }}"></script>
+
     <script src="{{ mix('manifest.js', 'assets') }}" defer></script>
     <script src="{{ mix('vendor.js', 'assets') }}" defer></script>
     <script type="module" src="{{ mix('main.js', 'assets') }}" defer></script>

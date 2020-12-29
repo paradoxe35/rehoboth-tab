@@ -23,7 +23,9 @@ const config = {
             "swiper/react",
             "gia/Component",
             "gia/loadComponents",
-            "gia/config"
+            "gia/config",
+            'gia/createInstance',
+            "gia/getComponentFromElement"
         ],
     },
     root,

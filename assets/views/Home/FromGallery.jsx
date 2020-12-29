@@ -198,7 +198,7 @@ const ContentMasonryWrapper = () => {
 
 
 const FromGallery = () => {
-    return <div className="container-fluid">
+    return <div className="container-fluid mb-4">
         <ContainerStyled>
             <div className="container my-4" data-aos="fade-up">
                 <div className="row justify-content-center">

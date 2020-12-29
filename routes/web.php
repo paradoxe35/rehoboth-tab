@@ -40,19 +40,4 @@ Route::middleware(['auth'])
         Route::get('', LivewireController::class)->name('livewire');
     });
 
-Route::prefix('dash')
-    ->group(function () {
-        Route::redirect('/', '/dash/login');
-
-        Auth::routes([
-            'login' => true,
-            'register' => false,
-            'verify' => false,
-            'reset' => false,
-            'confirm' => false
-        ]);
-
-        Route::namespace('Admin')
-            ->group(function () {
-            });
-    });
+require __DIR__ . '/admin.php';

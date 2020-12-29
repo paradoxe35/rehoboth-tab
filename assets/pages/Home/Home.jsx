@@ -19,6 +19,7 @@ const Home = () => {
     useEffect(() => {
         aos.init({ once: true })
     }, [])
+    // @ts-ignore
     return <BodyClassName className="nav--muted">
         <>
             <HomeHero />

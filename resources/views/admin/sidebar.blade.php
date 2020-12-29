@@ -1,40 +1,46 @@
-<nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse"  g-component="SidebarComponent">
+<nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse" g-component="Sidebar">
     <div class="position-sticky pt-3">
         <ul class="nav flex-column">
             <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="#">
+                <a class="nav-link {{ Str::contains(request()->fullUrl(), route('admin.home')) ? 'active' : '' }}"
+                    href="{{ route('admin.home') }}">
                     <span data-feather="home"></span>
-                    Dashboard
+                    {{ __("Profil") }}
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">
+                <a class="nav-link {{ Str::contains(request()->fullUrl(), route('admin.sermons')) ? 'active' : '' }}"
+                    href="{{ route('admin.sermons') }}">
                     <span data-feather="file"></span>
-                    Orders
+                    {{ __("Sermons") }}
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">
+                <a class="nav-link {{ Str::contains(request()->fullUrl(), route('admin.events')) ? 'active' : '' }}"
+                    href="{{ route('admin.events') }}">
+                    <span data-feather="file"></span>
+                    {{ __("Événements") }}
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link {{ Str::contains(request()->fullUrl(), route('admin.galleries')) ? 'active' : '' }}"
+                    href="{{ route('admin.galleries') }}">
                     <span data-feather="shopping-cart"></span>
-                    Products
+                    {{ __("Galerie") }}
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <span data-feather="users"></span>
-                    Customers
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">
+                <a class="nav-link {{ Str::contains(request()->fullUrl(), route('admin.blogs')) ? 'active' : '' }}"
+                    href="{{ route('admin.blogs') }}">
                     <span data-feather="bar-chart-2"></span>
-                    Reports
+                    {{ __("Blog") }}
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">
+                <a class="nav-link {{ Str::contains(request()->fullUrl(), route('admin.messages')) ? 'active' : '' }}"
+                    href="{{ route('admin.messages') }}">
                     <span data-feather="layers"></span>
-                    Integrations
+                    {{ __("Messages") }}
                 </a>
             </li>
         </ul>
