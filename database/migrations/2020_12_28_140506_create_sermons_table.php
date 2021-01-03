@@ -15,6 +15,13 @@ class CreateSermonsTable extends Migration
     {
         Schema::create('sermons', function (Blueprint $table) {
             $table->id();
+            $table->string('title');
+            $table->string('author');
+            $table->string('video')->nullable();
+            $table->string('audio')->nullable();
+            $table->string('document')->nullable();
+            $table->string('description')->nullable();
+            $table->date('date');
             $table->timestamps();
         });
     }

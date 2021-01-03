@@ -25,7 +25,8 @@ const config = {
             "gia/loadComponents",
             "gia/config",
             'gia/createInstance',
-            "gia/getComponentFromElement"
+            "gia/getComponentFromElement",
+            "gia/eventbus"
         ],
     },
     root,

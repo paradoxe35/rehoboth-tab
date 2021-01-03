@@ -15,6 +15,8 @@ class CreateWebPushesTable extends Migration
     {
         Schema::create('web_pushes', function (Blueprint $table) {
             $table->id();
+            $table->text('token');
+            $table->ipAddress('ip');
             $table->timestamps();
         });
     }

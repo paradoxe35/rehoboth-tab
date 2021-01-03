@@ -16,10 +16,12 @@ class CreateImagesTable extends Migration
         Schema::create('images', function (Blueprint $table) {
             $table->id();
             $table->morphs('imageable');
-            $table->integer('width');
-            $table->integer('height');
+            $table->bigInteger('width');
+            $table->bigInteger('height');
             $table->string('caption')->nullable();
+            $table->dateTime('date')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
