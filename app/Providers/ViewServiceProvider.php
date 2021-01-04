@@ -3,10 +3,11 @@
 namespace App\Providers;
 
 use App\View\Components\Livewire\Frame;
+use App\View\Components\Spinner;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Blade;
-
+use Illuminate\View\View as IView;
 
 class ViewServiceProvider extends ServiceProvider
 {
@@ -43,6 +44,7 @@ class ViewServiceProvider extends ServiceProvider
     private function components()
     {
         Blade::component('frame', Frame::class);
+        Blade::component('spinner', Spinner::class);
     }
 
     /**
@@ -50,7 +52,7 @@ class ViewServiceProvider extends ServiceProvider
      */
     private function composers()
     {
-        View::composer('*', function ($view) {
+        View::composer('*', function (IView $view) {
             $view->with('app_name', config('app.name'));
         });
     }

@@ -2,6 +2,11 @@
 
 
 @section('content')
-Home
-<div g-component="HomePage"></div>
+<div g-component="HomePage">
+    @include('admin.pages.home.cards')
+    <hr>
+    @include('admin.pages.home.admins')
+    <hr>
+    @include('admin.pages.home.details')
+</div>
 @endsection
