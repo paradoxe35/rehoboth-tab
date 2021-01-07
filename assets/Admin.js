@@ -7,12 +7,13 @@ import SwupMetaTagsPlugin from 'swup-meta-tags-plugin';
 import components from './admin/components';
 import { iframeResizer } from 'iframe-resizer'
 
+window.resizeIframe = (obj) => iframeResizer({}, obj)
+
 const swup = new Swup({
+    cache: false,
     plugins: [
-        new SwupGiaPlugin({ components, log: true }),
+        new SwupGiaPlugin({ components, log: process.env.NODE_ENV === "development" }),
         new SwupProgressPlugin(),
         new SwupMetaTagsPlugin()
     ]
 });
-
-window.resizeIframe = (obj) => iframeResizer({}, obj)

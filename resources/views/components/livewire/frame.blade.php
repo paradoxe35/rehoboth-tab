@@ -1,10 +1,10 @@
 <x-spinner id="spinner-frame" />
 <script type="text/javascript">
     function onloadLivewireFrame(t) {
-        if(resizeIframe){
+        if(window.resizeIframe){
             resizeIframe(t)
         }else{
-            window.onload= function(){
+            window.onload = function(){
                 resizeIframe(t)
             }
         }
