@@ -31,9 +31,11 @@
 </head>
 
 <body @yield('body-attr') class="@yield('body-class')">
-    @yield('body')
+    <div id="swup">
+        @yield('body')
 
-    {{ $slot ?? '' }}
+        {{ $slot ?? '' }}
+    </div>
 
     @livewireScripts
 </body>

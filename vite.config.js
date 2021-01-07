@@ -22,10 +22,6 @@ const config = {
             "react-icons/fi",
             "swiper/react",
             "gia/Component",
-            "gia/loadComponents",
-            "gia/config",
-            'gia/createInstance',
-            "gia/getComponentFromElement",
             "gia/eventbus"
         ],
     },

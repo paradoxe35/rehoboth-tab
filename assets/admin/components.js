@@ -4,7 +4,7 @@ import Sidebar from "./components/Sidebar"
 
 const controllers = {
     Sidebar,
-    HomePage
+    HomePage,
 }
 
 export default controllers

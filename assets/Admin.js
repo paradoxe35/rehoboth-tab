@@ -1,23 +1,18 @@
-import 'alpinejs'
+//@ts-nocheck
 import "/@/styles/dashboard.css"
-import loadComponents from 'gia/loadComponents';
-import components from '/@/admin/components';
-import config from 'gia/config';
-import Turbolinks from 'turbolinks'
-import { debounce } from './functions/functions';
-import { loadGiaComponent } from './utils/loadComponent';
+import Swup from 'swup';
+import SwupGiaPlugin from '@swup/gia-plugin';
+import SwupProgressPlugin from '@swup/progress-plugin';
+import SwupMetaTagsPlugin from 'swup-meta-tags-plugin';
+import components from './admin/components';
 import { iframeResizer } from 'iframe-resizer'
 
+const swup = new Swup({
+    plugins: [
+        new SwupGiaPlugin({ components, log: true }),
+        new SwupProgressPlugin(),
+        new SwupMetaTagsPlugin()
+    ]
+});
 
-loadComponents(components);
-// @ts-ignore
-config.set('log', process.env.NODE_ENV == "development");
-
-Turbolinks.start()
-
-window.addEventListener('turbolinks:before-render',
-    debounce(loadGiaComponent.bind(this, components), 500)
-)
-
-// @ts-ignore
 window.resizeIframe = (obj) => iframeResizer({}, obj)
