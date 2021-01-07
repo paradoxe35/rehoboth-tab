@@ -34,7 +34,7 @@ Route::get('/gallery', [GalleryController::class, 'index'])->name('gallery');
 Route::get('/contact', [ContactController::class, 'index'])->name('contact');
 
 
-Route::middleware(['auth'])
+Route::middleware([])
     ->prefix('livewire')
     ->group(function () {
         Route::get('', LivewireController::class)->name('livewire');

@@ -1,6 +1,7 @@
 @extends('admin.main')
 
-
 @section('content')
-Sermons
+
+@yield('sermons-content')
+
 @endsection

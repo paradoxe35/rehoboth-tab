@@ -9,6 +9,11 @@ class SermonsController extends Controller
 {
     public function index()
     {
-        return view('admin.pages.sermons');
+        return view('admin.pages.sermons.index');
+    }
+
+    public function create()
+    {
+        return view('admin.pages.sermons.create');
     }
 }

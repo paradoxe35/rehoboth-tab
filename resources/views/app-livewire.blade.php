@@ -24,8 +24,8 @@
 <body>
     @livewire($component, $attribute)
 
-    <script src="{{ mix('js/manifest.js', 'compiled') }}"></script>
-    <script src="{{ mix('js/livewire-frame.js', 'compiled') }}"></script>
+    <script src="{{ mix('manifest.js', 'assets') }}"></script>
+    <script src="{{ mix('livewire-frame.js', 'assets') }}"></script>
     @livewireScripts
 </body>
 

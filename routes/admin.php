@@ -26,10 +26,16 @@ Route::prefix('dash')
         // Route::middleware('auth')
         //     ->group(function () {
         Route::get('/home', [HomeController::class, 'index'])->name('home');
-        Route::get('/sermons', [SermonsController::class, 'index'])->name('sermons');
-        Route::get('/events', [EventsController::class, 'index'])->name('events');
-        Route::get('/galleries', [GalleriesController::class, 'index'])->name('galleries');
-        Route::get('/blogs', [BlogsController::class, 'index'])->name('blogs');
-        Route::get('/messages', [MessagesController::class, 'index'])->name('messages');
+
+        Route::resource('/sermons', SermonsController::class);
+
+        Route::resource('/events', EventsController::class);
+
+        Route::resource('/galleries', GalleriesController::class);
+
+        Route::resource('/blogs',  BlogsController::class);
+
+        Route::resource('/messages', MessagesController::class);
+
         // });
     });
