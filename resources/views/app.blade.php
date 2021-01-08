@@ -28,20 +28,15 @@
     {{-- section:assets --}}
     @if (app()->environment() === "local")
 
-    <script type="module" src="{{ env('DEV_SERVER') }}/vite/client"></script>
-    @foreach (explode(',', env('DEV_SERVER_ENTRIES')) as $entry)
-    @if ($entry)
-    <script type="module" src="{{ env('DEV_SERVER') }}/{{ $entry }}" defer></script>
-    @endif
-    @endforeach
+        @include('vite-assets', ['entries' => 'DEV_SERVER_ENTRIES'])
 
     @else
-    <link href="{{ mix('main-style.css', 'assets') }}" rel="stylesheet">
-    <script src="{{ mix('main-style.js', 'assets') }}"></script>
+        <link href="{{ mix('main-style.css', 'assets') }}" rel="stylesheet">
+        <script src="{{ mix('main-style.js', 'assets') }}"></script>
 
-    <script src="{{ mix('manifest.js', 'assets') }}" defer></script>
-    <script src="{{ mix('vendor.js', 'assets') }}" defer></script>
-    <script type="module" src="{{ mix('main.js', 'assets') }}" defer></script>
+        <script src="{{ mix('manifest.js', 'assets') }}" defer></script>
+        <script src="{{ mix('vendor.js', 'assets') }}" defer></script>
+        <script type="module" src="{{ mix('main.js', 'assets') }}" defer></script>
     @endif
 
     {{-- ziggy:tags --}}
