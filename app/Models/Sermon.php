@@ -14,5 +14,31 @@ class Sermon extends Model
      *
      * @var array
      */
-    protected $fillable = ['title', 'author', 'description', 'date', 'video', 'audio', 'document'];
+    protected $fillable = ['subject', 'preacher', 'description', 'date'];
+
+
+    public function files()
+    {
+        return $this->morphMany(File::class, 'fileable');
+    }
+
+    public function image()
+    {
+        return $this->morphOne(Image::class, 'imageable');
+    }
+
+    public function video()
+    {
+        return $this->files()->where('type', 'video');
+    }
+
+    public function audios()
+    {
+        return $this->files()->where('type', 'audio');
+    }
+
+    public function documents()
+    {
+        return $this->files()->where('type', 'document');
+    }
 }

@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\View\Components\Button;
+use App\View\Components\Input;
 use App\View\Components\Livewire\Frame;
 use App\View\Components\Spinner;
 use Illuminate\Support\Facades\View;
@@ -43,8 +45,7 @@ class ViewServiceProvider extends ServiceProvider
      */
     private function components()
     {
-        Blade::component('frame', Frame::class);
-        Blade::component('spinner', Spinner::class);
+        //
     }
 
     /**

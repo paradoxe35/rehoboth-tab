@@ -5,6 +5,7 @@
         <span class="navbar-toggler-icon"></span>
     </button>
     <input class="form-control form-control-dark w-100 bg-transparent" type="text" disabled placeholder="Paradoxe Ngwasi" aria-label="Search">
+    <livewire:loader />
     <ul class="navbar-nav px-3">
         <li class="nav-item text-nowrap">
             <a class="nav-link" href="#">{{ __("Déconnexion") }}</a>

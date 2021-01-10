@@ -15,5 +15,6 @@
         {{ __("Ajouter sermon") }}
     </a>
 </div>
+
 <x-livewire.frame ref="tables.sermons-table" />
 @endsection

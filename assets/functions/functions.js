@@ -100,3 +100,22 @@ export function isHidden(el) {
     const style = window.getComputedStyle(el);
     return (style.display === 'none')
 }
+
+const getIdYtLink = (url) => {
+    const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+    const match = url.match(regExp);
+
+    return (match && match[2].length === 11)
+        ? match[2]
+        : null;
+}
+
+export function ytLinkToEmbedCode(url) {
+    const videoId = getIdYtLink(url);
+    return !videoId ? null : `<iframe width="560" height="315" src="//www.youtube.com/embed/${videoId}" frameborder="0" allowfullscreen></iframe>`
+}
+
+export async function ytLinkToEmbedCodeApi(url) {
+    const videoId = getIdYtLink(url);
+    return !videoId ? null : await fetch(`https://www.youtube.com/oembed?url=${url}`).then(r => r.json())
+}

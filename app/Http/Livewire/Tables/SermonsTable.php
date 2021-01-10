@@ -23,15 +23,15 @@ class SermonsTable extends LivewireDatatable
             NumberColumn::name('id')
                 ->hide(),
 
-            Column::name('title')
+            Column::name('subject')
                 ->truncate()
                 ->searchable()
-                ->label(trans("Thème")),
+                ->label(trans("Sujet")),
 
-            Column::name('author')
+            Column::name('preacher')
                 ->label(trans('Prédicateur')),
 
-            Column::callback(['video', 'audio', 'document'], function ($video, $audio, $document) {
+            Column::callback(['id'], function ($id) {
                 return 'media';
             })->label(trans('Media')),
 

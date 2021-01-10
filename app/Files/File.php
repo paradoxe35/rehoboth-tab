@@ -23,4 +23,9 @@ class File
      * @var string AGENTS_IMG_PATH
      */
     public const AGENTS_IMG_PATH = 'agents';
+
+    /**
+     * @var string SERMONS_PATH
+     */
+    public const SERMONS_PATH = 'sermons';
 }

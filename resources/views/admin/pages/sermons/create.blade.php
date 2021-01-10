@@ -15,5 +15,6 @@
     ]
 ]])
 
+<livewire:admin.sermons.create />
 
 @endsection

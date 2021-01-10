@@ -13,4 +13,9 @@ declare module "*.svg" {
     export default value;
 }
 
+
+declare const Livewire: any;
+
+declare const $swup = new (await import('swup')).default;
+
 declare const route = (await import('ziggy-js')).default;
