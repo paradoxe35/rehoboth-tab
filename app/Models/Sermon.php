@@ -27,16 +27,25 @@ class Sermon extends Model
         return $this->morphOne(Image::class, 'imageable');
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
     public function video()
     {
         return $this->files()->where('type', 'video');
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
     public function audios()
     {
         return $this->files()->where('type', 'audio');
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
     public function documents()
     {
         return $this->files()->where('type', 'document');

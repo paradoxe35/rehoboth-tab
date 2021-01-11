@@ -22,7 +22,8 @@ const config = {
             "react-icons/fi",
             "swiper/react",
             "gia/Component",
-            "gia/eventbus"
+            "gia/eventbus",
+            "iframe-resizer/js/iframeResizer.contentWindow"
         ],
     },
     root,

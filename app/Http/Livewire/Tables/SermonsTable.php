@@ -25,14 +25,27 @@ class SermonsTable extends LivewireDatatable
 
             Column::name('subject')
                 ->truncate()
+                ->editable()
                 ->searchable()
                 ->label(trans("Sujet")),
 
             Column::name('preacher')
+                ->editable()
                 ->label(trans('Prédicateur')),
 
             Column::callback(['id'], function ($id) {
-                return 'media';
+                /** @var \App\Models\Sermon */
+                $model = Sermon::find($id);
+
+                $video = $model->video()->first();
+                $audios = $model->audios()->get();
+                $documents = $model->documents()->get();
+
+                return view('livewire.admin.sermons.table.media-actions', [
+                    'video' => $video,
+                    'audios' => $audios,
+                    'documents' => $documents
+                ]);
             })->label(trans('Media')),
 
             DateColumn::name('date')

@@ -6,6 +6,7 @@ import SwupProgressPlugin from '@swup/progress-plugin';
 import SwupMetaTagsPlugin from 'swup-meta-tags-plugin';
 import components from './admin/components';
 import { iframeResizer } from 'iframe-resizer'
+import global from '/@/utils/global'
 
 window.resizeIframe = (obj) => iframeResizer({}, obj)
 
@@ -18,16 +19,4 @@ window.$swup = new Swup({
     ]
 });
 
-window.swupReload = (top = true) => {
-    if (top) {
-        window.scrollTo({
-            top: 0,
-            behavior: "smooth"
-        })
-    }
-    $swup.loadPage({
-        url: window.location.pathname + window.location.search
-    }, true)
-}
-
-$swup.on('contentReplaced', () => livewire.start())
+global()

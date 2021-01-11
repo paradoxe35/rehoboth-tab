@@ -110,12 +110,28 @@ const getIdYtLink = (url) => {
         : null;
 }
 
-export function ytLinkToEmbedCode(url) {
+export function ytLinkToEmbedCode(url, width = 560, height = 315) {
     const videoId = getIdYtLink(url);
-    return !videoId ? null : `<iframe width="560" height="315" src="//www.youtube.com/embed/${videoId}" frameborder="0" allowfullscreen></iframe>`
+    return !videoId ? null : `<iframe width="${width}" height="${height}" src="//www.youtube.com/embed/${videoId}" frameborder="0" allowfullscreen></iframe>`
 }
 
 export async function ytLinkToEmbedCodeApi(url) {
     const videoId = getIdYtLink(url);
     return !videoId ? null : await fetch(`https://www.youtube.com/oembed?url=${url}`).then(r => r.json())
+}
+
+
+export const capitalize = (s) => {
+    if (typeof s !== 'string') return ''
+    return s.charAt(0).toUpperCase() + s.slice(1)
+}
+
+
+export const eventListenOne = (parent = null, eventName, callback) => {
+    const el = (parent || window);
+    const h = (e) => {
+        callback(e)
+        el.removeEventListener(eventName, h);
+    }
+    el.addEventListener(eventName, h);
 }

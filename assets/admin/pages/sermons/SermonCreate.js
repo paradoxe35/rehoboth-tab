@@ -1,4 +1,4 @@
-import { GiaComponent } from '../gia';
+import { GiaComponent } from '/@/admin/gia';
 
 export default class extends GiaComponent {
     constructor(element) {

@@ -1,4 +1,4 @@
-<div class="card" g-component="SermonPage">
+<div class="card" g-component="SermonCreate">
     <div class="card-body">
         <form autocomplete="off" class="needs-validation" novalidate wire:submit.prevent="store"
             enctype="multipart/form-data">

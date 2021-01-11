@@ -116,7 +116,8 @@ class Create extends Component
                 $uploaded = $file->storePublicly(File::SERMONS_PATH . "/{$sermon->id}");
                 $sermon->files()->create([
                     'path' => $uploaded,
-                    'type' => 'audio'
+                    'type' => 'audio',
+                    'name' => $file->getClientOriginalName()
                 ]);
             });
     }
@@ -128,7 +129,8 @@ class Create extends Component
                 $uploaded = $file->storePublicly(File::SERMONS_PATH . "/{$sermon->id}");
                 $sermon->files()->create([
                     'path' => $uploaded,
-                    'type' => 'document'
+                    'type' => 'document',
+                    'name' => $file->getClientOriginalName()
                 ]);
             });
     }
