@@ -15,6 +15,6 @@
     ]
 ]])
 
-<livewire:admin.sermons.edit />
+<livewire:admin.sermons.edit :sermon="$sermon" />
 
 @endsection

@@ -108,3 +108,13 @@ body {
     height: 4px;
     background-color: var(--bs-primary);
 }
+
+audio {
+    height: 30px;
+}
+
+audio:nth-child(2),
+audio:nth-child(4),
+audio:nth-child(6) {
+    margin: 0;
+}

@@ -67,8 +67,11 @@ class DropFilesData {
      * Remove a file from the FileList
      */
     deleteFile(file) {
-        this.el.files = removeFile(this.el.files, file);
+        const files = removeFile(this.el.files, file);
+        this.el.files = files
         this.filesUpdate();
+
+        return files
     }
     /**
      * Event triggered when new files are selected
@@ -97,6 +100,10 @@ class DropFilesData {
  * @param { import('filepond').FilePondOptions } options 
  */
 export const createInstance = (el, options) => {
+    if (el.length < 2) {
+        console.error("input file collection must contains at least 2 elements")
+        return
+    }
     // @ts-ignore
     const files = new DropFilesData(el[1], options.allowMultiple || FilePond.getOptions().allowMultiple)
 
@@ -105,7 +112,13 @@ export const createInstance = (el, options) => {
             if (!err) files.newFiles(file)
         },
         onremovefile: (err, { file }) => {
-            if (!err) files.deleteFile(file)
+            if (!err) {
+                const mfiles = files.deleteFile(file)
+                if (mfiles.length == 0 && livewireInstance) {
+                    livewireInstance()
+                        .set(el[1].getAttribute("wire:model"), options.allowMultiple ? [] : null)
+                }
+            }
         },
         ...options
     })

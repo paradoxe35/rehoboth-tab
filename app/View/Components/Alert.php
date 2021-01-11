@@ -4,25 +4,21 @@ namespace App\View\Components;
 
 use Illuminate\View\Component;
 
-class Button extends Component
+class Alert extends Component
 {
+    public $type;
 
-    public $target;
-
-    public $class;
-
-    public $color;
+    public $message;
 
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct(string $target = '', string $class = '', string $color = 'primary')
+    public function __construct(string $type = 'info', string $message = '')
     {
-        $this->target = $target;
-        $this->class = $class;
-        $this->color = $color;
+        $this->type = $type;
+        $this->message = $message;
     }
 
     /**
@@ -32,6 +28,6 @@ class Button extends Component
      */
     public function render()
     {
-        return view('components.button');
+        return view('components.alert');
     }
 }

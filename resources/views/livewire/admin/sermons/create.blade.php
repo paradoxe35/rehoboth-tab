@@ -1,4 +1,6 @@
 <x-card g-component="SermonCreate">
+    <x-livewire-js-instance />
+
     <form autocomplete="off" class="needs-validation" novalidate wire:submit.prevent="store"
         enctype="multipart/form-data">
 

@@ -4,25 +4,16 @@ namespace App\View\Components;
 
 use Illuminate\View\Component;
 
-class Button extends Component
+class livewireJsInstance extends Component
 {
-
-    public $target;
-
-    public $class;
-
-    public $color;
-
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct(string $target = '', string $class = '', string $color = 'primary')
+    public function __construct()
     {
-        $this->target = $target;
-        $this->class = $class;
-        $this->color = $color;
+        //
     }
 
     /**
@@ -32,6 +23,6 @@ class Button extends Component
      */
     public function render()
     {
-        return view('components.button');
+        return view('components.livewire-js-instance');
     }
 }

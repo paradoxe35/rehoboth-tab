@@ -1,4 +1,4 @@
-<label class="form-label">
+<label class="form-label d-block">
     {{ __($label) }}
     @if ($optional)
     <small>({{ __($optionalText) }})</small>
@@ -6,7 +6,7 @@
 </label>
 <input type="file" {{ $attributes }}>
 @if ($hasWire)
-<input type="file" class="d-none" {{ $attributes }} label="{{ $inputLabel ?? '' }}" wire:model.lazy="{{ $model }}"
+<input type="file" class="d-none" {{ $attributes }} label="{{ $inputLabel ?? '' }}" wire:model="{{ $model }}"
     name="{{ $model }}" class="form-control @error($model) is-invalid @enderror">
 @else
 <input type="file" {{ $attributes }} name="{{ $model }}" label="{{ $inputLabel ?? '' }}"

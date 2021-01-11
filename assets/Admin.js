@@ -33,6 +33,12 @@ window.swupReload = (top = true) => {
 
 $swup.on('contentReplaced', () => livewire.start())
 
+$swup.on('transitionStart', () => {
+    if (window.livewireInstance) {
+        window.livewireInstance = null
+    }
+})
+
 window.addEventListener(routeFromChildEvent, (e) => {
     $swup.loadPage({ url: e.detail })
 })
