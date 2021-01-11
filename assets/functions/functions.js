@@ -136,3 +136,7 @@ export const eventListenOne = (parent = null, eventName, callback) => {
     el.removeEventListener(eventName, h);
     el.addEventListener(eventName, h);
 }
+
+export function confirmed() {
+    return confirm("Êtes-vous sûr ?")
+}

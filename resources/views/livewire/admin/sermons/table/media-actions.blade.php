@@ -13,4 +13,9 @@
         onclick='openParentModal("sermonsIndex", { type: "documents", data: @json($documents) }, "{{ Str::random() }}")'>
         {{ __("Documents") }}
     </button>
+
+    <button class="button"
+        onclick='openParentModal("sermonsIndex", { type: "image", data: @json($image) }, "{{ Str::random() }}")'>
+        {{ __("Image") }}
+    </button>
 </div>

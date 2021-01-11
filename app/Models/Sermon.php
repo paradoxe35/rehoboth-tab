@@ -2,12 +2,23 @@
 
 namespace App\Models;
 
+use App\Events\Models\SermonDeleted;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Sermon extends Model
 {
     use HasFactory;
+
+
+    /**
+     * The event map for the model.
+     *
+     * @var array
+     */
+    protected $dispatchesEvents = [
+        'deleted' => SermonDeleted::class,
+    ];
 
     /**
      * The attributes that are mass assignable.

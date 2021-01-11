@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Tables;
 
 use App\Models\Sermon;
+use Illuminate\Support\Facades\Storage;
 use Mediconesystems\LivewireDatatables\Http\Livewire\LivewireDatatable;
 use Mediconesystems\LivewireDatatables\Column;
 use Mediconesystems\LivewireDatatables\DateColumn;
@@ -40,12 +41,12 @@ class SermonsTable extends LivewireDatatable
                 $video = $model->video()->first();
                 $audios = $model->audios()->get();
                 $documents = $model->documents()->get();
+                $image = $model->image()->first();
 
-                return view('livewire.admin.sermons.table.media-actions', [
-                    'video' => $video,
-                    'audios' => $audios,
-                    'documents' => $documents
-                ]);
+                return view(
+                    'livewire.admin.sermons.table.media-actions',
+                    compact('video', 'audios', 'documents', 'image')
+                );
             })->label(trans('Media')),
 
             DateColumn::name('date')
@@ -55,6 +56,10 @@ class SermonsTable extends LivewireDatatable
             DateColumn::name('created_at')
                 ->filterable()
                 ->label(trans('Ajouté le')),
+
+            Column::callback(['id', 'date'], function ($id, $date) {
+                return view('livewire.admin.sermons.table.edit', ['id' => $id]);
+            })->label(trans('Modifier Media')),
 
             Column::delete()
                 ->alignCenter()

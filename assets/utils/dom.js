@@ -211,3 +211,13 @@ export const dispatchEventUpdatedModalItems = (type, data, more = {}) => {
         detail: { type, data, ...more }
     }))
 }
+
+export const onDeleteItemModal = (eventName, parentId, callback) => {
+    eventListenOne(null, eventName, (e) => {
+
+        const el = document.getElementById(parentId)
+        Array.from(el.querySelectorAll('.delete--js'))
+            .forEach(el => el.addEventListener('click', callback.bind(undefined, el)))
+
+    })
+}

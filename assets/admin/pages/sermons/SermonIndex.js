@@ -1,8 +1,7 @@
 import { GiaComponent } from '/@/admin/gia';
 import { ApiRequest } from '/@/api/api';
-import { capitalize, eventListenOne, ytLinkToEmbedCode } from '/@/functions/functions';
-import { Btn, dispatchEventUpdatedModalItems, openModalEventFrame } from '/@/utils/dom';
-import { modalItemsUpdatedEvent } from '/@/utils/vars';
+import { capitalize, confirmed, eventListenOne, ytLinkToEmbedCode } from '/@/functions/functions';
+import { Btn, dispatchEventUpdatedModalItems, onDeleteItemModal, openModalEventFrame } from '/@/utils/dom';
 
 export default class extends GiaComponent {
     constructor(element) {
@@ -21,6 +20,10 @@ export default class extends GiaComponent {
                 case "documents":
                     return this.viewDocumentsSermon(type, data)
                     break;
+
+                case "image":
+                    return this.viewImageSermon(type, data)
+                    break;
             }
         })
     }
@@ -29,13 +32,13 @@ export default class extends GiaComponent {
         this.unmoutModal && this.unmoutModal()
     }
 
-    title(text) {
+    htmlTitle(text) {
         return /*html*/`
             <div class="my-3"><h4>${capitalize(text)}</h4></div>
         `
     }
 
-    delete(id) {
+    htmlDeleteButton(id) {
         return /*html*/`
             <button data-id="${id}" class="btn delete--js text-xs btn-danger p-1 text-white">Supprimer</button>
         `
@@ -56,7 +59,7 @@ export default class extends GiaComponent {
                     </audio>
                 </div>
                 <span>
-                    ${this.delete(audio.id)}
+                    ${this.htmlDeleteButton(audio.id)}
                 </span>
             </div>
             <hr />
@@ -76,14 +79,14 @@ export default class extends GiaComponent {
                     <a target="_blank" class="text-sm text-decoration-underline" href="${file.public_path}">${file.name}</a>
                 </span>
                 <span>
-                    ${this.delete(file.id)}
+                    ${this.htmlDeleteButton(file.id)}
                 </span>
             </div>
             <hr />
         `
     }
 
-    info(text) {
+    htmlInfo(text) {
         return  /*html*/`
             <div class="alert alert-info" role="alert">
                 ${text}
@@ -91,18 +94,49 @@ export default class extends GiaComponent {
         `
     }
 
+
+    deleteFileFetch(el) {
+        if (!confirmed()) return
+
+        Btn.loading(el)
+        ApiRequest("delete", route("admin.files.destroy", { file: el.getAttribute("data-id") }).toString())
+            .finally(() => Btn.hide())
+            .then(({ data }) => dispatchEventUpdatedModalItems("remove", data))
+    }
+
+
     /**
-     * @param {string} parentId 
-     * @param {Function} callback 
-     */
-    onDelete(parentId, callback) {
-        eventListenOne(null, "sermonsIndex", (e) => {
+    * @param { string } type 
+    * @param { Object } data 
+    */
+    viewImageSermon(type, data) {
+        const parentId = `image-${Math.random()}`
 
-            const el = document.getElementById(parentId)
-            Array.from(el.querySelectorAll('.delete--js'))
-                .forEach(el => el.addEventListener('click', callback.bind(undefined, el)))
+        onDeleteItemModal("sermonsIndex", parentId, (el) => {
+            if (!confirmed()) return
 
+            Btn.loading(el)
+            ApiRequest("delete", route("admin.images.destroy", { image: el.getAttribute("data-id") }).toString())
+                .finally(() => Btn.hide())
+                .then(({ data }) => dispatchEventUpdatedModalItems("remove", data))
         })
+
+        return /*html*/`
+            <div id="${parentId}">
+                <div class="d-flex justify-content-between">
+                    ${this.htmlTitle(type)}
+                    <span>
+                        ${data ? this.htmlDeleteButton(data.id) : ''}
+                    </span>
+                </div>
+                
+                <div class="w-100 d-flex justify-content-center">
+                    ${data ? /*html*/`
+                        <img src="${data.public_path}" class="img-fluid img-thumbnail" />
+                    `: this.htmlInfo("Aucune image enregistrée")}
+                </div>
+            </div>
+        `
     }
 
     /**
@@ -112,25 +146,24 @@ export default class extends GiaComponent {
     viewVideoSermon(type, data) {
         const parentId = `video-${Math.random()}`
 
-        this.onDelete(parentId, (el, e) => {
-            console.log(el);
-        })
+        onDeleteItemModal("sermonsIndex", parentId, this.deleteFileFetch.bind(this))
 
         return /*html*/`
             <div id="${parentId}">
                 <div class="d-flex justify-content-between">
-                    ${this.title(type)}
+                    ${this.htmlTitle(type)}
                     <span>
-                        ${data ? this.delete(data.id) : ''}
+                        ${data ? this.htmlDeleteButton(data.id) : ''}
                     </span>
                 </div>
                 
                 <div class="w-100 d-flex justify-content-center">
-                ${data ? ytLinkToEmbedCode(data.path) : this.info("Aucune video enregistré")}
+                ${data ? ytLinkToEmbedCode(data.path) : this.htmlInfo("Aucune video enregistrée")}
                 </div>
             </div>
         `
     }
+
 
     /**
      * @param { string } type 
@@ -141,18 +174,12 @@ export default class extends GiaComponent {
 
         const parentId = `audios-${Math.random()}`
 
-        this.onDelete(parentId, (el, e) => {
-            Btn.loading(el)
-
-            ApiRequest("delete", route("admin.files.sermon-file", { id: el.getAttribute("data-id") }).toString())
-                .finally(() => Btn.hide())
-                .then(({ data }) => dispatchEventUpdatedModalItems("remove", data))
-        })
+        onDeleteItemModal("sermonsIndex", parentId, this.deleteFileFetch.bind(this))
 
         return /*html*/`
             <div id="${parentId}">
-                ${this.title(type)}
-                ${!!views.length ? views.join('\n') : this.info("Aucun audio enregistré")}
+                ${this.htmlTitle(type)}
+                ${!!views.length ? views.join('\n') : this.htmlInfo("Aucun audio enregistré")}
             </div>`
     }
 
@@ -165,14 +192,12 @@ export default class extends GiaComponent {
 
         const parentId = `documents-${Math.random()}`
 
-        this.onDelete(parentId, (el, e) => {
-            console.log(el);
-        })
+        onDeleteItemModal("sermonsIndex", parentId, this.deleteFileFetch.bind(this))
 
         return /*html*/`
             <div id="${parentId}">
-                ${this.title(type)}
-                ${!!views.length ? views.join('\n') : this.info("Aucun document enregistré")}
+                ${this.htmlTitle(type)}
+                ${!!views.length ? views.join('\n') : this.htmlInfo("Aucun document enregistré")}
             </div>
         `
     }
