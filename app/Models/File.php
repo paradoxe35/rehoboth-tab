@@ -18,7 +18,7 @@ class File extends Model
     protected $fillable = ['name', 'path', 'type'];
 
 
-     /**
+    /**
      * The accessors to append to the model's array form.
      *
      * @var array
@@ -33,5 +33,13 @@ class File extends Model
     public function getPublicPathAttribute()
     {
         return Storage::url($this->path);
+    }
+
+    /**
+     * Get the parent imageable model (user or post).
+     */
+    public function fileable()
+    {
+        return $this->morphTo();
     }
 }

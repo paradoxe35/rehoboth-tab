@@ -1,4 +1,7 @@
 import { Modal } from 'bootstrap'
+import { eventListenOne } from '../functions/functions'
+import { modalItemsUpdatedEvent, openModalEvent } from './vars'
+
 /**
  * @param { Object } trans 
  * @param { string } defaults
@@ -75,8 +78,10 @@ export const openModal = (data) => {
     if (modal) {
         innerDump(modal.querySelector('.modal-body'), data)
 
-        const imodal = new Modal(modal)
-        imodal.show()
+        if (!modal.classList.contains('show')) {
+            const imodal = new Modal(modal)
+            imodal.show()
+        }
         return
     }
     const html = `<div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
@@ -105,6 +110,43 @@ export const openModal = (data) => {
     imodal.show()
 }
 
+export const HtmlAlert = {
+    parents: [],
+
+    message(message) {
+        if (message !== null || message !== undefined) {
+            if (typeof message === 'string')
+                return message;
+            if (Array.isArray(message))
+                return this.fromArray(message);
+            if (message.message && !message.errors)
+                return message.message;
+            if (message.message && message.errors)
+                return this.fromObject(message.errors);
+        } else {
+            return Localize({
+                fr: 'Une erreur est survenue en interne, veuillez réessayer plus tard',
+                en: 'An error has occurred internally, please try again later'
+            })
+        }
+    },
+
+    /**
+     * @param { object } object 
+     * @returns { string }
+     */
+    fromObject(object) {
+        return Object.keys(object).map(key => object[key].join(".\n")).join("\n")
+    },
+    /**
+     * @param { Array<string> } arr 
+     */
+    fromArray(arr) {
+        return arr.join(".\n")
+    }
+}
+
+
 export const openModalEventFrame = (types, fn) => {
 
     const memo = {};
@@ -121,11 +163,51 @@ export const openModalEventFrame = (types, fn) => {
         const content = fn(datas)
         if (type == types && content) {
             openModal(content)
+
             window.dispatchEvent(new Event(type))
+
+            eventListenOne(null, modalItemsUpdatedEvent, ({ detail: { type: itype, data: idata } }) => {
+
+                let finaldata = id ? memo[id] : datas
+
+                switch (itype) {
+                    case "add":
+                        if (Array.isArray(finaldata.data)) {
+                            finaldata.data = [idata, ...finaldata]
+                        } else {
+                            finaldata.data = idata
+                        }
+                        break;
+                    case "remove":
+                        if (Array.isArray(finaldata.data)) {
+                            finaldata.data = finaldata.data.filter(e => e.id != idata.id)
+                        } else {
+                            finaldata.data = null
+                        }
+                        break;
+                    default:
+                        break;
+                }
+
+                if (memo[id]) {
+                    memo[id] = finaldata
+                }
+
+                window.dispatchEvent(
+                    new CustomEvent(openModalEvent, { detail: { type, finaldata, id } })
+                )
+            })
         }
     }
 
-    window.addEventListener('openModal', handleEvent)
+    window.addEventListener(openModalEvent, handleEvent)
 
-    return () => window.removeEventListener('openModal', handleEvent)
+    return () => window.removeEventListener(openModalEvent, handleEvent)
+}
+
+
+export const dispatchEventUpdatedModalItems = (type, data, more = {}) => {
+    window.dispatchEvent(new CustomEvent(modalItemsUpdatedEvent, {
+        detail: { type, data, ...more }
+    }))
 }

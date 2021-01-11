@@ -1,6 +1,8 @@
 import { GiaComponent } from '/@/admin/gia';
+import { ApiRequest } from '/@/api/api';
 import { capitalize, eventListenOne, ytLinkToEmbedCode } from '/@/functions/functions';
-import { openModalEventFrame } from '/@/utils/dom';
+import { Btn, dispatchEventUpdatedModalItems, openModalEventFrame } from '/@/utils/dom';
+import { modalItemsUpdatedEvent } from '/@/utils/vars';
 
 export default class extends GiaComponent {
     constructor(element) {
@@ -35,7 +37,7 @@ export default class extends GiaComponent {
 
     delete(id) {
         return /*html*/`
-            <button data-id="${id}" class="btn text-xs btn-danger p-1 text-white">Supprimer</button>
+            <button data-id="${id}" class="btn delete--js text-xs btn-danger p-1 text-white">Supprimer</button>
         `
     }
 
@@ -90,20 +92,42 @@ export default class extends GiaComponent {
     }
 
     /**
+     * @param {string} parentId 
+     * @param {Function} callback 
+     */
+    onDelete(parentId, callback) {
+        eventListenOne(null, "sermonsIndex", (e) => {
+
+            const el = document.getElementById(parentId)
+            Array.from(el.querySelectorAll('.delete--js'))
+                .forEach(el => el.addEventListener('click', callback.bind(undefined, el)))
+
+        })
+    }
+
+    /**
     * @param { string } type 
     * @param { Object } data 
     */
     viewVideoSermon(type, data) {
+        const parentId = `video-${Math.random()}`
+
+        this.onDelete(parentId, (el, e) => {
+            console.log(el);
+        })
+
         return /*html*/`
-            <div class="d-flex justify-content-between">
-                ${this.title(type)}
-                <span>
-                    ${data ? this.delete(data.id) : ''}
-                </span>
-            </div>
-            
-            <div class="w-100 d-flex justify-content-center">
-               ${data ? ytLinkToEmbedCode(data.path) : this.info("Aucune video enregistré")}
+            <div id="${parentId}">
+                <div class="d-flex justify-content-between">
+                    ${this.title(type)}
+                    <span>
+                        ${data ? this.delete(data.id) : ''}
+                    </span>
+                </div>
+                
+                <div class="w-100 d-flex justify-content-center">
+                ${data ? ytLinkToEmbedCode(data.path) : this.info("Aucune video enregistré")}
+                </div>
             </div>
         `
     }
@@ -117,17 +141,19 @@ export default class extends GiaComponent {
 
         const parentId = `audios-${Math.random()}`
 
-        eventListenOne(null, "sermonsIndex", (e) => {
-            const el = document.getElementById(parentId)
-            console.log(el);
+        this.onDelete(parentId, (el, e) => {
+            Btn.loading(el)
+
+            ApiRequest("delete", route("admin.files.sermon-file", { id: el.getAttribute("data-id") }).toString())
+                .finally(() => Btn.hide())
+                .then(({ data }) => dispatchEventUpdatedModalItems("remove", data))
         })
 
         return /*html*/`
             <div id="${parentId}">
                 ${this.title(type)}
                 ${!!views.length ? views.join('\n') : this.info("Aucun audio enregistré")}
-            </div>
-        `
+            </div>`
     }
 
     /**
@@ -139,8 +165,7 @@ export default class extends GiaComponent {
 
         const parentId = `documents-${Math.random()}`
 
-        eventListenOne(null, "sermonsIndex", (e) => {
-            const el = document.getElementById(parentId)
+        this.onDelete(parentId, (el, e) => {
             console.log(el);
         })
 

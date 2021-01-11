@@ -18,14 +18,18 @@
     </style>
 
     @livewireStyles
+    
     @if (app()->environment() === "local")
-    @include('vite-assets', ['entries' => 'DEV_SERVER_ADMIN_ENTRIES'])
+        @include('vite-assets', ['entries' => 'DEV_SERVER_ADMIN_ENTRIES'])
     @else
-    <link href="{{ mix('main-style.css', 'assets') }}" rel="stylesheet">
-    <script src="{{ mix('main-style.js', 'assets') }}"></script>
-    <script src="{{ mix('manifest.js', 'assets') }}" defer></script>
-    <script type="module" src="{{ mix('admin.js', 'assets') }}" defer></script>
+        <link href="{{ mix('main-style.css', 'assets') }}" rel="stylesheet">
+        <script src="{{ mix('main-style.js', 'assets') }}"></script>
+        <script src="{{ mix('manifest.js', 'assets') }}" defer></script>
+        <script type="module" src="{{ mix('admin.js', 'assets') }}" defer></script>
     @endif
+
+    {{-- ziggy:tags --}}
+    @routes
 </head>
 
 <body @yield('body-attr') class="@yield('body-class')">

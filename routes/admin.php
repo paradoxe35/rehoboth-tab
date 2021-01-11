@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\EventsController;
 use App\Http\Controllers\Admin\GalleriesController;
 use App\Http\Controllers\Admin\HomeController;
 use App\Http\Controllers\Admin\MessagesController;
+use App\Http\Controllers\Admin\Models\FilesController;
 use App\Http\Controllers\Admin\SermonsController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
@@ -36,6 +37,15 @@ Route::prefix('dash')
         Route::resource('/blogs',  BlogsController::class);
 
         Route::resource('/messages', MessagesController::class);
+
+
+        Route::name('files.')
+            ->prefix('files')
+            ->group(function () {
+
+                Route::delete("{id}/sermon-file", [FilesController::class, "destroySermonFile"])
+                    ->name('sermon-file');
+            });
 
         // });
     });

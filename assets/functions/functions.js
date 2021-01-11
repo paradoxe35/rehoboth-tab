@@ -133,5 +133,6 @@ export const eventListenOne = (parent = null, eventName, callback) => {
         callback(e)
         el.removeEventListener(eventName, h);
     }
+    el.removeEventListener(eventName, h);
     el.addEventListener(eventName, h);
 }
