@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin\Morph;
 
 use App\Http\Controllers\Controller;
-use App\Models\File;
+use App\Models\Morphs\File;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 

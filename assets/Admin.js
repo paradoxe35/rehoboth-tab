@@ -7,6 +7,7 @@ import SwupMetaTagsPlugin from 'swup-meta-tags-plugin';
 import components from './admin/components';
 import { iframeResizer } from 'iframe-resizer'
 import { routeFromChildEvent } from "/@/utils/vars"
+import { ytLinkToEmbedCode } from "./functions/functions";
 
 window.resizeIframe = (obj) => iframeResizer({}, obj)
 
@@ -42,3 +43,5 @@ $swup.on('transitionStart', () => {
 window.addEventListener(routeFromChildEvent, (e) => {
     $swup.loadPage({ url: e.detail })
 })
+
+window.ytLinkToEmbedCode = ytLinkToEmbedCode

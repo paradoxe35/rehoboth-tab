@@ -4,8 +4,8 @@ namespace App\Http\Livewire\Admin\Sermons;
 
 use App\Files\File;
 use App\Files\Images\ImageCompression;
-use App\Models\File as ModelsFile;
-use App\Models\Image;
+use App\Models\Morphs\File as ModelsFile;
+use App\Models\Morphs\Image;
 use App\Models\Sermon;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
@@ -27,6 +27,8 @@ class Edit extends Component
 
     public $video;
 
+    public $videoModel;
+
     public $imageModel;
 
     public $audiosModel = [];
@@ -36,9 +38,9 @@ class Edit extends Component
     public function mount(Sermon $sermon)
     {
         $this->image = $sermon->image()->first();
-        $this->audios = $sermon->audios()->get();
         $this->video = $sermon->video()->first();
 
+        $this->audios = $sermon->audios()->get();
         $this->documents = $sermon->documents()->get();
     }
 
@@ -57,6 +59,62 @@ class Edit extends Component
 
             $this->image = null;
         }
+    }
+
+    public function deleteFile($id, $type)
+    {
+        $file = ModelsFile::find($id);
+
+        if ($file) {
+            Storage::delete($file->path);
+
+            $file->delete();
+
+            switch ($type) {
+                case 'video':
+                    $this->video = null;
+                    break;
+                case 'audio':
+                    $this->audios = $this->sermon->audios()->get();
+                    break;
+                case 'document':
+                    $this->documents = $this->sermon->documents()->get();
+                    break;
+            }
+        }
+    }
+
+    private function storeImage()
+    {
+        $sermon = $this->sermon;
+        $filetmp = $this->imageModel->getRealPath();
+
+        (new ImageCompression)
+            ->compress_image($filetmp);
+
+        $uploaded = $this->imageModel->storePublicly(File::SERMONS_PATH . "/{$sermon->id}");
+
+        [$width, $height] = getimagesize($filetmp);
+
+        return [
+            'path' => $uploaded,
+            'width' => $width,
+            'height' => $height,
+            'caption' => $this->imageModel->getClientOriginalName()
+        ];
+    }
+
+    private function storeFiles($models, $type)
+    {
+        collect($models)
+            ->each(function ($file) use ($type) {
+                $uploaded = $file->storePublicly(File::SERMONS_PATH . "/{$this->sermon->id}");
+                $this->sermon->files()->create([
+                    'path' => $uploaded,
+                    'type' => $type,
+                    'name' => $file->getClientOriginalName()
+                ]);
+            });
     }
 
     public function saveImage()
@@ -83,48 +141,72 @@ class Edit extends Component
         }
     }
 
-    private function storeImage()
+    public function saveVideo()
     {
-        $sermon = $this->sermon;
-        $filetmp = $this->imageModel->getRealPath();
+        $this->validate([
+            'videoModel' => [
+                'required',
+                'regex:/^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/',
+                'string'
+            ],
+        ]);
 
-        (new ImageCompression)
-            ->compress_image($filetmp);
+        if ($this->video) {
+            $this->video->delete();
+        }
 
-        $uploaded = $this->imageModel->storePublicly(File::SERMONS_PATH . "/{$sermon->id}");
+        $this->video = $this->sermon->files()->create([
+            'path' => $this->videoModel,
+            'type' => 'video'
+        ]);
 
-        [$width, $height] = getimagesize($filetmp);
+        $this->videoModel = null;
+    }
 
-        return [
-            'path' => $uploaded,
-            'width' => $width,
-            'height' => $height,
-            'caption' => $this->imageModel->getClientOriginalName()
-        ];
+    public function saveAudios()
+    {
+        $this->validate([
+            'audiosModel.*' => [
+                'required',
+                'file',
+                'max:' . (200 * 1024),
+                "mimes:mp3,oga,aac,wav"
+            ],
+        ]);
+
+        $max = 10;
+
+        if (($this->audios->count() + count($this->audiosModel)) > $max) {
+            $this->addError('audiosModel.*', "Vous ne pouvez enregistrer que {$max} fichiers");
+            return;
+        }
+
+        $this->storeFiles($this->audiosModel, 'audio');
+
+        $this->audios = $this->sermon->audios()->get();
     }
 
 
-    public function deleteFile($id, $type)
+    public function saveDocuments()
     {
-        $file = ModelsFile::find($id);
+        $this->validate([
+            'documentsModel.*' => [
+                'required',
+                'file',
+                'max:' . (30 * 1024),
+                "mimes:pdf"
+            ]
+        ]);
 
-        return null;
-        if ($file) {
-            Storage::delete($file->path);
+        $max = 10;
 
-            $file->delete();
-
-            switch ($type) {
-                case 'video':
-                    $this->video = null;
-                    break;
-                case 'audio':
-                    $this->audios = $this->audios->filter(fn ($f) => $f != $id);
-                    break;
-                case 'document':
-                    $this->documents = $this->documents->filter(fn ($f) => $f != $id);
-                    break;
-            }
+        if (($this->documents->count() + count($this->documentsModel)) > $max) {
+            $this->addError('documentsModel.*', "Vous ne pouvez enregistrer que {$max} fichiers");
+            return;
         }
+
+        $this->storeFiles($this->documentsModel, 'document');
+
+        $this->documents = $this->sermon->documents()->get();
     }
 }

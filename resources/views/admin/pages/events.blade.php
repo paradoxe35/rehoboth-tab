@@ -1,6 +1,7 @@
 @extends('admin.main')
 
-
 @section('content')
-Events
+
+@yield('events-content')
+
 @endsection

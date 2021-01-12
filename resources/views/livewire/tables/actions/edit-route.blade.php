@@ -1,5 +1,5 @@
 <div class="flex space-x-1 justify-around">
-    <a style="cursor: pointer" onclick="routeToParent('{{ route('admin.sermons.edit', ['sermon' => $id], false) }}')"
+    <a style="cursor: pointer" onclick="routeToParent('{{ $route }}')"
         class="p-1 text-blue-600 hover:bg-blue-600 hover:text-white rounded">
         <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
             <path

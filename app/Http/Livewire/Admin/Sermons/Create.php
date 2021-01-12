@@ -77,9 +77,13 @@ class Create extends Component
 
         $this->storeImage($sermon);
 
-        $this->storeAudios($sermon);
-
         $this->storeVideo($sermon);
+        
+        $this->storeFiles($sermon, $this->audios, 'audio');
+
+        $this->storeFiles($sermon, $this->documents, 'document');
+        
+        $this->storeAudios($sermon);
 
         $this->storeDocuments($sermon);
 
@@ -109,27 +113,14 @@ class Create extends Component
         }
     }
 
-    private function storeAudios(Sermon $sermon)
+    private function storeFiles(Sermon $sermon, $models, $type)
     {
-        collect($this->audios)
-            ->each(function ($file) use ($sermon) {
+        collect($models)
+            ->each(function ($file) use ($sermon, $type) {
                 $uploaded = $file->storePublicly(File::SERMONS_PATH . "/{$sermon->id}");
                 $sermon->files()->create([
                     'path' => $uploaded,
-                    'type' => 'audio',
-                    'name' => $file->getClientOriginalName()
-                ]);
-            });
-    }
-
-    private function storeDocuments(Sermon $sermon)
-    {
-        collect($this->documents)
-            ->each(function ($file) use ($sermon) {
-                $uploaded = $file->storePublicly(File::SERMONS_PATH . "/{$sermon->id}");
-                $sermon->files()->create([
-                    'path' => $uploaded,
-                    'type' => 'document',
+                    'type' => $type,
                     'name' => $file->getClientOriginalName()
                 ]);
             });

@@ -3,7 +3,6 @@
 namespace App\Http\Livewire\Tables;
 
 use App\Models\Sermon;
-use Illuminate\Support\Facades\Storage;
 use Mediconesystems\LivewireDatatables\Http\Livewire\LivewireDatatable;
 use Mediconesystems\LivewireDatatables\Column;
 use Mediconesystems\LivewireDatatables\DateColumn;
@@ -58,7 +57,9 @@ class SermonsTable extends LivewireDatatable
                 ->label(trans('Ajouté le')),
 
             Column::callback(['id', 'date'], function ($id, $date) {
-                return view('livewire.admin.sermons.table.edit', ['id' => $id]);
+                return view('livewire.tables.actions.edit-route', [
+                    'route' => route('admin.sermons.edit', ['sermon' => $id], false)
+                ]);
             })->label(trans('Modifier Media')),
 
             Column::delete()

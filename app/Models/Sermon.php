@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use App\Events\Models\SermonDeleted;
+use App\Models\Morphs\File;
+use App\Models\Morphs\Image;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
