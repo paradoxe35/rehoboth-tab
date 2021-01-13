@@ -127,4 +127,8 @@ export const createInstance = (el, options) => {
 }
 
 
+export const fileLabel = (type) => {
+    return `${type} ou <span class="filepond--label-action">Parcourir</span>`
+}
+
 export default FilePond

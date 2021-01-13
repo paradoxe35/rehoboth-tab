@@ -8,7 +8,7 @@ export default class extends GiaComponent {
     }
 
     async require() {
-        this.react = (await import("./content/Create"))
+        this.react = (await import("./create/Index"))
             .default(this.element)
     }
     mount() { }

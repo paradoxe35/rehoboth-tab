@@ -59,7 +59,7 @@ const config = {
             })
         }
     ],
-    plugins: [prefresh()]
+    // plugins: [prefresh()]
 };
 
 module.exports = config;
