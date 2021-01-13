@@ -5,34 +5,35 @@ import Card from "/@/components/Card"
 import { useMultipleOption } from "/@/utils/hooks"
 
 
-const PaidTicketOption = ({ index, onSelect, onDelete }) => {
+// @ts-ignore
+const PaidTicketOption = React.memo(({ index, onSelect, onDelete, checked }) => {
     return <>
         <tr>
             <td>
                 <input className="form-control form-control-sm" type="text" placeholder="Nom de l'option" />
             </td>
             <td>
-                <input className="form-control form-control-sm" type="text" placeholder="Price" />
+                <input className="form-control form-control-sm" defaultValue="$0.00" type="text" placeholder="Price" />
             </td>
             <td className="text-center align-middle">
                 <div className="custom-control custom-radio">
                     <input
                         className="custom-control-input"
-                        onChange={() => onSelect(index.id)}
-                        checked={index.checked}
+                        onChange={() => onSelect(index)}
+                        checked={checked}
                         type="radio"
                         name="paid-ticket-option" />
                     <label className="custom-control-label" />
                 </div>
             </td>
             <td className="text-center align-middle">
-                <button className="btn btn-link btn-sm" onClick={() => onDelete(index.id)}>
+                <button className="btn btn-link btn-sm" onClick={() => onDelete(index)}>
                     <DeleteIcon />
                 </button>
             </td>
         </tr>
     </>
-}
+})
 
 
 const PaidTicketContent = () => {
@@ -72,11 +73,8 @@ const PaidTicketContent = () => {
             </thead>
             <tbody>
                 {options.map(v => (
-                    <PaidTicketOption
-                        key={v.id}
-                        index={v}
-                        onDelete={onDelete}
-                        onSelect={onSelect} />
+                    // @ts-ignore
+                    <PaidTicketOption key={v.id} checked={v.checked} index={v.id} onDelete={onDelete} onSelect={onSelect} />
                 ))}
             </tbody>
         </table>

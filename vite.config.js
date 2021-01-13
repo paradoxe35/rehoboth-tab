@@ -1,4 +1,4 @@
-// @ts-check
+//@ts-nocheck
 import prefresh from '@prefresh/vite'
 import path from 'path'
 
@@ -59,7 +59,7 @@ const config = {
             })
         }
     ],
-    // plugins: [prefresh()]
+    plugins: [prefresh()]
 };
 
 module.exports = config;

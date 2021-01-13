@@ -33,10 +33,10 @@ export const useMultipleOption = () => {
         setOptions(a => [...a, { id: `option-${count}`, checked: count === 0 }])
     }, [count])
 
-    const onDelete = (id) => setOptions(a => {
+    const onDelete = useCallback((id) => setOptions(a => {
         if (a.length == 1) return a
         return a.filter(v => v.id != id)
-    })
+    }), [])
 
     return {
         count,

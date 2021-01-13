@@ -7,12 +7,13 @@ import Card from "/@/components/Card"
 import { useMultipleOption } from "/@/utils/hooks"
 
 
-const ScheduleOption = ({ index, onDelete }) => {
+// @ts-ignore
+const ScheduleOption = React.memo(({ index, onDelete }) => {
     return <div className="border rounded position-relative bg-white p-3 mb-3">
         <div className="row">
             <div className="col"></div>
             <div className="col-auto">
-                <button className="btn btn-link btn-sm" onClick={() => onDelete(index.id)}>
+                <button className="btn btn-link btn-sm" onClick={() => onDelete(index)}>
                     <DeleteIcon />
                 </button>
             </div>
@@ -34,17 +35,15 @@ const ScheduleOption = ({ index, onDelete }) => {
             </div>
         </div>
     </div>
-}
+})
 
 const ScheduleSection = () => {
     const { setCount, options, onDelete } = useMultipleOption()
 
     return <Card title={<H5 text="Programmes" />} bodyClass="bg-light" cardClass="my-3">
         {options.map(v => (
-            <ScheduleOption
-                key={v.id}
-                index={v}
-                onDelete={onDelete} />
+            // @ts-ignore
+            <ScheduleOption key={v.id} index={v.id} onDelete={onDelete} />
         ))}
 
         <button type="button"

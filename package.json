@@ -41,7 +41,7 @@
     },
     "dependencies": {
         "@inertiajs/inertia": "^0.8.2",
-        "@inertiajs/inertia-react": "^0.4.5",
+        "@inertiajs/inertia-react": "^0.5.1",
         "@inertiajs/progress": "^0.2.3",
         "@popperjs/core": "^2.6.0",
         "@swup/gia-plugin": "^1.0.1",
@@ -73,6 +73,7 @@
         "react-icons": "^4.1.0",
         "react-loading-skeleton": "^2.1.1",
         "react-responsive-masonry": "^2.1.0",
+        "react-select": "^3.2.0",
         "styled-components": "^5.2.1",
         "swiper": "^6.4.5",
         "swup": "^2.0.14",

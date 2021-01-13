@@ -30,6 +30,7 @@ class ErrorBoundaryComponent extends React.Component {
 const NewErrorBoundaryComponent = withTranslation()(ErrorBoundaryComponent)
 
 const ErrorBoundary = ({ children, message = null }) => {
+    // @ts-ignore
     return <NewErrorBoundaryComponent message={message}>
         {children}
     </NewErrorBoundaryComponent>
