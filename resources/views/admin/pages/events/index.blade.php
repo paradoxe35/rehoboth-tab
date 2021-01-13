@@ -1,7 +1,7 @@
-@extends('admin.pages.sermons')
+@extends('admin.pages.layout-page')
 
 
-@section('sermons-content')
+@section('page-content')
 
 @include('admin.breadcrumb', ['items' => [
     [

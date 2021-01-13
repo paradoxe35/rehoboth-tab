@@ -33,7 +33,7 @@
 </head>
 
 <body @yield('body-attr') class="@yield('body-class')">
-    <div id="swup">
+    <div id="swup" class="mb-5">
         @yield('body')
 
         {{ $slot ?? '' }}

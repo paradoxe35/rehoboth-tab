@@ -118,3 +118,7 @@ audio:nth-child(4),
 audio:nth-child(6) {
     margin: 0;
 }
+
+.sticky-sidebar {
+    top: 5.3125rem;
+}

@@ -5,16 +5,18 @@
 
 @include('admin.breadcrumb', ['items' => [
     [
-        'name' => 'Sermons',
+        'name' => 'Événements',
         'active' => false,
-        'link' => route('admin.sermons.index')
+        'link' => route('admin.events.index')
     ],
     [
-        'name' => "Editer sermon - {$sermon->subject}",
+        'name' => 'Nouvel évènement',
         'active' => true
     ]
 ]])
 
-<livewire:admin.sermons.edit :sermon="$sermon" />
 
+<div g-component="EventCreate">
+    <x-spinner />
+</div>
 @endsection

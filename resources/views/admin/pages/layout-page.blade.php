@@ -2,6 +2,6 @@
 
 @section('content')
 
-@yield('sermons-content')
+@yield('page-content')
 
 @endsection
