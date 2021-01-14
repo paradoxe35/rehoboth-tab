@@ -2,9 +2,11 @@ import React, { useRef, useState } from 'react'
 import { Checkbox, FormControl } from '../FormControl'
 import H5 from "../H5"
 import Card from "/@/components/Card"
-import Select from 'react-select';
-import BsModal from '/@/components/admin/Modal';
+import CreatableSelect from 'react-select/creatable';
+import makeAnimated from 'react-select/animated';
 
+
+const animatedComponents = makeAnimated();
 
 const colourOptions = [
     { value: 'ocean', label: 'Ocean', color: '#00B8D9', isFixed: true },
@@ -26,51 +28,49 @@ const flavourOptions = [
     { value: 'salted-caramel', label: 'Salted Caramel', rating: 'crazy' },
 ];
 
-const SelectLabel = ({ label, onNewClick = null }) => {
+const SelectLabel = ({ label }) => {
     return <div className="d-flex justify-content-between align-items-center">
         <label className="form-label">{label}</label>
-        <button className="btn btn-link btn-sm pr-0" onClick={onNewClick} type="button">
-            Nouveau
-        </button>
     </div>
 }
 
 
 const Organizers = () => {
-    const modalRef = useRef(null)
     const [datas, setDatas] = useState([])
 
-    
     return <div className="mb-3">
-        <SelectLabel
-            label="Organisateurs"
-            onNewClick={() => modalRef.current && modalRef.current.show()} />
+        <SelectLabel label="Organisateurs" />
         {/*  @ts-ignore */}
-        <Select
+        <CreatableSelect
             defaultValue={[colourOptions[2], colourOptions[3]]}
             isMulti
             name="colors"
+            components={animatedComponents}
             options={colourOptions}
             className="basic-multi-select"
             classNamePrefix="select"
         />
-
-        <BsModal modalRef={modalRef} render={datas} size={null}>
-            {render => {
-                return <></>
-            }}
-        </BsModal>
     </div>
 }
 
 const Tags = () => {
 
+    const handleChange = (newValue, actionMeta) => {
+        console.group('Value Changed');
+        console.log(newValue);
+        console.log(`action: ${actionMeta.action}`);
+        console.log(`meta: `, actionMeta);
+        console.groupEnd();
+    };
+
     return <div className="mb-3">
         <SelectLabel label="Tags" />
         {/*  @ts-ignore */}
-        <Select
+        <CreatableSelect
             isMulti
             name="tags"
+            onChange={handleChange}
+            components={animatedComponents}
             options={flavourOptions}
             className="basic-multi-select"
             classNamePrefix="select"
@@ -82,10 +82,10 @@ const Tags = () => {
 const OtherInfoSection = () => {
     return <Card title={<H5 text="Autre info" />} bodyClass="bg-light" cardClass="my-3">
         <FormControl label="Label" />
+
         <hr />
         <Organizers />
         <Tags />
-
         <hr />
 
         <h6>Billets restants</h6>

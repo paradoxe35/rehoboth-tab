@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react"
+import { useCallback, useEffect, useRef, useState } from "react"
 
 
 export const useInputElementRefs = function () {
@@ -22,6 +22,15 @@ export const useInputElementRefs = function () {
         ref,
         refs
     }
+}
+
+
+export const useOnChangeRef = (onChange) => {
+    const onChangeRef = useRef(onChange)
+
+    onChangeRef.current = onChange
+
+    return onChangeRef
 }
 
 

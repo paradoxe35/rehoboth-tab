@@ -10,10 +10,20 @@ const PaidTicketOption = React.memo(({ index, onSelect, onDelete, checked }) => 
     return <>
         <tr>
             <td>
-                <input className="form-control form-control-sm" type="text" placeholder="Nom de l'option" />
+                <input 
+                    className="form-control form-control-sm" 
+                    type="text"
+                    placeholder="Nom de l'option" />
             </td>
             <td>
                 <input className="form-control form-control-sm" defaultValue="$0.00" type="text" placeholder="Price" />
+            </td>
+            <td>
+                <input 
+                    className="form-control form-control-sm" 
+                    defaultValue="50" 
+                    type="number" 
+                    placeholder="Stock" />
             </td>
             <td className="text-center align-middle">
                 <div className="custom-control custom-radio">
@@ -67,6 +77,7 @@ const PaidTicketContent = () => {
                 <tr className="fs--1">
                     <th>Nom de l'option</th>
                     <th>Prix</th>
+                    <th>Stock</th>
                     <th>Par défaut</th>
                     <th></th>
                 </tr>

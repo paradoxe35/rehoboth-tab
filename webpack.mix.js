@@ -74,10 +74,25 @@ mix.react('assets/App.jsx', 'main.js')
         "@inertiajs/inertia-react",
         "@inertiajs/progress",
     ])
-    .version()
     .sourceMaps(false)
-    .clean()
-    .disableNotifications()
-    .versionHash({
-        length: 8
+
+
+
+if (!mix.inProduction()) {
+    mix.browserSync({
+        proxy: 'localhost:8000',
+        watch: true,
+        files: ["./resources", "./asset"],
+        notify: false,
+        open: false,
+    });
+}
+
+if (mix.inProduction()) {
+    mix.clean()
+    mix.versionHash({
+        length: 16
     })
+}
+
+mix.disableNotifications();

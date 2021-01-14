@@ -20,7 +20,7 @@ const BsModal = ({ children, modalRef = null, keepAlive = false, render = null, 
 
 
     return createPortal(<div className="modal fade" ref={ref} tabIndex={-1} role="dialog" aria-hidden="true">
-        <div className={`modal-dialog modal-dialog-centered ${size ? `modal-${size}` : ''}modal-dialog-scrollable`} role="document">
+        <div className={`modal-dialog modal-dialog-centered ${size ? `modal-${size}` : ''} modal-dialog-scrollable`} role="document">
             <div className="modal-content">
                 <div className="modal-body pb-2">
                     {keepAlive ? children(render, ref.current) : (open ? children(render, ref.current) : [])}

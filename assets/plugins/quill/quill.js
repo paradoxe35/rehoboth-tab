@@ -2,8 +2,12 @@ import 'quill/dist/quill.snow.css'
 import './style.css'
 import Quill from 'quill'
 import BlotFormatter from "quill-blot-formatter";
+import MagicUrl from 'quill-magic-url'
+import ImageUploader from "quill-image-uploader";
 
 
+Quill.register("modules/imageUploader", ImageUploader);
+Quill.register('modules/magicUrl', MagicUrl)
 Quill.register("modules/blotFormatter", BlotFormatter);
 
 export const defaultOption = {
@@ -20,6 +24,22 @@ export const defaultOption = {
             ],
         },
         blotFormatter: {},
+        magicUrl: true,
+        imageUploader: {
+            upload: file => {
+                return new Promise((resolve, reject) => {
+                    let url = null
+                    setTimeout(() => {
+                        url = URL.createObjectURL(file)
+                        resolve(url);
+                    }, 3500);
+
+                    setTimeout(() => {
+                        URL.revokeObjectURL(url)
+                    }, 4000);
+                });
+            }
+        }
     },
     theme: 'snow',
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Event;
 
 use App\Models\Morphs\Address;
 use App\Models\Morphs\File;
@@ -21,7 +21,12 @@ class Event extends Model
      * @var array
      */
     protected $fillable = ['name', 'label', 'description', 'text'];
-    
+
+
+    public function registrations()
+    {
+        return $this->hasMany(EventRegistration::class);
+    }
 
     public function image()
     {

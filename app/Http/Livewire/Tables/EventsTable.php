@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire\Tables;
 
-use App\Models\Event;
+use App\Models\Event\Event;
 use Mediconesystems\LivewireDatatables\Http\Livewire\LivewireDatatable;
 use Mediconesystems\LivewireDatatables\Column;
 use Mediconesystems\LivewireDatatables\DateColumn;

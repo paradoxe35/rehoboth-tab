@@ -15,9 +15,10 @@ class CreateTicketOptionsTable extends Migration
     {
         Schema::create('ticket_options', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('ticket_id')->constrained()->onDelete('delete');
+            $table->foreignId('ticket_id')->constrained()->onDelete('cascade');
             $table->string('name');
             $table->double('price');
+            $table->integer('stock')->default(50);
             $table->boolean('default')->default(false);
             $table->timestamps();
         });

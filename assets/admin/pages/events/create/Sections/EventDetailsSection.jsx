@@ -5,8 +5,9 @@ import H5 from "../H5"
 import BsModal from '/@/components/admin/Modal';
 import Card from "/@/components/Card"
 import { Iframe } from '/@/components/Iframe';
+import Label from '/@/components/Label';
 import Quill, { defaultOption } from '/@/plugins/quill/quill';
-import { useInputElementRefs } from '/@/utils/hooks';
+import { useInputElementRefs, useOnChangeRef } from '/@/utils/hooks';
 import { GOOGLE_API_KEY } from '/@/utils/vars';
 
 
@@ -46,41 +47,24 @@ const Inscriptions = () => {
     </>
 }
 
-
-const usePlacejsOnChange = () => {
-    const { ref,
-        refs: {
-            ['country']: country,
-            ['city']: city
-        }
-    } = useInputElementRefs()
-
-    const placejsOnChange = useCallback(/** @param {import('places.js').Suggestion} e */(e) => {
-        country.value = e.country
-        city.value = e.city
-    }, [country, city])
-
-    return {
-        ref,
-        placejsOnChange
-    }
-}
-
 const PlacesJsContainer = ({ onChange = null }) => {
     const ref = useRef(null)
     const places = useRef(null)
 
+    const onChangeRef = useOnChangeRef(onChange)
+
+    const handleChange = useCallback(({ suggestion }) => {
+        onChangeRef.current && onChangeRef.current(suggestion)
+    }, [])
+
     useEffect(() => {
-        if (process.env.NODE_ENV == "development") return
         (async () => {
             if (ref.current) {
                 const PlacesJs = (await import("places.js")).default
                 places.current = PlacesJs({
                     container: ref.current
                 });
-                places.current.on("change", ({ suggestion }) => {
-                    onChange && onChange(suggestion)
-                })
+                places.current.on("change", handleChange)
             }
         })()
         return () => places.current && places.current.destroy()
@@ -124,7 +108,11 @@ const MapContent = ({ placejsOnChange }) => {
             <div className="col-12">
                 <PlacesJsContainer onChange={placeOnChange} />
             </div>
-
+            <div className="col-12">
+                <Label>
+                    Renseigner votre adresse map manuellement
+                </Label>
+            </div>
             <div className="col-lg-6">
                 <FormControl label="Latitude" defaultValue="-1.9509" name="lat" ref={ref} placeholder="ex: -2.5056" />
             </div>
@@ -165,6 +153,29 @@ const Map = ({ placejsOnChange = null }) => {
     </div>
 }
 
+
+const usePlacejsOnChange = () => {
+    const { ref,
+        refs: {
+            ['country']: country,
+            ['city']: city,
+            ['state']: state
+        }
+    } = useInputElementRefs()
+
+    const placejsOnChange = useCallback(/** @param {import('places.js').Suggestion} e */(e) => {
+
+        country.value = e.country || ''
+        city.value = e.city || ''
+        state.value = e.county || ''
+
+    }, [country, city, state])
+
+    return {
+        ref,
+        placejsOnChange
+    }
+}
 
 
 const EventDetailsSection = () => {
@@ -214,7 +225,7 @@ const EventDetailsSection = () => {
             </div>
 
             <div className="col-12">
-                {process.env.NODE_ENV !== "development" && <DescriptionAndText />}
+                <DescriptionAndText />
             </div>
 
         </div>
