@@ -3,10 +3,10 @@ import './style.css'
 import Quill from 'quill'
 import BlotFormatter from "quill-blot-formatter";
 import MagicUrl from 'quill-magic-url'
-import ImageUploader from "quill-image-uploader";
-
+import ImageUploader from 'quill-image-uploader'
 
 Quill.register("modules/imageUploader", ImageUploader);
+
 Quill.register('modules/magicUrl', MagicUrl)
 Quill.register("modules/blotFormatter", BlotFormatter);
 
@@ -20,8 +20,11 @@ export const defaultOption = {
                 [{ 'script': 'sub' }, { 'script': 'super' }],
                 [{ 'list': 'ordered' }, { 'list': 'bullet' }],
                 ['clean'],
-                ['image']
+                ['image', 'video']
             ],
+            handlers: {
+                image: imageHandler
+            }
         },
         blotFormatter: {},
         magicUrl: true,
@@ -45,5 +48,13 @@ export const defaultOption = {
 }
 
 
+export function imageHandler() {
+    const range = this.quill.getSelection();
+    const value = prompt("Entrez le lien de l'image");
+    if (value) {
+        // @ts-ignore
+        this.quill.insertEmbed(range.index, 'image', value, Quill.sources.USER);
+    }
+}
 
 export default Quill

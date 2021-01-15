@@ -1,4 +1,5 @@
 import toastr from 'toastr'
+import 'toastr/build/toastr.css'
 
 
 const asyncTimer = (time = 5000) => new Promise(resolve => {
@@ -10,11 +11,11 @@ toastr.options = {
     "debug": false,
     "newestOnTop": false,
     "progressBar": false,
-    "positionClass": "toast-bottom-center",
+    "positionClass": "toast-bottom-left",
     "preventDuplicates": false,
     "onclick": null,
     "showDuration": 300,
-    "hideDuration": 1000,
+    "hideDuration": 300,
     "timeOut": 5000,
     "extendedTimeOut": 1000,
     "showEasing": "swing",
@@ -25,11 +26,11 @@ toastr.options = {
 
 export const Notifier = {
     success(message = '', time = 5000) {
-        toastr.success(message)
+        toastr.success(message, null, { timeOut: time })
         return asyncTimer(time)
     },
     error(message = '', time = 5000) {
-        toastr.error(message)
+        toastr.error(message, null, { timeOut: time })
         return asyncTimer(time)
     },
 }

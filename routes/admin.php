@@ -8,6 +8,8 @@ use App\Http\Controllers\Admin\MessagesController;
 use App\Http\Controllers\Admin\Morph\FilesController;
 use App\Http\Controllers\Admin\Morph\ImagesController;
 use App\Http\Controllers\Admin\SermonsController;
+use App\Http\Controllers\Organizers\OrganizersController;
+use App\Http\Controllers\Tags\TagsController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -44,6 +46,8 @@ Route::prefix('dash')
 
         Route::apiResource("files", FilesController::class);
         Route::apiResource("images", ImagesController::class);
+        Route::apiResource("tags", TagsController::class);
+        Route::apiResource("organizers", OrganizersController::class);
 
         // });
     });

@@ -29,6 +29,7 @@ setTz()
  * @param { number } reloadStatus 
  */
 export const errorResponse = (error, mustNotifierErrors = false, reloadStatus = 0) => {
+    console.log(error.response);
     if (error.response) {
         !!reloadStatus && error.response.status === reloadStatus && window.location.reload()
         mustNotifierErrors && Notifier.error(HtmlAlert.message(error.response.data), 7000);
@@ -40,7 +41,7 @@ export const errorResponse = (error, mustNotifierErrors = false, reloadStatus = 
  * @param {string} method 
  * @param {string} url 
  * @param { FormData | Object } datas 
- * @param { boolean } [mustNotifierErrors=false] 
+ * @param { boolean } [mustNotifierErrors=true] 
  * @param { number } [reloadStatus=0]
  * @returns { Promise<import('axios').AxiosResponse<any>> }
  */
@@ -48,6 +49,7 @@ export const ApiRequest = async (method = 'get', url, datas = {}, mustNotifierEr
     try {
         return await Api[method.toLowerCase()](url, datas)
     } catch (error) {
+        // @ts-ignore
         return errorResponse(error, mustNotifierErrors, reloadStatus)
     }
 }

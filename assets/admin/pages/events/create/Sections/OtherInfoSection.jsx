@@ -6,6 +6,7 @@ import CreatableSelect from 'react-select/creatable';
 import makeAnimated from 'react-select/animated';
 import { EVENT_DATA_FORM, useSyncFormDataInputElements } from '../DatasForm';
 import { useInputElementRefs } from '/@/utils/hooks';
+import { ApiRequest } from '/@/api/api';
 
 
 const SECTION_KEY = "other_info"
@@ -16,7 +17,12 @@ const useFetchOptions = (url) => {
     const [options, setOptions] = useState([])
 
     useEffect(() => {
-
+        ApiRequest('get', url)
+            .then(({ data }) => {
+                if (data) {
+                    setOptions(data.map(e => ({ value: e.name, label: e.name })))
+                }
+            })
     }, [])
 
     return { options }
@@ -31,7 +37,7 @@ const SelectLabel = ({ label }) => {
 
 
 const Organizers = () => {
-    const { options } = useFetchOptions()
+    const { options } = useFetchOptions(route('admin.organizers.index'))
 
     const handleChange = (newValue) => {
         EVENT_DATA_FORM[SECTION_KEY].data.organizers = newValue
@@ -54,7 +60,7 @@ const Organizers = () => {
 
 const Tags = () => {
 
-    const { options } = useFetchOptions()
+    const { options } = useFetchOptions(route('admin.tags.index'))
 
     const handleChange = (newValue) => {
         EVENT_DATA_FORM[SECTION_KEY].data.tags = newValue

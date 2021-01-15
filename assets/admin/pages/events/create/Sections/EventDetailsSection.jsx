@@ -244,6 +244,7 @@ const DescriptionAndText = () => {
 
     useEffect(() => {
         if (ref.current) {
+            delete defaultOption.modules.imageUploader
             quill.current = new Quill(ref.current, defaultOption);
             quill.current.on("editor-change", () => {
                 EVENT_DATA_FORM[SECTION_KEY]['data'].description = quill.current.root.innerHTML

@@ -136,13 +136,13 @@ export const HtmlAlert = {
      * @returns { string }
      */
     fromObject(object) {
-        return Object.keys(object).map(key => object[key].join(".\n")).join("\n")
+        return Object.keys(object).map(key => object[key].join(".<br/>")).join("<br/>")
     },
     /**
      * @param { Array<string> } arr 
      */
     fromArray(arr) {
-        return arr.join(".\n")
+        return arr.join(".<br/>")
     }
 }
 
