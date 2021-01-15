@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react'
+import { EVENT_DATA_FORM, useSyncFormDataInputElements } from '../DatasForm';
 import { FlatpickrDate, FlatpickrTime } from '../Flatpickr';
 import { Checkbox, FormControl } from '../FormControl'
 import H5 from "../H5"
@@ -6,46 +7,12 @@ import BsModal from '/@/components/admin/Modal';
 import Card from "/@/components/Card"
 import { Iframe } from '/@/components/Iframe';
 import Label from '/@/components/Label';
+import { triggerOnChangeEvent } from '/@/functions/functions';
 import Quill, { defaultOption } from '/@/plugins/quill/quill';
 import { useInputElementRefs, useOnChangeRef } from '/@/utils/hooks';
 import { GOOGLE_API_KEY } from '/@/utils/vars';
 
-
-
-const DescriptionAndText = () => {
-    const ref = useRef(null)
-    /** @type { { current: import('quill').default } } */
-    const quill = useRef(null)
-
-    useEffect(() => {
-        if (ref.current) {
-            quill.current = new Quill(ref.current, defaultOption);
-        }
-    }, [])
-
-    return <>
-        <div className="mb-3">
-            <label className="form-label">
-                Description
-            </label>
-            <div className="default-style bg-white">
-                <div id="full-editor" style={{ maxHeight: "400px", overflowY: "auto" }} ref={ref} />
-            </div>
-        </div>
-    </>
-}
-
-const Inscriptions = () => {
-    const [checked, setChecked] = useState(false)
-
-    return <>
-        <Checkbox
-            label="Inscriptions"
-            checked={checked}
-            onChange={({ target: { checked } }) => setChecked(checked)} />
-        {checked && <FlatpickrDate label="Date limite d'inscription" />}
-    </>
-}
+const SECTION_KEY = "details"
 
 const PlacesJsContainer = ({ onChange = null }) => {
     const ref = useRef(null)
@@ -73,22 +40,29 @@ const PlacesJsContainer = ({ onChange = null }) => {
     return <FormControl ref={ref} label="Recherche d'adresse" />
 }
 
-
-
 const MapContent = ({ placejsOnChange }) => {
-    const { ref, refs: { ['lat']: ilat, ['lng']: ilng } } = useInputElementRefs()
+    const { ref, refs } = useInputElementRefs()
+
+    const { ['lat']: ilat, ['lng']: ilng } = refs
 
     const modalRef = useRef(null)
     const localisation = useRef({ lat: null, lng: null })
 
-    const placeOnChange = useCallback(/** @param {import('places.js').Suggestion} e */(e) => {
+    useSyncFormDataInputElements(refs, SECTION_KEY)
 
-        ilat.value = `${e.latlng.lat}`
-        ilng.value = `${e.latlng.lng}`
+    const placeOnChange = useCallback(
+        /** @param {import('places.js').Suggestion} e */
+        (e) => {
 
-        placejsOnChange && placejsOnChange(e)
+            ilat.value = `${e.latlng.lat}`
+            ilng.value = `${e.latlng.lng}`
 
-    }, [ilng, ilng])
+            triggerOnChangeEvent(ilat)
+            triggerOnChangeEvent(ilng)
+
+            placejsOnChange && placejsOnChange(e)
+
+        }, [ilng, ilng, placejsOnChange])
 
     const openModal = () => {
         const rlat = /^(-?\d+(\.\d+)?)$/
@@ -114,10 +88,20 @@ const MapContent = ({ placejsOnChange }) => {
                 </Label>
             </div>
             <div className="col-lg-6">
-                <FormControl label="Latitude" defaultValue="-1.9509" name="lat" ref={ref} placeholder="ex: -2.5056" />
+                <FormControl
+                    label="Latitude"
+                    defaultValue="-1.9509"
+                    name="lat"
+                    ref={ref}
+                    placeholder="ex: -2.5056" />
             </div>
             <div className="col-lg-6">
-                <FormControl label="Longitude" defaultValue="30.0615" name="lng" ref={ref} placeholder="ex: 28.8594" />
+                <FormControl
+                    label="Longitude"
+                    defaultValue="30.0615"
+                    name="lng"
+                    ref={ref}
+                    placeholder="ex: 28.8594" />
             </div>
 
             <div className="col-12">
@@ -143,8 +127,14 @@ const MapContent = ({ placejsOnChange }) => {
 const Map = ({ placejsOnChange = null }) => {
     const [checked, setChecked] = useState(false)
 
+    const { ref, refs } = useInputElementRefs()
+
+    useSyncFormDataInputElements(refs, SECTION_KEY)
+
     return <div className="mb-3">
         <Checkbox
+            ref={ref}
+            name="map"
             label="Map"
             checked={checked}
             onChange={({ target: { checked } }) => setChecked(checked)} />
@@ -153,76 +143,137 @@ const Map = ({ placejsOnChange = null }) => {
     </div>
 }
 
+const Inscriptions = () => {
+    const [checked, setChecked] = useState(false)
 
-const usePlacejsOnChange = () => {
-    const { ref,
-        refs: {
-            ['country']: country,
-            ['city']: city,
-            ['state']: state
+    const { ref, refs } = useInputElementRefs()
+
+    useSyncFormDataInputElements(refs, SECTION_KEY)
+
+    return <div className="col-12">
+        <Checkbox
+            ref={ref}
+            name="registration"
+            label="Inscriptions"
+            checked={checked}
+            onChange={({ target: { checked } }) => setChecked(checked)} />
+        {
+            checked &&
+            <FlatpickrDate
+                ref={ref}
+                name="registration_deadline"
+                label="Date limite d'inscription" />
         }
-    } = useInputElementRefs()
+    </div>
+}
 
-    const placejsOnChange = useCallback(/** @param {import('places.js').Suggestion} e */(e) => {
+const EventDetailsMain = () => {
+    const { ref, refs } = useInputElementRefs()
 
-        country.value = e.country || ''
-        city.value = e.city || ''
-        state.value = e.county || ''
+    useSyncFormDataInputElements(refs, SECTION_KEY)
 
-    }, [country, city, state])
+    return <>
+        <div className="col-12">
+            <FormControl name="title" ref={ref} label="Titre de l'événement" />
+        </div>
+        <div className="col-lg-6">
+            <FlatpickrDate name="start_date" ref={ref} label="Date de début" />
+        </div>
+        <div className="col-lg-6">
+            <FlatpickrTime name="start_time" ref={ref} label="Heure de début" />
+        </div>
 
-    return {
-        ref,
-        placejsOnChange
-    }
+        <div className="col-lg-6">
+            <FlatpickrDate name="end_date" ref={ref} label="Date de fin" />
+        </div>
+        <div className="col-lg-6">
+            <FlatpickrTime name="end_time" ref={ref} label="Heure de fin" />
+        </div>
+    </>
+}
+
+const EventDetailsLocalisation = () => {
+    const { ref, refs } = useInputElementRefs()
+
+    const { ['country']: country, ['city']: city, ['state']: state } = refs
+
+    useSyncFormDataInputElements(refs, SECTION_KEY)
+
+    const placejsOnChange = useCallback(
+        /** @param {import('places.js').Suggestion} e */
+        (e) => {
+            country.value = e.country || ''
+            city.value = e.city || ''
+            state.value = e.county || ''
+
+            triggerOnChangeEvent(state)
+            triggerOnChangeEvent(city)
+            triggerOnChangeEvent(country)
+
+        }, [country, city, state])
+
+    return <>
+        <div className="col-lg-6">
+            <FormControl name="venue" ref={ref} label="Lieu" />
+        </div>
+        <div className="col-lg-6">
+            <FormControl name="address" ref={ref} label="Adresse" />
+        </div>
+
+        <div className="col-lg-4">
+            <FormControl label="Ville" name="city" ref={ref} />
+        </div>
+        <div className="col-lg-4">
+            <FormControl label="Etat" name="state" ref={ref} />
+        </div>
+        <div className="col-lg-4">
+            <FormControl label="Pays" name="country" ref={ref} />
+        </div>
+
+        <div className="col-12">
+            <Map placejsOnChange={placejsOnChange} />
+        </div>
+    </>
 }
 
 
+const DescriptionAndText = () => {
+    const ref = useRef(null)
+    /** @type { { current: import('quill').default } } */
+    const quill = useRef(null)
+
+    useEffect(() => {
+        if (ref.current) {
+            quill.current = new Quill(ref.current, defaultOption);
+            quill.current.on("editor-change", () => {
+                EVENT_DATA_FORM[SECTION_KEY]['data'].description = quill.current.root.innerHTML
+            })
+        }
+    }, [])
+
+    return <>
+        <div className="mb-3">
+            <label className="form-label">
+                Description
+            </label>
+            <div className="default-style bg-white">
+                <div id="full-editor" style={{ maxHeight: "400px", overflowY: "auto" }} ref={ref} />
+            </div>
+        </div>
+    </>
+}
+
 const EventDetailsSection = () => {
-    const { ref, placejsOnChange } = usePlacejsOnChange()
+
 
     return <Card title={<H5 text="Détails de l'évènement" />} bodyClass="bg-light" cardClass="my-3">
         <div className="row">
-            <div className="col-12">
-                <FormControl label="Titre de l'événement" />
-            </div>
-            <div className="col-lg-6">
-                <FlatpickrDate label="Date de début" />
-            </div>
-            <div className="col-lg-6">
-                <FlatpickrTime label="Heure de début" />
-            </div>
 
-            <div className="col-lg-6">
-                <FlatpickrDate label="Date de fin" />
-            </div>
-            <div className="col-lg-6">
-                <FlatpickrTime label="Heure de fin" />
-            </div>
-            <div className="col-12">
-                <Inscriptions />
-            </div>
+            <EventDetailsMain />
 
-            <div className="col-lg-6">
-                <FormControl name="venue" ref={ref} label="Lieu" />
-            </div>
-            <div className="col-lg-6">
-                <FormControl name="address" ref={ref} label="Adresse" />
-            </div>
+            <Inscriptions />
 
-            <div className="col-lg-4">
-                <FormControl label="Ville" name="city" ref={ref} />
-            </div>
-            <div className="col-lg-4">
-                <FormControl label="Etat" name="state" ref={ref} />
-            </div>
-            <div className="col-lg-4">
-                <FormControl label="Pays" name="country" ref={ref} />
-            </div>
-
-            <div className="col-12">
-                <Map placejsOnChange={placejsOnChange} />
-            </div>
+            <EventDetailsLocalisation />
 
             <div className="col-12">
                 <DescriptionAndText />

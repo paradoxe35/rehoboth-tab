@@ -1,32 +1,27 @@
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Checkbox, FormControl } from '../FormControl'
 import H5 from "../H5"
 import Card from "/@/components/Card"
 import CreatableSelect from 'react-select/creatable';
 import makeAnimated from 'react-select/animated';
+import { EVENT_DATA_FORM, useSyncFormDataInputElements } from '../DatasForm';
+import { useInputElementRefs } from '/@/utils/hooks';
 
+
+const SECTION_KEY = "other_info"
 
 const animatedComponents = makeAnimated();
 
-const colourOptions = [
-    { value: 'ocean', label: 'Ocean', color: '#00B8D9', isFixed: true },
-    { value: 'blue', label: 'Blue', color: '#0052CC', isDisabled: true },
-    { value: 'purple', label: 'Purple', color: '#5243AA' },
-    { value: 'red', label: 'Red', color: '#FF5630', isFixed: true },
-    { value: 'orange', label: 'Orange', color: '#FF8B00' },
-    { value: 'yellow', label: 'Yellow', color: '#FFC400' },
-    { value: 'green', label: 'Green', color: '#36B37E' },
-    { value: 'forest', label: 'Forest', color: '#00875A' },
-    { value: 'slate', label: 'Slate', color: '#253858' },
-    { value: 'silver', label: 'Silver', color: '#666666' },
-];
+const useFetchOptions = (url) => {
+    const [options, setOptions] = useState([])
 
-const flavourOptions = [
-    { value: 'vanilla', label: 'Vanilla', rating: 'safe' },
-    { value: 'chocolate', label: 'Chocolate', rating: 'good' },
-    { value: 'strawberry', label: 'Strawberry', rating: 'wild' },
-    { value: 'salted-caramel', label: 'Salted Caramel', rating: 'crazy' },
-];
+    useEffect(() => {
+
+    }, [])
+
+    return { options }
+}
+
 
 const SelectLabel = ({ label }) => {
     return <div className="d-flex justify-content-between align-items-center">
@@ -36,17 +31,21 @@ const SelectLabel = ({ label }) => {
 
 
 const Organizers = () => {
-    const [datas, setDatas] = useState([])
+    const { options } = useFetchOptions()
+
+    const handleChange = (newValue) => {
+        EVENT_DATA_FORM[SECTION_KEY].data.organizers = newValue
+    };
 
     return <div className="mb-3">
         <SelectLabel label="Organisateurs" />
         {/*  @ts-ignore */}
         <CreatableSelect
-            defaultValue={[colourOptions[2], colourOptions[3]]}
             isMulti
             name="colors"
+            onChange={handleChange}
             components={animatedComponents}
-            options={colourOptions}
+            options={options}
             className="basic-multi-select"
             classNamePrefix="select"
         />
@@ -55,12 +54,10 @@ const Organizers = () => {
 
 const Tags = () => {
 
-    const handleChange = (newValue, actionMeta) => {
-        console.group('Value Changed');
-        console.log(newValue);
-        console.log(`action: ${actionMeta.action}`);
-        console.log(`meta: `, actionMeta);
-        console.groupEnd();
+    const { options } = useFetchOptions()
+
+    const handleChange = (newValue) => {
+        EVENT_DATA_FORM[SECTION_KEY].data.tags = newValue
     };
 
     return <div className="mb-3">
@@ -71,7 +68,7 @@ const Tags = () => {
             name="tags"
             onChange={handleChange}
             components={animatedComponents}
-            options={flavourOptions}
+            options={options}
             className="basic-multi-select"
             classNamePrefix="select"
         />
@@ -80,16 +77,23 @@ const Tags = () => {
 
 
 const OtherInfoSection = () => {
+    const { ref, refs } = useInputElementRefs()
+
+    useSyncFormDataInputElements(refs, SECTION_KEY)
+
     return <Card title={<H5 text="Autre info" />} bodyClass="bg-light" cardClass="my-3">
-        <FormControl label="Label" />
+        <FormControl name="label" ref={ref} label="Label" />
 
         <hr />
+
         <Organizers />
+
         <Tags />
+
         <hr />
 
         <h6>Billets restants</h6>
-        <Checkbox label="Afficher le nombre de billets restants." />
+        <Checkbox name="remaining_tickets" ref={ref} label="Afficher le nombre de billets restants." />
     </Card>
 }
 

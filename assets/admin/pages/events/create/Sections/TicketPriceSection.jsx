@@ -1,28 +1,44 @@
-import React, { useEffect, useState } from "react"
+import React, { useCallback, useEffect, useState } from "react"
+import { EVENT_DATA_FORM, useSyncFormDataInputElements } from "../DatasForm"
 import H5 from "../H5"
 import { AddIcon, DeleteIcon } from "../Icons"
 import Card from "/@/components/Card"
-import { useMultipleOption } from "/@/utils/hooks"
+import { useInputElementRefs, useMultipleOption } from "/@/utils/hooks"
 
+const SECTION_KEY = "tickets"
 
 // @ts-ignore
 const PaidTicketOption = React.memo(({ index, onSelect, onDelete, checked }) => {
+    const { ref, refs } = useInputElementRefs()
+
+    useSyncFormDataInputElements(refs, `${SECTION_KEY}.data.options.${index}`)
+
     return <>
         <tr>
             <td>
-                <input 
-                    className="form-control form-control-sm" 
+                <input
+                    className="form-control form-control-sm"
+                    ref={ref}
+                    name="name"
                     type="text"
                     placeholder="Nom de l'option" />
             </td>
             <td>
-                <input className="form-control form-control-sm" defaultValue="$0.00" type="text" placeholder="Price" />
+                <input
+                    className="form-control form-control-sm"
+                    defaultValue="$0.00"
+                    ref={ref}
+                    name="price"
+                    type="text"
+                    placeholder="Price" />
             </td>
             <td>
-                <input 
-                    className="form-control form-control-sm" 
-                    defaultValue="50" 
-                    type="number" 
+                <input
+                    className="form-control form-control-sm"
+                    defaultValue="50"
+                    name="stock"
+                    ref={ref}
+                    type="number"
                     placeholder="Stock" />
             </td>
             <td className="text-center align-middle">
@@ -31,8 +47,9 @@ const PaidTicketOption = React.memo(({ index, onSelect, onDelete, checked }) => 
                         className="custom-control-input"
                         onChange={() => onSelect(index)}
                         checked={checked}
+                        ref={ref}
                         type="radio"
-                        name="paid-ticket-option" />
+                        name="default" />
                     <label className="custom-control-label" />
                 </div>
             </td>
@@ -49,7 +66,7 @@ const PaidTicketOption = React.memo(({ index, onSelect, onDelete, checked }) => 
 const PaidTicketContent = () => {
     const { setCount, options, setOptions, onDelete } = useMultipleOption()
 
-    const onSelect = (id) => {
+    const onSelect = useCallback((id) => {
         setOptions(a => a.map(e => {
             if (e.id == id) {
                 e.checked = true
@@ -58,7 +75,22 @@ const PaidTicketContent = () => {
             }
             return e
         }))
-    }
+    }, [])
+
+    useEffect(() => {
+        const poptions = EVENT_DATA_FORM[SECTION_KEY].data.options
+        if (poptions) {
+            Object.keys(poptions)
+                .forEach((k) => {
+                    if (!options.map(e => e.id).includes(k)) {
+                        delete EVENT_DATA_FORM[SECTION_KEY].data.options[k]
+                    }
+                })
+            options.forEach((k) => {
+                EVENT_DATA_FORM[SECTION_KEY].data.options[k.id].default = k.checked
+            })
+        }
+    }, [options])
 
     useEffect(() => {
         const hasDefault = options.some(v => v.checked)
@@ -99,6 +131,10 @@ const PaidTicketContent = () => {
 
 const TicketPriceSection = () => {
     const [type, setType] = useState('paid')
+
+    useEffect(() => {
+        EVENT_DATA_FORM[SECTION_KEY].data['type'] = type
+    }, [type])
 
     return <Card title={<H5 text="Prix des tickets" />} bodyClass="bg-light" cardClass="my-3">
         <ul className="nav nav-pills mb-3" id="pills-tab" role="tablist">

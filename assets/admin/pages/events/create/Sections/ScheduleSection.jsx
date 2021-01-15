@@ -1,14 +1,21 @@
-import React from "react"
+import React, { useEffect } from "react"
+import { EVENT_DATA_FORM, useSyncFormDataInputElements } from "../DatasForm"
 import { FlatpickrDate, FlatpickrTime } from "../Flatpickr"
 import { FormControl } from "../FormControl"
 import H5 from "../H5"
 import { AddIcon, DeleteIcon } from "../Icons"
 import Card from "/@/components/Card"
-import { useMultipleOption } from "/@/utils/hooks"
+import { useInputElementRefs, useMultipleOption } from "/@/utils/hooks"
 
+const SECTION_KEY = "schedules"
 
 // @ts-ignore
 const ScheduleOption = React.memo(({ index, onDelete }) => {
+
+    const { ref, refs } = useInputElementRefs()
+
+    useSyncFormDataInputElements(refs, `${SECTION_KEY}.data.options.${index}`)
+
     return <div className="border rounded position-relative bg-white p-3 mb-3">
         <div className="row">
             <div className="col"></div>
@@ -18,20 +25,20 @@ const ScheduleOption = React.memo(({ index, onDelete }) => {
                 </button>
             </div>
             <div className="col-12">
-                <FormControl label="Titre" />
+                <FormControl ref={ref} name="title" label="Titre" />
             </div>
             <div className="col-lg-6">
-                <FlatpickrDate label="Date de début" />
+                <FlatpickrDate ref={ref} name="start_date" label="Date de début" />
             </div>
             <div className="col-lg-6">
-                <FlatpickrTime label="Heure de début" />
+                <FlatpickrTime ref={ref} name="start_time" label="Heure de début" />
             </div>
 
             <div className="col-lg-6">
-                <FlatpickrDate label="Date de fin" />
+                <FlatpickrDate ref={ref} name="end_date" label="Date de fin" />
             </div>
             <div className="col-lg-6">
-                <FlatpickrTime label="Heure de fin" />
+                <FlatpickrTime ref={ref} name="end_time" label="Heure de fin" />
             </div>
         </div>
     </div>
@@ -39,6 +46,18 @@ const ScheduleOption = React.memo(({ index, onDelete }) => {
 
 const ScheduleSection = () => {
     const { setCount, options, onDelete } = useMultipleOption()
+
+    useEffect(() => {
+        const poptions = EVENT_DATA_FORM[SECTION_KEY].data.options
+        if (poptions) {
+            Object.keys(poptions)
+                .forEach((k) => {
+                    if (!options.map(e => e.id).includes(k)) {
+                        delete EVENT_DATA_FORM[SECTION_KEY].data.options[k]
+                    }
+                })
+        }
+    }, [options])
 
     return <Card title={<H5 text="Programmes" />} bodyClass="bg-light" cardClass="my-3">
         {options.map(v => (

@@ -78,15 +78,13 @@ mix.react('assets/App.jsx', 'main.js')
 
 
 
-if (!mix.inProduction()) {
-    mix.browserSync({
-        proxy: 'localhost:8000',
-        watch: true,
-        files: ["./resources", "./asset"],
-        notify: false,
-        open: false,
-    });
-}
+mix.browserSync({
+    proxy: 'localhost:8000',
+    watch: true,
+    files: ["./resources", "./assets"],
+    notify: false,
+    open: false,
+});
 
 if (mix.inProduction()) {
     mix.clean()

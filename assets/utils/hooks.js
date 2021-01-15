@@ -39,7 +39,7 @@ export const useMultipleOption = () => {
     const [options, setOptions] = useState([])
 
     useEffect(() => {
-        setOptions(a => [...a, { id: `option-${count}`, checked: count === 0 }])
+        setOptions(a => [...a, { id: `option_${count}`, checked: count === 0 }])
     }, [count])
 
     const onDelete = useCallback((id) => setOptions(a => {
@@ -55,3 +55,18 @@ export const useMultipleOption = () => {
         onDelete
     }
 }
+
+export const mergeRefs = (...refs) => {
+    const filteredRefs = refs.filter(Boolean);
+    if (!filteredRefs.length) return null;
+    if (filteredRefs.length === 0) return filteredRefs[0];
+    return inst => {
+        for (const ref of filteredRefs) {
+            if (typeof ref === 'function') {
+                ref(inst);
+            } else if (ref) {
+                ref.current = inst;
+            }
+        }
+    };
+};

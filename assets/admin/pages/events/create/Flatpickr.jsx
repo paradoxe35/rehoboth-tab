@@ -1,25 +1,32 @@
-import React, { useEffect, useRef } from "react"
+import React, { forwardRef, useEffect, useRef } from "react"
 import { FormControl } from "./FormControl"
 import flatpickr from '/@/plugins/flatpickr'
+import { mergeRefs } from "/@/utils/hooks"
 
-export const FlatpickrDate = (props) => {
-    const ref = useRef(null)
+/**
+ * @type { any }
+ */
+export const FlatpickrDate = forwardRef((props, ref) => {
+    const refEl = useRef(null)
 
     useEffect(() => {
-        if (ref.current) {
-            flatpickr(ref.current, {})
+        if (refEl.current) {
+            flatpickr(refEl.current, {})
         }
     }, [])
 
-    return <FormControl {...props} ref={ref} />
-}
+    return <FormControl {...props} ref={mergeRefs(refEl, ref)} />
+})
 
-export const FlatpickrTime = (props) => {
-    const ref = useRef(null)
+/**
+ * @type { any }
+ */
+export const FlatpickrTime = forwardRef((props, ref) => {
+    const refEl = useRef(null)
 
     useEffect(() => {
-        if (ref.current) {
-            flatpickr(ref.current, {
+        if (refEl.current) {
+            flatpickr(refEl.current, {
                 enableTime: true,
                 noCalendar: true,
                 dateFormat: "H:i",
@@ -28,5 +35,5 @@ export const FlatpickrTime = (props) => {
         }
     }, [])
 
-    return <FormControl {...props} ref={ref} />
-}
+    return <FormControl {...props} ref={mergeRefs(refEl, ref)} />
+})

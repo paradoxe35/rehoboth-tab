@@ -140,3 +140,17 @@ export const eventListenOne = (parent = null, eventName, callback) => {
 export function confirmed() {
     return confirm("Êtes-vous sûr ?")
 }
+
+export const triggerOnChangeEvent = el => el && el.dispatchEvent(new Event('change'))
+
+export function valueAtPath(object, path) {
+    if (!object || path.length === 0) return object
+    return valueAtPath(object[path.shift()], path)
+}
+
+export function setValueAtPath(object, path, value) {
+    if (!object || path.length === 0) return null
+    if (!object[path[0]]) object[path[0]] = {}
+    if (path.length === 1) object[path[0]] = value
+    else return setValueAtPath(object[path.shift()], path, value)
+}

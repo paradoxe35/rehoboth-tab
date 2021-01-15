@@ -10,10 +10,15 @@ import TicketPriceSection from "./Sections/TicketPriceSection"
 import ScheduleSection from "./Sections/ScheduleSection"
 import UploadPhotosSection from "./Sections/UploadPhotosSection"
 import OtherInfoSection from "./Sections/OtherInfoSection"
-
+import { EVENT_DATA_FORM } from './DatasForm'
 
 
 const Main = () => {
+
+    const handleSaveForm = () => {
+        console.log(EVENT_DATA_FORM);
+    }
+
     return <>
         <CoverImageSection />
         <div className="row">
@@ -37,7 +42,10 @@ const Main = () => {
                     </h5>
                 </div>
                 <div className="col-auto">
-                    <Button className="btn-sm text-sm" text="Sauvegarder" />
+                    <Button
+                        onClick={handleSaveForm}
+                        className="btn-sm text-sm"
+                        text="Sauvegarder" />
                 </div>
             </div>
         </Card>
