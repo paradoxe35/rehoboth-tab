@@ -40,7 +40,7 @@ const Organizers = () => {
     const { options } = useFetchOptions(route('admin.organizers.index'))
 
     const handleChange = (newValue) => {
-        EVENT_DATA_FORM[SECTION_KEY].data.organizers = newValue
+        EVENT_DATA_FORM[SECTION_KEY].organizers = newValue
     };
 
     return <div className="mb-3">
@@ -63,7 +63,7 @@ const Tags = () => {
     const { options } = useFetchOptions(route('admin.tags.index'))
 
     const handleChange = (newValue) => {
-        EVENT_DATA_FORM[SECTION_KEY].data.tags = newValue
+        EVENT_DATA_FORM[SECTION_KEY].tags = newValue
     };
 
     return <div className="mb-3">

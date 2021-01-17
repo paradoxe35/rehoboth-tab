@@ -2,30 +2,12 @@ import { useCallback, useEffect, useRef } from "react"
 import { setValueAtPath } from "/@/functions/functions"
 
 export const EVENT_DATA_FORM = {
-    cover: {
-        isValid: false,
-        data: null
-    },
-    details: {
-        isValid: false,
-        data: {}
-    },
-    tickets: {
-        isValid: false,
-        data: {}
-    },
-    schedules: {
-        isValid: false,
-        data: {}
-    },
-    photos: {
-        isValid: false,
-        data: []
-    },
-    other_info: {
-        isValid: false,
-        data: {}
-    }
+    cover: null,
+    details: {},
+    tickets: {},
+    schedules: {},
+    photos: [],
+    other_info: {}
 }
 
 
@@ -41,7 +23,7 @@ export const useSyncFormDataInputElements = (refs, key) => {
         let keys = key.split('.')
         const ivalue = ((type === "checkbox" || type === 'radio') ? checked : value)
         if (keys.length <= 1) {
-            EVENT_DATA_FORM[key].data[name] = ivalue
+            EVENT_DATA_FORM[key][name] = ivalue
         } else {
             setValueAtPath(EVENT_DATA_FORM, [...keys, name], ivalue)
         }

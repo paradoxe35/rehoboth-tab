@@ -21,13 +21,13 @@ const UploadPhotosSection = () => {
                 minFileSize: "50KB",
                 onaddfile: (err, { file }) => {
                     if (!err) {
-                        EVENT_DATA_FORM[SECTION_KEY].data.push(file)
+                        EVENT_DATA_FORM[SECTION_KEY].push(file)
                     }
                 },
                 onremovefile: (err, { file }) => {
                     if (!err) {
-                        EVENT_DATA_FORM[SECTION_KEY].data =
-                            EVENT_DATA_FORM[SECTION_KEY].data.filter(f => f != file)
+                        EVENT_DATA_FORM[SECTION_KEY] =
+                            EVENT_DATA_FORM[SECTION_KEY].filter(f => f != file)
                     }
                 }
             })

@@ -7,6 +7,7 @@ use App\Models\Morphs\File;
 use App\Models\Morphs\Image;
 use App\Models\Morphs\Organizer;
 use App\Models\Morphs\Schedule;
+use App\Models\Morphs\Tag;
 use App\Models\Morphs\Ticket\Ticket;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -20,7 +21,18 @@ class Event extends Model
      *
      * @var array
      */
-    protected $fillable = ['name', 'label', 'description', 'text'];
+    protected $fillable = [
+        'name', 
+        'label', 
+        'description', 
+        'text',
+        'start_date',
+        'start_time',
+        'end_date',
+        'end_time',
+        'enable_registration',
+        'registration_deadline'
+    ];
 
 
     public function registrations()
@@ -33,7 +45,7 @@ class Event extends Model
         return $this->morphOne(Image::class, 'imageable');
     }
 
-    public function files()
+    public function photos()
     {
         return $this->morphMany(File::class, 'fileable');
     }
@@ -43,9 +55,9 @@ class Event extends Model
         return $this->morphOne(Address::class, 'addressable');
     }
 
-    public function tickets()
+    public function ticket()
     {
-        return $this->morphMany(Ticket::class, 'ticketable');
+        return $this->morphOne(Ticket::class, 'ticketable');
     }
 
     public function schedules()

@@ -65,10 +65,9 @@ const MapContent = ({ placejsOnChange }) => {
         }, [ilng, ilng, placejsOnChange])
 
     const openModal = () => {
-        const rlat = /^(-?\d+(\.\d+)?)$/
-        const rlng = /^(-?\d+(\.\d+)?)$/
+        const rll = /^(-?\d+(\.\d+)?)$/
 
-        if (rlat.test(ilat.value.trim()) && rlng.test(ilng.value.trim())) {
+        if (rll.test(ilat.value.trim()) && rll.test(ilng.value.trim())) {
             localisation.current = {
                 lat: ilat.value.trim(),
                 lng: ilng.value.trim()
@@ -174,7 +173,7 @@ const EventDetailsMain = () => {
 
     return <>
         <div className="col-12">
-            <FormControl name="title" ref={ref} label="Titre de l'événement" />
+            <FormControl name="name" ref={ref} label="Nom de l'événement" />
         </div>
         <div className="col-lg-6">
             <FlatpickrDate name="start_date" ref={ref} label="Date de début" />
@@ -247,7 +246,7 @@ const DescriptionAndText = () => {
             delete defaultOption.modules.imageUploader
             quill.current = new Quill(ref.current, defaultOption);
             quill.current.on("editor-change", () => {
-                EVENT_DATA_FORM[SECTION_KEY]['data'].description = quill.current.root.innerHTML
+                EVENT_DATA_FORM[SECTION_KEY].description = quill.current.root.innerHTML
             })
         }
     }, [])

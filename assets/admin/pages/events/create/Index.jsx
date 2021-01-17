@@ -1,5 +1,5 @@
 import "/@/utils/devtool"
-import React from 'react'
+import React, { useState } from 'react'
 import { render, unmountComponentAtNode } from 'react-dom'
 import Card from '/@/components/Card'
 import Button from "/@/components/admin/Button"
@@ -11,13 +11,75 @@ import ScheduleSection from "./Sections/ScheduleSection"
 import UploadPhotosSection from "./Sections/UploadPhotosSection"
 import OtherInfoSection from "./Sections/OtherInfoSection"
 import { EVENT_DATA_FORM } from './DatasForm'
+import { ApiRequest } from "/@/api/api"
+import { Notifier } from "/@/utils/notifier"
 
+
+
+const Submit = () => {
+    const [loading, setLoading] = useState(false)
+
+    const handleSaveForm = async () => {
+        if (!EVENT_DATA_FORM.cover) {
+            return Notifier.error("Image couverture est requise");
+        }
+
+        setLoading(true)
+        try {
+
+            const pictures = new FormData()
+            pictures.set('cover', EVENT_DATA_FORM.cover)
+            EVENT_DATA_FORM.photos.forEach((photo) => pictures.append('photos[]', photo))
+
+            const formData = { ...EVENT_DATA_FORM }
+
+            delete formData.cover
+            delete formData.photos
+
+            await ApiRequest('post',
+                route('admin.events.store', { section: 'details' }
+                ).toString(), formData.details)
+
+            await ApiRequest('post',
+                route('admin.events.store', { section: 'tickets' }
+                ).toString(), formData.tickets)
+
+            await ApiRequest('post',
+                route('admin.events.store', { section: 'schedules' }
+                ).toString(), formData.schedules)
+
+            const { data } = await ApiRequest('post',
+                route('admin.events.store', { section: 'save' }
+                ).toString(), formData)
+
+            ApiRequest('post',
+                route('admin.events.store', { section: 'pictures', event_id: data.event.id }
+                ).toString(), pictures)
+                .finally(() => {
+
+                    $swup.loadPage({
+                        url: route('admin.events.show', { event: data.event.id })
+                            .toString()
+                    })
+                    setLoading(false)
+                })
+
+        } catch (error) {
+            console.log(error)
+            setLoading(false)
+        }
+
+    }
+
+    return <Button
+        loading={loading}
+        onClick={handleSaveForm}
+        className="btn-sm text-sm"
+        text="Sauvegarder" />
+
+}
 
 const Main = () => {
-
-    const handleSaveForm = () => {
-        console.log(EVENT_DATA_FORM);
-    }
 
     return <>
         <CoverImageSection />
@@ -42,10 +104,7 @@ const Main = () => {
                     </h5>
                 </div>
                 <div className="col-auto">
-                    <Button
-                        onClick={handleSaveForm}
-                        className="btn-sm text-sm"
-                        text="Sauvegarder" />
+                    <Submit />
                 </div>
             </div>
         </Card>

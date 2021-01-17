@@ -36,6 +36,8 @@ Route::prefix('dash')
         ]);
 
         Route::resource('/events', EventsController::class);
+        
+        Route::resource('/events', EventsController::class);
 
         Route::resource('/galleries', GalleriesController::class);
 

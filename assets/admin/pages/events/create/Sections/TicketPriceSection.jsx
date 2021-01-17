@@ -11,7 +11,7 @@ const SECTION_KEY = "tickets"
 const PaidTicketOption = React.memo(({ index, onSelect, onDelete, checked }) => {
     const { ref, refs } = useInputElementRefs()
 
-    useSyncFormDataInputElements(refs, `${SECTION_KEY}.data.options.${index}`)
+    useSyncFormDataInputElements(refs, `${SECTION_KEY}.options.${index}`)
 
     return <>
         <tr>
@@ -78,16 +78,16 @@ const PaidTicketContent = () => {
     }, [])
 
     useEffect(() => {
-        const poptions = EVENT_DATA_FORM[SECTION_KEY].data.options
+        const poptions = EVENT_DATA_FORM[SECTION_KEY].options
         if (poptions) {
             Object.keys(poptions)
                 .forEach((k) => {
                     if (!options.map(e => e.id).includes(k)) {
-                        delete EVENT_DATA_FORM[SECTION_KEY].data.options[k]
+                        delete EVENT_DATA_FORM[SECTION_KEY].options[k]
                     }
                 })
             options.forEach((k) => {
-                EVENT_DATA_FORM[SECTION_KEY].data.options[k.id].default = k.checked
+                EVENT_DATA_FORM[SECTION_KEY].options[k.id].default = k.checked
             })
         }
     }, [options])
@@ -133,7 +133,7 @@ const TicketPriceSection = () => {
     const [type, setType] = useState('paid')
 
     useEffect(() => {
-        EVENT_DATA_FORM[SECTION_KEY].data['type'] = type
+        EVENT_DATA_FORM[SECTION_KEY]['type'] = type
     }, [type])
 
     return <Card title={<H5 text="Prix des tickets" />} bodyClass="bg-light" cardClass="my-3">

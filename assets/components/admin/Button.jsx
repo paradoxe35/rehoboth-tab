@@ -9,7 +9,7 @@ const Button = ({
     onClick = null
 }) => {
     // @ts-ignore
-    return <button onClick={onClick} className={`btn btn-${color} ${className} text-white`} type={type} >
+    return <button onClick={onClick} disabled={loading} className={`btn btn-${color} ${className} text-white`} type={type} >
         <div className="d-flex align-content-center align-items-center">
             <span>{text}</span>
             {loading && (

@@ -28,4 +28,19 @@ class File
      * @var string SERMONS_PATH
      */
     public const SERMONS_PATH = 'sermons';
+
+    /**
+     * @var string EVENTS_PATH
+     */
+    public const EVENTS_PATH = 'events';
+
+    /**
+     * @var string EVENTS_COVERS_PATH
+     */
+    public const EVENTS_COVERS_PATH = 'events/covers';
+
+    /**
+     * @var string EVENTS_PHOTOS_PATH
+     */
+    public const EVENTS_PHOTOS_PATH = 'events/photos';
 }

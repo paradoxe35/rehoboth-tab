@@ -19,12 +19,12 @@ const CoverImageSection = () => {
                 minFileSize: "50KB",
                 onaddfile: (err, { file }) => {
                     if (!err) {
-                        EVENT_DATA_FORM[SECTION_KEY].data = file
+                        EVENT_DATA_FORM[SECTION_KEY] = file
                     }
                 },
                 onremovefile: (err) => {
                     if (!err) {
-                        EVENT_DATA_FORM[SECTION_KEY].data = null
+                        EVENT_DATA_FORM[SECTION_KEY] = null
                     }
                 }
             })

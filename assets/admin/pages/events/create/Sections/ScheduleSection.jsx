@@ -14,7 +14,7 @@ const ScheduleOption = React.memo(({ index, onDelete }) => {
 
     const { ref, refs } = useInputElementRefs()
 
-    useSyncFormDataInputElements(refs, `${SECTION_KEY}.data.options.${index}`)
+    useSyncFormDataInputElements(refs, `${SECTION_KEY}.options.${index}`)
 
     return <div className="border rounded position-relative bg-white p-3 mb-3">
         <div className="row">
@@ -48,12 +48,12 @@ const ScheduleSection = () => {
     const { setCount, options, onDelete } = useMultipleOption()
 
     useEffect(() => {
-        const poptions = EVENT_DATA_FORM[SECTION_KEY].data.options
+        const poptions = EVENT_DATA_FORM[SECTION_KEY].options
         if (poptions) {
             Object.keys(poptions)
                 .forEach((k) => {
                     if (!options.map(e => e.id).includes(k)) {
-                        delete EVENT_DATA_FORM[SECTION_KEY].data.options[k]
+                        delete EVENT_DATA_FORM[SECTION_KEY].options[k]
                     }
                 })
         }
