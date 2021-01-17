@@ -15,7 +15,7 @@ class File extends Model
      *
      * @var array
      */
-    protected $fillable = ['name', 'path', 'type'];
+    protected $fillable = ['name', 'path', 'type', 'width', 'height'];
 
 
     /**
