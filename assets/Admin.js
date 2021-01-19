@@ -4,6 +4,7 @@ import Swup from 'swup';
 import SwupGiaPlugin from '@swup/gia-plugin';
 import SwupProgressPlugin from '@swup/progress-plugin';
 import SwupMetaTagsPlugin from 'swup-meta-tags-plugin';
+import SwupScriptsPlugin from '@swup/scripts-plugin';
 import components from './admin/components';
 import { iframeResizer } from 'iframe-resizer'
 import { routeFromChildEvent } from "/@/utils/vars"
@@ -16,7 +17,10 @@ window.$swup = new Swup({
     plugins: [
         new SwupGiaPlugin({ components, log: process.env.NODE_ENV === "development" }),
         new SwupProgressPlugin(),
-        new SwupMetaTagsPlugin()
+        new SwupMetaTagsPlugin(),
+        new SwupScriptsPlugin({
+            optin: true
+        })
     ]
 });
 

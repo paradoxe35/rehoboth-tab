@@ -5,6 +5,7 @@ import SermonIndex from "./pages/sermons/SermonIndex"
 import SermonEdit from "./pages/sermons/SermonEdit"
 import EventIndex from "./pages/events/EventIndex"
 import EventCreate from "./pages/events/EventCreate"
+import EventShow from "./pages/events/EventShow"
 
 
 const controllers = {
@@ -14,7 +15,8 @@ const controllers = {
     SermonIndex,
     SermonEdit,
     EventIndex,
-    EventCreate
+    EventCreate,
+    EventShow
 }
 
 export default controllers

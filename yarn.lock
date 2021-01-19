@@ -1374,6 +1374,13 @@
   dependencies:
     "@swup/plugin" "^1.0.1"
 
+"@swup/scripts-plugin@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@swup/scripts-plugin/-/scripts-plugin-1.1.0.tgz#7c4b5d764e82386688a41e8d00211cef4bc2750b"
+  integrity sha512-/2V5cUrmzxxZH91bBk0WjsWMJhjKhb32wZ41Sw/HXAUf2gLvqebvW6Lw98HJsagNXxVqqjmzTDIfdbHGwVsG/w==
+  dependencies:
+    "@swup/plugin" "^1.0.1"
+
 "@testing-library/dom@^7.16.2":
   version "7.29.2"
   resolved "https://registry.yarnpkg.com/@testing-library/dom/-/dom-7.29.2.tgz#6cba65d961d8b36d621a98caa8537444075fb42e"

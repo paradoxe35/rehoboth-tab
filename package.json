@@ -51,6 +51,7 @@
         "@popperjs/core": "^2.6.0",
         "@swup/gia-plugin": "^1.0.1",
         "@swup/progress-plugin": "^1.0.0",
+        "@swup/scripts-plugin": "^1.1.0",
         "alpinejs": "^2.8.0",
         "aos": "^2.3.4",
         "axios": "^0.21.1",

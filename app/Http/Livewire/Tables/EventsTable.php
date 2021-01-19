@@ -6,6 +6,7 @@ use App\Models\Event\Event;
 use Mediconesystems\LivewireDatatables\Http\Livewire\LivewireDatatable;
 use Mediconesystems\LivewireDatatables\Column;
 use Mediconesystems\LivewireDatatables\DateColumn;
+use Mediconesystems\LivewireDatatables\TimeColumn;
 use Mediconesystems\LivewireDatatables\NumberColumn;
 
 
@@ -28,14 +29,27 @@ class EventsTable extends LivewireDatatable
                 ->searchable()
                 ->label(trans("Nom de l'événement")),
 
-            Column::name('label')
-                ->truncate()
-                ->editable()
-                ->label(trans("Label")),
+            DateColumn::name('start_date')
+                ->label(trans("Date de début")),
+
+            TimeColumn::name('start_time')
+                ->label(trans("Heure de début")),
+
+            DateColumn::name('end_date')
+                ->label(trans("Date de fin")),
+
+            TimeColumn::name('end_time')
+                ->label(trans("heure de fin")),
 
             DateColumn::name('created_at')
                 ->filterable()
                 ->label(trans('Ajouté le')),
+
+            Column::callback(['id'], function ($id) {
+                return view('livewire.tables.actions.show-route', [
+                    'route' => route('admin.events.show', ['event' => $id], false)
+                ]);
+            }),
 
             Column::delete()
                 ->alignCenter()

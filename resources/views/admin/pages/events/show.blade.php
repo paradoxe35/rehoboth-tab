@@ -15,5 +15,12 @@
     ]
 ]])
 
+<div g-component="EventShow">
+    <x-spinner />
+</div>
+
+<script type="text/javascript" data-swup-reload-script>
+    window.$event = @json($event);
+</script>
 
 @endsection
