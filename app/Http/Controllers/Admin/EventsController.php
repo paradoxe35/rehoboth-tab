@@ -79,15 +79,17 @@ class EventsController extends Controller
         }
 
         foreach ($options as $key => $option) {
-            if (strlen(trim($option['name'])) > 1) {
-                $price = str_replace('$', '', $option['price']);
-                if (!is_numeric($price)) {
-                    abort(422, trans("La section tickets avec :key, format prix invalid", ['key' => $key]));
-                }
+            if (strlen(trim($option['name'])) < 1) {
+                abort(422, trans("La section tickets avec :key, Nom de l'option est requis", ['key' => $key]));
+            }
 
-                if (!is_numeric($option['stock'])) {
-                    abort(422, trans("La section tickets avec :key, format stock invalid", ['key' => $key]));
-                }
+            $price = str_replace('$', '', $option['price']);
+            if (!is_numeric($price)) {
+                abort(422, trans("La section tickets avec :key, format prix invalid", ['key' => $key]));
+            }
+
+            if (!is_numeric($option['stock'])) {
+                abort(422, trans("La section tickets avec :key, format stock invalid", ['key' => $key]));
             }
         }
 

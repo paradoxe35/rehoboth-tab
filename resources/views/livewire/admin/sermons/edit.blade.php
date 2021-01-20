@@ -1,4 +1,4 @@
-<x-card g-component="SermonEdit">
+<x-card>
     <x-livewire-js-instance />
 
     <h5>{{ __("Editer Media") }}</h5>
@@ -47,8 +47,8 @@
                 <div class="col-lg-6">
                     @if ($video)
                     <div class="my-2">
-                        <x-button wire:click="deleteFile({{ $video->id }}, 'video')" target="deleteFile" class="text-xs p-1"
-                            color="danger">
+                        <x-button wire:click="deleteFile({{ $video->id }}, 'video')" target="deleteFile"
+                            class="text-xs p-1" color="danger">
                             {{ __("Supprimer") }}
                         </x-button>
                     </div>

@@ -15,6 +15,8 @@
     ]
 ]])
 
-<livewire:admin.sermons.edit :sermon="$sermon" />
+<div g-component="SermonEdit">
+    <livewire:admin.sermons.edit :sermon="$sermon" />
+</div>
 
 @endsection

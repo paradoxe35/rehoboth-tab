@@ -58,7 +58,7 @@ const Submit = () => {
                 .finally(() => {
 
                     $swup.loadPage({
-                        url: route('admin.events.show', { event: data.event.id })
+                        url: route('admin.events.show', { event: data.event.id }, false)
                             .toString()
                     })
                     setLoading(false)

@@ -16,11 +16,7 @@
 ]])
 
 <div g-component="EventShow">
-    <x-spinner />
+    <livewire:admin.events.show-edit :sermon="$event" />
 </div>
-
-<script type="text/javascript" data-swup-reload-script>
-    window.$event = @json($event);
-</script>
 
 @endsection
