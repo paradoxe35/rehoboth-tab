@@ -16,7 +16,7 @@
 ]])
 
 <div g-component="EventShow">
-    <livewire:admin.events.show-edit :sermon="$event" />
+    <livewire:admin.events.show-edit :event="$event" />
 </div>
 
 @endsection

@@ -14,9 +14,6 @@ class ShowEdit extends Component
 
     public Event $event;
 
-    public function mount()
-    {
-    }
 
     public function render()
     {
