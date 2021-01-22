@@ -36,7 +36,7 @@ export const FormControl = forwardRef(/** @param {*} param0  */
  * @type { any }
  */
 // @ts-ignore
-export const Checkbox = forwardRef(({ label = '', checked = null, onChange = null, name = null }, ref) => {
+export const Checkbox = forwardRef(({ defaultChecked = null, label = '', checked = null, onChange = null, name = null }, ref) => {
     const id = Math.random()
 
     return <div className="form-check my-3">
@@ -46,6 +46,7 @@ export const Checkbox = forwardRef(({ label = '', checked = null, onChange = nul
             type="checkbox"
             name={name}
             ref={ref}
+            defaultChecked={defaultChecked}
             onChange={onChange}
             checked={checked} />
         <label className="form-check-label" htmlFor={`checkbox-${id}`}>

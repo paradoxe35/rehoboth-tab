@@ -10,6 +10,7 @@ import { ApiRequest } from '/@/api/api';
 
 
 const SECTION_KEY = "other_info"
+let $event = {}
 
 const animatedComponents = makeAnimated();
 
@@ -38,16 +39,22 @@ const SelectLabel = ({ label }) => {
 
 const Organizers = () => {
     const { options } = useFetchOptions(route('admin.organizers.index'))
+    const defaultValue = ($event?.organizers || []).map(t => ({ label: t.name, value: t.name }))
 
     const handleChange = (newValue) => {
         EVENT_DATA_FORM[SECTION_KEY].organizers = newValue
     };
+
+    useEffect(() => {
+        EVENT_DATA_FORM[SECTION_KEY].organizers = defaultValue
+    }, [])
 
     return <div className="mb-3">
         <SelectLabel label="Organisateurs" />
         {/*  @ts-ignore */}
         <CreatableSelect
             isMulti
+            closeMenuOnSelect={false}
             name="colors"
             onChange={handleChange}
             components={animatedComponents}
@@ -62,15 +69,22 @@ const Tags = () => {
 
     const { options } = useFetchOptions(route('admin.tags.index'))
 
+    const defaultValue = ($event?.tags || []).map(t => ({ label: t.name, value: t.name }))
+
     const handleChange = (newValue) => {
         EVENT_DATA_FORM[SECTION_KEY].tags = newValue
     };
+
+    useEffect(() => {
+        EVENT_DATA_FORM[SECTION_KEY].tags = defaultValue
+    }, [])
 
     return <div className="mb-3">
         <SelectLabel label="Tags" />
         {/*  @ts-ignore */}
         <CreatableSelect
             isMulti
+            closeMenuOnSelect={false}
             name="tags"
             onChange={handleChange}
             components={animatedComponents}
@@ -82,13 +96,20 @@ const Tags = () => {
 }
 
 
-const OtherInfoSection = () => {
+const OtherInfoSection = ({ children = [] }) => {
+
+    $event = window.$event || {}
+
     const { ref, refs } = useInputElementRefs()
 
     useSyncFormDataInputElements(refs, SECTION_KEY)
 
     return <Card title={<H5 text="Autre info" />} bodyClass="bg-light" cardClass="my-3">
-        <FormControl name="label" ref={ref} label="Label" />
+        <FormControl
+            defaultValue={$event?.label}
+            name="label"
+            ref={ref}
+            label="Label" />
 
         <hr />
 
@@ -99,7 +120,13 @@ const OtherInfoSection = () => {
         <hr />
 
         <h6>Billets restants</h6>
-        <Checkbox name="remaining_tickets" ref={ref} label="Afficher le nombre de billets restants." />
+        <Checkbox
+            defaultChecked={!!$event?.ticket?.remaining}
+            name="remaining_tickets"
+            ref={ref}
+            label="Afficher le nombre de billets restants." />
+
+        {children}
     </Card>
 }
 

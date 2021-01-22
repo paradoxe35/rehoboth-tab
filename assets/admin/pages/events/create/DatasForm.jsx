@@ -16,7 +16,7 @@ export let EVENT_DATA_FORM = { ...EVENT_DATA_DEFAULT }
 
 
 export function resetEventDataForm() {
-    EVENT_DATA_FORM = EVENT_DATA_DEFAULT
+    EVENT_DATA_FORM = { ...EVENT_DATA_DEFAULT }
 }
 
 

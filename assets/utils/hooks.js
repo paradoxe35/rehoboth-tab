@@ -80,3 +80,18 @@ export const mergeRefs = (...refs) => {
         }
     };
 };
+
+export const useListDataPaginator = (datas, fn) => {
+    const [listData, setListData] = useState(datas || {})
+
+    useEffect(() => {
+        setListData(datas || {})
+    }, [datas])
+
+    const onPageChange = useCallback(({ page }) => {
+        if (!listData.meta || listData.meta.current_page == page) return
+        fn && fn(page)
+    }, [listData])
+
+    return [listData, setListData, onPageChange]
+}
