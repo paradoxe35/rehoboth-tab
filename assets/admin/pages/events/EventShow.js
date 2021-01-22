@@ -8,8 +8,16 @@ export default class extends GiaComponent {
     }
 
     async require() {
-        
+        this.react = (await import("./show/Index"))
+            .default(this.element)
     }
+
     mount() { }
+
+    unmount() {
+        this.react && this.react()
+        // @ts-ignore
+        window.$event = null;
+    }
 
 }

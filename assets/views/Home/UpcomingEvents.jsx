@@ -182,6 +182,7 @@ const FirstEventCountdown = withTranslation()(({ datas = [], t }) => {
                 <div className="col-lg-6 my-3">
                     {
                         !isReady &&
+                        // @ts-ignore
                         <Countdown
                             onComplete={handleComplete}
                             renderer={rendererCountdown}
@@ -196,6 +197,7 @@ const FirstEventCountdown = withTranslation()(({ datas = [], t }) => {
 
 const UpcomingEvent = () => {
     return <div className="container-fluid">
+        {/* @ts-ignore */}
         {!!datas.length && <FirstEventCountdown datas={datas} />}
         {datas.length > 1 && (
             <LatestSectionParentStyled data-aos="fade-up" className="row justify-content-center align-items-center pb-3">

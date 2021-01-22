@@ -15,8 +15,12 @@
     ]
 ]])
 
+<script type="text/javascript" data-swup-reload-script>
+    window.$event = @json($event)
+</script>
+
 <div g-component="EventShow">
-    <livewire:admin.events.show-edit :event="$event" />
+    <x-spinner />
 </div>
 
 @endsection

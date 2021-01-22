@@ -1,4 +1,4 @@
-<div>
+<div g-component="BsTabs">
     <ul class="nav nav-pills my-4" id="pills-tab-{{ Str::kebab(implode('-', $tabs)) }}" role="tablist" wire:ignore>
         @foreach ($tabs as $key => $tab)
         <li class="nav-item" role="presentation">

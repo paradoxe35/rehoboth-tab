@@ -10,7 +10,7 @@ import TicketPriceSection from "./Sections/TicketPriceSection"
 import ScheduleSection from "./Sections/ScheduleSection"
 import UploadPhotosSection from "./Sections/UploadPhotosSection"
 import OtherInfoSection from "./Sections/OtherInfoSection"
-import { EVENT_DATA_FORM } from './DatasForm'
+import { EVENT_DATA_FORM, resetEventDataForm } from './DatasForm'
 import { ApiRequest } from "/@/api/api"
 import { Notifier } from "/@/utils/notifier"
 
@@ -113,6 +113,9 @@ const Main = () => {
 
 const instance = (element) => {
     render(<Main />, element)
-    return () => unmountComponentAtNode(element)
+    return () => {
+        resetEventDataForm()
+        unmountComponentAtNode(element)
+    }
 }
 export default instance

@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from "react"
+import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 
 
 export const useInputElementRefs = function () {
@@ -34,12 +34,22 @@ export const useOnChangeRef = (onChange) => {
 }
 
 
-export const useMultipleOption = () => {
-    const [count, setCount] = useState(0)
-    const [options, setOptions] = useState([])
+export const useMultipleOption = (defaultOptions = []) => {
+
+    const fnDefaulOptions = useMemo(() => {
+        return (defaultOptions || []).map((o, i) => {
+            return { id: `option_${i}`, checked: !!o?.default, data: o }
+        })
+    }, [defaultOptions])
+
+    const [count, setCount] = useState(fnDefaulOptions.length)
+    const [options, setOptions] = useState(fnDefaulOptions)
+    const optionRef = useRef(null)
+
+    optionRef.current = options
 
     useEffect(() => {
-        setOptions(a => [...a, { id: `option_${count}`, checked: count === 0 }])
+        setOptions(a => [...a, { id: `option_${count}`, checked: count === 0, data: {} }])
     }, [count])
 
     const onDelete = useCallback((id) => setOptions(a => {

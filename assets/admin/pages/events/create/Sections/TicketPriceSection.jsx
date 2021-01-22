@@ -2,13 +2,15 @@ import React, { useCallback, useEffect, useState } from "react"
 import { EVENT_DATA_FORM, useSyncFormDataInputElements } from "../DatasForm"
 import H5 from "../H5"
 import { AddIcon, DeleteIcon } from "../Icons"
+import { Tab, Tabs } from "/@/components/admin/Tabs"
 import Card from "/@/components/Card"
 import { useInputElementRefs, useMultipleOption } from "/@/utils/hooks"
 
 const SECTION_KEY = "tickets"
+let $ticket = {}
 
 // @ts-ignore
-const PaidTicketOption = React.memo(({ index, onSelect, onDelete, checked }) => {
+const PaidTicketOption = React.memo(({ index, onSelect, onDelete, checked, data }) => {
     const { ref, refs } = useInputElementRefs()
 
     useSyncFormDataInputElements(refs, `${SECTION_KEY}.options.${index}`)
@@ -19,6 +21,7 @@ const PaidTicketOption = React.memo(({ index, onSelect, onDelete, checked }) => 
                 <input
                     className="form-control form-control-sm"
                     ref={ref}
+                    defaultValue={data?.name}
                     name="name"
                     type="text"
                     placeholder="Nom de l'option" />
@@ -26,7 +29,7 @@ const PaidTicketOption = React.memo(({ index, onSelect, onDelete, checked }) => 
             <td>
                 <input
                     className="form-control form-control-sm"
-                    defaultValue="$0.00"
+                    defaultValue={data?.price ? `$${data?.price}` : "$0.00"}
                     ref={ref}
                     name="price"
                     type="text"
@@ -35,7 +38,7 @@ const PaidTicketOption = React.memo(({ index, onSelect, onDelete, checked }) => 
             <td>
                 <input
                     className="form-control form-control-sm"
-                    defaultValue="50"
+                    defaultValue={data?.stock || "50"}
                     name="stock"
                     ref={ref}
                     type="number"
@@ -64,7 +67,7 @@ const PaidTicketOption = React.memo(({ index, onSelect, onDelete, checked }) => 
 
 
 const PaidTicketContent = () => {
-    const { setCount, options, setOptions, onDelete } = useMultipleOption()
+    const { setCount, options, setOptions, onDelete } = useMultipleOption($ticket?.options)
 
     const onSelect = useCallback((id) => {
         setOptions(a => a.map(e => {
@@ -117,7 +120,7 @@ const PaidTicketContent = () => {
             <tbody>
                 {options.map(v => (
                     // @ts-ignore
-                    <PaidTicketOption key={v.id} checked={v.checked} index={v.id} onDelete={onDelete} onSelect={onSelect} />
+                    <PaidTicketOption data={v.data} key={v.id} checked={v.checked} index={v.id} onDelete={onDelete} onSelect={onSelect} />
                 ))}
             </tbody>
         </table>
@@ -129,47 +132,31 @@ const PaidTicketContent = () => {
     </>
 }
 
-const TicketPriceSection = () => {
-    const [type, setType] = useState('paid')
+const TicketPriceSection = ({ children = [] }) => {
+    // @ts-ignore
+    $ticket = window.$event?.ticket
+
+    const [type, setType] = useState($ticket?.type || 'paid')
 
     useEffect(() => {
         EVENT_DATA_FORM[SECTION_KEY]['type'] = type
     }, [type])
 
     return <Card title={<H5 text="Prix des tickets" />} bodyClass="bg-light" cardClass="my-3">
-        <ul className="nav nav-pills mb-3" id="pills-tab" role="tablist">
-            <li className="nav-item" role="presentation">
-                <a className="nav-link border-darken border"
-                    onClick={() => setType('free')}
-                    id="pills-free-ticket-tab"
-                    data-bs-toggle="pill"
-                    href="#pills-free-ticket"
-                    role="tab"
-                    aria-controls="pills-free-ticket" aria-selected="false">Billet gratuit</a>
-            </li>
-            <li className="nav-item mx-2" role="presentation">
-                <a className="nav-link active border-darken border"
-                    onClick={() => setType('paid')}
-                    id="pills-paid-ticket-tab"
-                    data-bs-toggle="pill"
-                    href="#pills-paid-ticket"
-                    role="tab"
-                    aria-controls="pills-paid-ticket"
-                    aria-selected="true">Billet payé</a>
-            </li>
-        </ul>
-        <hr />
-        <div className="tab-content" id="pills-tabContent">
-            <div className="tab-pane fade"
-                id="pills-free-ticket"
-                role="tabpanel"
-                aria-labelledby="pills-free-ticket-tab" />
-            <div className="tab-pane fade show active"
-                id="pills-paid-ticket"
-                role="tabpanel" aria-labelledby="pills-paid-ticket-tab">
+        <Tabs>
+            <Tab
+                active={type == "free"}
+                onClick={() => setType('free')}
+                title="Billet gratuit" />
+            <Tab
+                active={type == "paid"}
+                onClick={() => setType('paid')}
+                id="billet-paid"
+                title="Billet payé">
                 <PaidTicketContent />
-            </div>
-        </div>
+            </Tab>
+        </Tabs>
+        {children}
     </Card>
 }
 

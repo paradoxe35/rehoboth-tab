@@ -14,6 +14,9 @@ import { GOOGLE_API_KEY } from '/@/utils/vars';
 
 const SECTION_KEY = "details"
 
+let $event = {}
+let $address = {}
+
 const PlacesJsContainer = ({ onChange = null }) => {
     const ref = useRef(null)
     const places = useRef(null)
@@ -88,16 +91,16 @@ const MapContent = ({ placejsOnChange }) => {
             </div>
             <div className="col-lg-6">
                 <FormControl
+                    defaultValue={$address.latitude}
                     label="Latitude"
-                    defaultValue="-1.9509"
                     name="lat"
                     ref={ref}
                     placeholder="ex: -2.5056" />
             </div>
             <div className="col-lg-6">
                 <FormControl
+                    defaultValue={$address.longitude}
                     label="Longitude"
-                    defaultValue="30.0615"
                     name="lng"
                     ref={ref}
                     placeholder="ex: 28.8594" />
@@ -124,7 +127,7 @@ const MapContent = ({ placejsOnChange }) => {
 }
 
 const Map = ({ placejsOnChange = null }) => {
-    const [checked, setChecked] = useState(false)
+    const [checked, setChecked] = useState(!!$address.map)
 
     const { ref, refs } = useInputElementRefs()
 
@@ -143,7 +146,7 @@ const Map = ({ placejsOnChange = null }) => {
 }
 
 const Inscriptions = () => {
-    const [checked, setChecked] = useState(false)
+    const [checked, setChecked] = useState(!!$event.enable_registration)
 
     const { ref, refs } = useInputElementRefs()
 
@@ -159,6 +162,7 @@ const Inscriptions = () => {
         {
             checked &&
             <FlatpickrDate
+                defaultValue={$event.registration_deadline}
                 ref={ref}
                 name="registration_deadline"
                 label="Date limite d'inscription" />
@@ -173,20 +177,39 @@ const EventDetailsMain = () => {
 
     return <>
         <div className="col-12">
-            <FormControl name="name" ref={ref} label="Nom de l'événement" />
+            <FormControl
+                name="name"
+                defaultValue={$event.name}
+                ref={ref}
+                label="Nom de l'événement" />
         </div>
         <div className="col-lg-6">
-            <FlatpickrDate name="start_date" ref={ref} label="Date de début" />
+            <FlatpickrDate
+                defaultValue={$event.start_date}
+                name="start_date"
+                ref={ref} label="Date de début" />
         </div>
         <div className="col-lg-6">
-            <FlatpickrTime name="start_time" ref={ref} label="Heure de début" />
+            <FlatpickrTime
+                defaultValue={$event.start_time}
+                name="start_time"
+                ref={ref}
+                label="Heure de début" />
         </div>
 
         <div className="col-lg-6">
-            <FlatpickrDate name="end_date" ref={ref} label="Date de fin" />
+            <FlatpickrDate
+                defaultValue={$event.end_date}
+                name="end_date"
+                ref={ref}
+                label="Date de fin" />
         </div>
         <div className="col-lg-6">
-            <FlatpickrTime name="end_time" ref={ref} label="Heure de fin" />
+            <FlatpickrTime
+                defaultValue={$event.end_time}
+                name="end_time"
+                ref={ref}
+                label="Heure de fin" />
         </div>
     </>
 }
@@ -213,20 +236,40 @@ const EventDetailsLocalisation = () => {
 
     return <>
         <div className="col-lg-6">
-            <FormControl name="venue" ref={ref} label="Lieu" />
+            <FormControl
+                defaultValue={$address.venue}
+                name="venue"
+                ref={ref}
+                label="Lieu" />
         </div>
         <div className="col-lg-6">
-            <FormControl name="address" ref={ref} label="Adresse" />
+            <FormControl
+                defaultValue={$address.address}
+                name="address"
+                ref={ref}
+                label="Adresse" />
         </div>
 
         <div className="col-lg-4">
-            <FormControl label="Ville" name="city" ref={ref} />
+            <FormControl
+                defaultValue={$address.city}
+                label="Ville"
+                name="city"
+                ref={ref} />
         </div>
         <div className="col-lg-4">
-            <FormControl label="Etat" name="state" ref={ref} />
+            <FormControl
+                defaultValue={$address.state}
+                label="Etat"
+                name="state"
+                ref={ref} />
         </div>
         <div className="col-lg-4">
-            <FormControl label="Pays" name="country" ref={ref} />
+            <FormControl
+                defaultValue={$address.country}
+                label="Pays"
+                name="country"
+                ref={ref} />
         </div>
 
         <div className="col-12">
@@ -245,6 +288,11 @@ const DescriptionAndText = () => {
         if (ref.current) {
             delete defaultOption.modules.imageUploader
             quill.current = new Quill(ref.current, defaultOption);
+            if ($event.text) {
+                quill.current.clipboard.dangerouslyPasteHTML($event.text)
+                EVENT_DATA_FORM[SECTION_KEY].description = $event.text
+            }
+
             quill.current.on("editor-change", () => {
                 EVENT_DATA_FORM[SECTION_KEY].description = quill.current.root.innerHTML
             })
@@ -263,8 +311,10 @@ const DescriptionAndText = () => {
     </>
 }
 
-const EventDetailsSection = () => {
+const EventDetailsSection = ({ children = [] }) => {
 
+    $event = window.$event || {}
+    $address = $event.address || {}
 
     return <Card title={<H5 text="Détails de l'évènement" />} bodyClass="bg-light" cardClass="my-3">
         <div className="row">
@@ -280,6 +330,8 @@ const EventDetailsSection = () => {
             </div>
 
         </div>
+
+        {children}
     </Card>
 }
 

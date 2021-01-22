@@ -1,13 +1,22 @@
 import { useCallback, useEffect, useRef } from "react"
 import { setValueAtPath } from "/@/functions/functions"
 
-export const EVENT_DATA_FORM = {
+
+export const EVENT_DATA_DEFAULT = {
     cover: null,
     details: {},
     tickets: {},
     schedules: {},
     photos: [],
     other_info: {}
+}
+
+
+export let EVENT_DATA_FORM = { ...EVENT_DATA_DEFAULT }
+
+
+export function resetEventDataForm() {
+    EVENT_DATA_FORM = EVENT_DATA_DEFAULT
 }
 
 

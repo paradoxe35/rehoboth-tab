@@ -8,9 +8,11 @@ import Card from "/@/components/Card"
 import { useInputElementRefs, useMultipleOption } from "/@/utils/hooks"
 
 const SECTION_KEY = "schedules"
+let $schedules = []
+
 
 // @ts-ignore
-const ScheduleOption = React.memo(({ index, onDelete }) => {
+const ScheduleOption = React.memo(({ index, onDelete, data }) => {
 
     const { ref, refs } = useInputElementRefs()
 
@@ -25,27 +27,30 @@ const ScheduleOption = React.memo(({ index, onDelete }) => {
                 </button>
             </div>
             <div className="col-12">
-                <FormControl ref={ref} name="title" label="Titre" />
+                <FormControl defaultValue={data?.title} ref={ref} name="title" label="Titre" />
             </div>
             <div className="col-lg-6">
-                <FlatpickrDate ref={ref} name="start_date" label="Date de début" />
+                <FlatpickrDate defaultValue={data?.start_date} ref={ref} name="start_date" label="Date de début" />
             </div>
             <div className="col-lg-6">
-                <FlatpickrTime ref={ref} name="start_time" label="Heure de début" />
+                <FlatpickrTime defaultValue={data?.start_time} ref={ref} name="start_time" label="Heure de début" />
             </div>
 
             <div className="col-lg-6">
-                <FlatpickrDate ref={ref} name="end_date" label="Date de fin" />
+                <FlatpickrDate defaultValue={data?.end_date} ref={ref} name="end_date" label="Date de fin" />
             </div>
             <div className="col-lg-6">
-                <FlatpickrTime ref={ref} name="end_time" label="Heure de fin" />
+                <FlatpickrTime defaultValue={data?.end_time} ref={ref} name="end_time" label="Heure de fin" />
             </div>
         </div>
     </div>
 })
 
-const ScheduleSection = () => {
-    const { setCount, options, onDelete } = useMultipleOption()
+const ScheduleSection = ({ children = [] }) => {
+    // @ts-ignore
+    $schedules = window.$event?.schedules
+
+    const { setCount, options, onDelete } = useMultipleOption($schedules)
 
     useEffect(() => {
         const poptions = EVENT_DATA_FORM[SECTION_KEY].options
@@ -62,7 +67,7 @@ const ScheduleSection = () => {
     return <Card title={<H5 text="Programmes" />} bodyClass="bg-light" cardClass="my-3">
         {options.map(v => (
             // @ts-ignore
-            <ScheduleOption key={v.id} index={v.id} onDelete={onDelete} />
+            <ScheduleOption data={v.data} key={v.id} index={v.id} onDelete={onDelete} />
         ))}
 
         <button type="button"
@@ -70,6 +75,10 @@ const ScheduleSection = () => {
             className="btn btn-primary text-xs btn-sm text-white mt-3">
             <AddIcon />
         </button>
+
+        <div className="mt-3">
+            {children}
+        </div>
     </Card>
 }
 

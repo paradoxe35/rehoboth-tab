@@ -321,6 +321,12 @@ class EventsController extends Controller
 
     public function show(Event $event)
     {
+
+        $event->load(['image', 'photos', 'address', 'ticket', 'schedules', 'tags', 'organizers']);
+
+
+        $event->ticket->load('options');
+
         return view('admin.pages.events.show', compact('event'));
     }
 }
