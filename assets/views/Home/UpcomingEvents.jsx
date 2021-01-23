@@ -84,7 +84,7 @@ const CardItemLabel = ({ col = 3 }) => {
             <InertiaLink
                 preserveScroll
                 className="text-secondary text-decoration-underline"
-                href={route("events").toString()}>
+                href={route("guest.events").toString()}>
                 {t("événements")}
             </InertiaLink>
         </LatestSectionSpanStyled>

@@ -17,8 +17,6 @@ class FilesController extends Controller
      */
     public function destroy(File $file)
     {
-        Storage::delete($file->path);
-
         $file->delete();
 
         return $file;

@@ -97,12 +97,12 @@ const NavBar = () => {
 
             <Nav className="d-none d-lg-block">
                 <ul>
-                    <LinkRoute routeName="home" text={t("Accueil")} />
-                    <LinkRoute routeName="events" text={t("Événements")} />
-                    <LinkRoute routeName="sermons" text={t("Sermons")} />
-                    <LinkRoute routeName="blog" text={t("Blog")} />
-                    <LinkRoute routeName="gallery" text={t("Galerie")} />
-                    <LinkRoute routeName="contact" text={t("Contact")} />
+                    <LinkRoute routeName="guest.home" text={t("Accueil")} />
+                    <LinkRoute routeName="guest.events" text={t("Événements")} />
+                    <LinkRoute routeName="guest.sermons" text={t("Sermons")} />
+                    <LinkRoute routeName="guest.blog" text={t("Blog")} />
+                    <LinkRoute routeName="guest.gallery" text={t("Galerie")} />
+                    <LinkRoute routeName="guest.contact" text={t("Contact")} />
                 </ul>
             </Nav>
 

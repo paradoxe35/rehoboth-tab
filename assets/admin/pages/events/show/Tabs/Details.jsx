@@ -1,14 +1,23 @@
 import React, { useState } from 'react'
-import { EVENT_DATA_FORM } from '../../create/DatasForm'
+import { forkedEventFormData, handleUpdateEventData } from '../../create/DatasForm'
 import EventDetailsSection from '../../create/Sections/EventDetailsSection'
 import Button from '/@/components/admin/Button'
 
+
+// @ts-ignore
+const $event = window.$event
 
 const Tab = () => {
     const [loading, setLoading] = useState(false)
 
     const handleSaveForm = async () => {
-        console.log(EVENT_DATA_FORM);
+        const { formData } = forkedEventFormData()
+
+        handleUpdateEventData(
+            route('admin.events.updateEvent', { section: 'details', event: $event.id }),
+            setLoading,
+            formData.details
+        )
     }
 
     return <EventDetailsSection>

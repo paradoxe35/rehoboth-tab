@@ -1,5 +1,7 @@
 import { useCallback, useEffect, useRef } from "react"
+import { ApiRequest } from "/@/api/api"
 import { setValueAtPath } from "/@/functions/functions"
+import { Notifier } from "/@/utils/notifier"
 
 
 export const EVENT_DATA_DEFAULT = {
@@ -49,4 +51,38 @@ export const useSyncFormDataInputElements = (refs, key) => {
             }
         }
     }, [refs])
+}
+
+
+export const forkedEventFormData = () => {
+
+    const pictures = new FormData()
+    const cover = new FormData()
+
+    cover.set('cover', EVENT_DATA_FORM.cover)
+    EVENT_DATA_FORM.photos.forEach((photo) => pictures.append('photos[]', photo))
+
+    const formData = { ...EVENT_DATA_FORM }
+
+    delete formData.cover
+    delete formData.photos
+
+
+    return {
+        formData,
+        pictures,
+        cover
+    }
+}
+
+
+export const handleUpdateEventData = (url, setLoading, datas, fn) => {
+    setLoading(true)
+
+    ApiRequest('post', url.toString(), datas)
+        .then(({ data }) => {
+            Notifier.success(data?.message)
+            fn && fn(data)
+        })
+        .finally(() => setLoading(false))
 }

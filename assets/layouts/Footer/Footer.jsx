@@ -64,7 +64,7 @@ const Footer = () => {
                     </a>
                     <a
                         className="text-sm text-decoration-underline d-block"
-                        href={route('contact').toString()}>
+                        href={route('guest.contact').toString()}>
                         {t("Adresse et contact")}
                     </a>
                 </div>

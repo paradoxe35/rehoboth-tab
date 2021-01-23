@@ -1,18 +1,23 @@
 import React, { useEffect } from 'react'
+import { ApiRequest } from '/@/api/api'
 import { LaravelPagination } from '/@/components/admin/Pagination'
 import Card from '/@/components/Card'
 import { useListDataPaginator } from '/@/utils/hooks'
 
+// @ts-ignore
+const $event = window.$event
 
 const Tab = () => {
     const [listData, setListData, onPageChange] = useListDataPaginator(null, onChangePagination)
 
     useEffect(() => {
-
+        ApiRequest('get', route('admin.events.registrations', { event: $event.id }).toString())
+            .then(({ data }) => setListData(data))
     }, [])
 
     async function onChangePagination(page) {
-
+        ApiRequest('get', route('admin.events.registrations', { event: $event.id, page }).toString())
+            .then(({ data }) => setListData(data))
     }
 
     return <Card>

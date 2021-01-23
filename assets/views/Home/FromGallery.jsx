@@ -46,7 +46,7 @@ const Titles = () => {
         </div>
         <div className="col-auto">
             <SpanAutoStyled className="h6 text-center subtitle font-weight-600">
-                <InertiaLink className="text-secondary" href={route('gallery').toString()}>
+                <InertiaLink className="text-secondary" href={route('guest.gallery').toString()}>
                     {t("Toutes les images")}
                 </InertiaLink>
             </SpanAutoStyled>

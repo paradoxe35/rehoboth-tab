@@ -1,13 +1,19 @@
 import React, { useCallback, useState } from 'react'
+import { EVENT_DATA_FORM, forkedEventFormData, handleUpdateEventData } from '../../create/DatasForm'
 import H5 from '../../create/H5'
 import CoverImageSection from '../../create/Sections/CoverImageSection'
 import UploadPhotosSection from '../../create/Sections/UploadPhotosSection'
+import { ApiRequest } from '/@/api/api'
 import Button from '/@/components/admin/Button'
 import { Tab, Tabs } from '/@/components/admin/Tabs'
 import Card from '/@/components/Card'
 import ContentMasonryWrapper from '/@/components/ContentMasonryWrapper'
 import { confirmed } from '/@/functions/functions'
+import { Notifier } from '/@/utils/notifier'
 
+
+// @ts-ignore
+const $event = window.$event
 
 const ITab = () => {
 
@@ -20,6 +26,7 @@ const ITab = () => {
     const onDeletePhoto = useCallback((img) => {
         if (confirmed()) {
             setPhotos(imgs => imgs.filter(i => i.id != img.id))
+            ApiRequest("delete", route("admin.files.destroy", { file: img.id }).toString())
         }
     }, [setPhotos])
 
@@ -29,9 +36,29 @@ const ITab = () => {
 
 
     const uploadCover = () => {
+        const { cover } = forkedEventFormData()
+
+        handleUpdateEventData(
+            route('admin.events.updateEvent', { section: 'cover', event: $event.id }),
+            setCoverLoading,
+            cover,
+            (data) => data.cover && setImage(data.cover)
+        )
     }
 
     const uploadPhotos = () => {
+        const { pictures } = forkedEventFormData()
+
+        if ((EVENT_DATA_FORM.photos.length + photos.length) > 10) {
+            return Notifier.error("Vous ne pouvez pas télécharger plus de 10 images")
+        }
+
+        handleUpdateEventData(
+            route('admin.events.updateEvent', { section: 'photos', event: $event.id }),
+            setPhotosLoading,
+            pictures,
+            (data) => data.photos && setPhotos(data.photos)
+        )
     }
 
     return <>

@@ -2,6 +2,7 @@
 
 namespace App\Models\Morphs;
 
+use App\Events\Models\ImageDeleted;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
@@ -10,6 +11,14 @@ class Image extends Model
 {
     use HasFactory;
 
+    /**
+     * The event map for the model.
+     *
+     * @var array
+     */
+    protected $dispatchesEvents = [
+        'deleted' => ImageDeleted::class,
+    ];
 
     /**
      * The attributes that are mass assignable.
@@ -18,8 +27,8 @@ class Image extends Model
      */
     protected $fillable = ['path', 'width', 'height', 'caption', 'date'];
 
-    
-     /**
+
+    /**
      * The accessors to append to the model's array form.
      *
      * @var array

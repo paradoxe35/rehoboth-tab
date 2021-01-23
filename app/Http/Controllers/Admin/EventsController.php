@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Files\File;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Event\EventRegistrationCollection;
 use App\Models\AppOrganizer;
 use App\Models\AppTag;
 use App\Models\Event\Event;
@@ -121,11 +122,11 @@ class EventsController extends Controller
         return $options;
     }
 
-    private function saveDetails(Request $request): Event
+    private function saveDetails(Request $request, ?Event $ievent = null, $datas = null): Event
     {
-        $details = $request->get('details');
+        $details = $datas ?: $request->get('details');
 
-        $event = Event::query()->create([
+        $eventFill = [
             'name' => $details['name'],
             'text' => $details['description'] ?? null,
             'start_date' => $details['start_date'],
@@ -134,10 +135,17 @@ class EventsController extends Controller
             'end_time' => $details['end_time'],
             'enable_registration' => boolval($details['registration']),
             'registration_deadline' => $details['registration_deadline'] ?? null
-        ]);
+        ];
+
+        if ($ievent) {
+            $ievent->fill($eventFill)->save();
+            $event = $ievent;
+        } else {
+            $event = Event::query()->create($eventFill);
+        }
 
 
-        $event->address()->create([
+        $addressFill = [
             'venue' => $details['venue'],
             'address' => $details['address'],
             'city' => $details['city'],
@@ -146,21 +154,32 @@ class EventsController extends Controller
             'map' => boolval($details['map']),
             'longitude' => $details['lng'] ?? null,
             'latitude' => $details['lat'] ?? null
-        ]);
+        ];
+
+        if ($ievent) {
+            $event->address->fill($addressFill)->save();
+        } else {
+            $event->address()->create($addressFill);
+        }
 
         return $event;
     }
 
-    private function saveTickets(Request $request, Event $event)
+    private function saveTickets(Request $request, Event $event, $datas = null)
     {
-        $tickets = $request->get('tickets');
+        $tickets = $datas ?: $request->get('tickets');
         $t_type = $tickets['type'];
         $t_options = $tickets['options'];
 
-
-        $ticket = $event->ticket()->create([
+        $dataFill = [
             'type' => $t_type
-        ]);
+        ];
+
+        if (isset($tickets['remaining'])) {
+            $dataFill['remaining'] = boolval($tickets['remaining']);
+        }
+
+        $ticket = $event->ticket()->create($dataFill);
 
         if ($t_type != TICKET_FREE) {
             foreach ($t_options as $option) {
@@ -176,9 +195,9 @@ class EventsController extends Controller
         }
     }
 
-    private function saveSchedules(Request $request, Event $event)
+    private function saveSchedules(Request $request, Event $event, $datas = null)
     {
-        $schedules = $request->get('schedules');
+        $schedules = $datas ?: $request->get('schedules');
 
         foreach ($schedules['options'] as $option) {
             if (strlen(trim($option['title'])) > 1) {
@@ -193,9 +212,9 @@ class EventsController extends Controller
         }
     }
 
-    private function saveOtherInfo(Request $request, Event $event)
+    private function saveOtherInfo(Request $request, Event $event,  $datas = null)
     {
-        $oinfo = $request->get('other_info');
+        $oinfo = $datas ?: $request->get('other_info');
 
         $event->refresh();
 
@@ -242,6 +261,42 @@ class EventsController extends Controller
         ];
     }
 
+
+    private function storeImageCover(Request $request, Event $event)
+    {
+        if ($request->hasfile('cover')) {
+            $file = $request->file('cover');
+
+            $uploaded = $file->storePublicly(File::EVENTS_COVERS_PATH . "/{$event->id}");
+            [$width, $height] = getimagesize($file->getPathname());
+
+            $event->image()->create([
+                'path' => $uploaded,
+                'width' => $width,
+                'height' => $height,
+                'caption' => $file->getClientOriginalName()
+            ]);
+        }
+    }
+
+    private function storeImagesPhotos(Request $request, Event $event)
+    {
+        if ($request->hasfile('photos')) {
+            foreach ($request->file('photos') as $file) {
+                $uploaded = $file->storePublicly(File::EVENTS_PHOTOS_PATH . "/{$event->id}");
+                [$width, $height] = getimagesize($file->getPathname());
+
+                $event->photos()->create([
+                    'path' => $uploaded,
+                    'type' => 'photo',
+                    'width' => $width,
+                    'height' => $height,
+                    'name' => $file->getClientOriginalName()
+                ]);
+            }
+        }
+    }
+
     private function savePhotos(Request $request)
     {
         $request->validate([
@@ -261,34 +316,9 @@ class EventsController extends Controller
 
         $event = Event::query()->findOrFail($request->query('event_id'));
 
-        if ($request->hasfile('cover')) {
-            $file = $request->file('cover');
+        $this->storeImageCover($request, $event);
 
-            $uploaded = $file->storePublicly(File::EVENTS_COVERS_PATH . "/{$event->id}");
-            [$width, $height] = getimagesize($file->getPathname());
-
-            $event->image()->create([
-                'path' => $uploaded,
-                'width' => $width,
-                'height' => $height,
-                'caption' => $file->getClientOriginalName()
-            ]);
-        }
-
-        if ($request->hasfile('photos')) {
-            foreach ($request->file('photos') as $file) {
-                $uploaded = $file->storePublicly(File::EVENTS_PHOTOS_PATH . "/{$event->id}");
-                [$width, $height] = getimagesize($file->getPathname());
-
-                $event->photos()->create([
-                    'path' => $uploaded,
-                    'type' => 'photo',
-                    'width' => $width,
-                    'height' => $height,
-                    'name' => $file->getClientOriginalName()
-                ]);
-            }
-        }
+        $this->storeImagesPhotos($request, $event);
     }
 
 
@@ -321,12 +351,123 @@ class EventsController extends Controller
 
     public function show(Event $event)
     {
-
         $event->load(['image', 'photos', 'address', 'ticket', 'schedules', 'tags', 'organizers']);
-
 
         $event->ticket->load('options');
 
         return view('admin.pages.events.show', compact('event'));
+    }
+
+
+    private function updateDetails(Event $event, Request $request)
+    {
+        $this->validateDetails($request);
+
+        $this->saveDetails($request, $event, $request->all());
+    }
+
+    private function updateTickets(Event $event, Request $request)
+    {
+        $this->validateTickets($request);
+
+        $event->ticket->delete();
+
+        $this->saveTickets($request, $event, $request->all());
+    }
+
+    private function updateSchedules(Event $event, Request $request)
+    {
+        $this->validateSchedules($request);
+
+        $event->schedules()->delete();
+
+        $this->saveSchedules($request, $event, $request->all());
+    }
+
+    private function updatePhotos(Event $event, Request $request)
+    {
+        $request->validate([
+            'photos.*' => [
+                'nullable',
+                'image',
+                'max:' . (5 * 1024),
+                'mimes:jpeg,png'
+            ],
+        ]);
+
+        $this->storeImagesPhotos($request, $event);
+
+        $event->refresh();
+
+        return $event->photos()->get();
+    }
+
+    private function updateCover(Event $event, Request $request)
+    {
+        $request->validate([
+            'cover' => [
+                'required',
+                'image',
+                'max:' . (5 * 1024),
+                'mimes:jpeg,png'
+            ],
+        ]);
+
+        $event->image->delete();
+
+        $this->storeImageCover($request, $event);
+
+        $event->refresh();
+
+        return $event->image;
+    }
+
+    private function updateOtherInfo(Event $event, Request $request)
+    {
+        $event->organizers()->delete();
+        $event->tags()->delete();
+
+        $this->saveOtherInfo($request, $event, $request->all());
+    }
+
+    public function updateEvent(Event $event, Request $request)
+    {
+        switch ($request->query('section')) {
+            case 'details':
+                $this->updateDetails($event, $request);
+                break;
+            case 'tickets':
+                $this->updateTickets($event, $request);
+                break;
+            case 'schedules':
+                $this->updateSchedules($event, $request);
+                break;
+            case 'photos':
+                $photos = $this->updatePhotos($event, $request);
+                break;
+            case 'cover':
+                $cover = $this->updateCover($event, $request);
+                break;
+            case 'other_info':
+                $this->updateOtherInfo($event, $request);
+                break;
+            default:
+                abort(400);
+                break;
+        }
+
+        return [
+            'message' => trans('Modifications enregistrée avec succès'),
+            'photos' => $photos ?? [],
+            'cover' => $cover ?? null
+        ];
+    }
+
+
+    public function registrations(Event $event)
+    {
+        $regs = $event->registrations();
+
+        return new EventRegistrationCollection($regs->paginate());
     }
 }

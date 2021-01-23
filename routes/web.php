@@ -21,17 +21,21 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 
-Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::name('guest.')
+    ->group(function () {
 
-Route::get('/events', [EventController::class, 'index'])->name('events');
+        Route::get('/', [HomeController::class, 'index'])->name('home');
 
-Route::get('/sermons', [SermonController::class, 'index'])->name('sermons');
+        Route::get('/events', [EventController::class, 'index'])->name('events');
 
-Route::get('/blog', [BlogController::class, 'index'])->name('blog');
+        Route::get('/sermons', [SermonController::class, 'index'])->name('sermons');
 
-Route::get('/gallery', [GalleryController::class, 'index'])->name('gallery');
+        Route::get('/blog', [BlogController::class, 'index'])->name('blog');
 
-Route::get('/contact', [ContactController::class, 'index'])->name('contact');
+        Route::get('/gallery', [GalleryController::class, 'index'])->name('gallery');
+
+        Route::get('/contact', [ContactController::class, 'index'])->name('contact');
+    });
 
 
 Route::middleware([])

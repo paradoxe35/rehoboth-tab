@@ -2,6 +2,7 @@
 
 namespace App\Models\Event;
 
+use App\Events\Models\EventDeleted;
 use App\Models\Morphs\Address;
 use App\Models\Morphs\File;
 use App\Models\Morphs\Image;
@@ -15,6 +16,15 @@ use Illuminate\Database\Eloquent\Model;
 class Event extends Model
 {
     use HasFactory;
+
+    /**
+     * The event map for the model.
+     *
+     * @var array
+     */
+    protected $dispatchesEvents = [
+        'deleted' => EventDeleted::class,
+    ];
 
     /**
      * The attributes that are mass assignable.

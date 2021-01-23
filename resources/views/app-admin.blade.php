@@ -29,7 +29,7 @@
     @endif
 
     {{-- ziggy:tags --}}
-    @routes
+    @routes('admin')
 </head>
 
 <body @yield('body-attr') class="@yield('body-class')">

@@ -36,8 +36,10 @@ Route::prefix('dash')
         ]);
 
         Route::resource('/events', EventsController::class);
-        
-        Route::resource('/events', EventsController::class);
+        Route::post('/events/{event}/updateEvent', [EventsController::class, 'updateEvent'])
+            ->name('events.updateEvent');
+        Route::get('/events/{event}/registrations', [EventsController::class, 'registrations'])
+            ->name('events.registrations');
 
         Route::resource('/galleries', GalleriesController::class);
 

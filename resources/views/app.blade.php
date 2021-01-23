@@ -40,7 +40,7 @@
     @endif
 
     {{-- ziggy:tags --}}
-    @routes
+    @routes('guest')
 </head>
 
 <body>

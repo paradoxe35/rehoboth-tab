@@ -3,6 +3,8 @@
 namespace App\Listeners\Models;
 
 use App\Events\Models\SermonDeleted;
+use App\Models\Morphs\File;
+use App\Models\Morphs\Image;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Facades\Storage;
@@ -28,18 +30,12 @@ class CleanSermonFiles
     public function handle(SermonDeleted $event)
     {
         $event->sermon->image()->get()
-            ->each(function ($image) {
-
-                Storage::delete($image->path);
-
+            ->each(function (Image $image) {
                 $image->delete();
             });
 
         $event->sermon->files()->get()
-            ->each(function ($file) {
-
-                Storage::delete($file->path);
-
+            ->each(function (File $file) {
                 $file->delete();
             });
     }
