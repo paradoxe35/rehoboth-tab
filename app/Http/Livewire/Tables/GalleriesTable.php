@@ -7,6 +7,8 @@ use Mediconesystems\LivewireDatatables\Http\Livewire\LivewireDatatable;
 
 class GalleriesTable extends LivewireDatatable
 {
+    public $sort = 'desc';
+
     public $model = Gallery::class;
 
     public function columns()

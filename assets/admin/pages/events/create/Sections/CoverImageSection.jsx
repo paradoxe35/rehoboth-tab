@@ -5,7 +5,7 @@ import FilePond, { fileLabel } from "/@/plugins/filepond"
 
 const SECTION_KEY = "cover"
 
-const CoverImageSection = () => {
+const CoverImageSection = React.memo(() => {
     const ref = useRef(null)
 
     useEffect(() => {
@@ -35,6 +35,6 @@ const CoverImageSection = () => {
     return <Card bodyClass="p-1 bg-light" cardClass="p-0 my-3">
         <input type="file" ref={ref} />
     </Card>
-}
+})
 
 export default CoverImageSection

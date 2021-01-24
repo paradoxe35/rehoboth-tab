@@ -22,7 +22,6 @@ class LivewireController extends Controller
 
         $attribute = collect($request->all())
             ->except(['component'])
-            ->values()
             ->toArray();
 
         return view('app-livewire', compact('component', 'attribute'));

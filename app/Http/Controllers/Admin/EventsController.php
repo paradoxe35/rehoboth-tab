@@ -23,7 +23,8 @@ class EventsController extends Controller
 
     public function __construct()
     {
-        $this->middleware(['optimizeImages'])->only(['store']);
+        $this->middleware(['optimizeImages:auto'])
+            ->only(['store', 'updateEvent']);
     }
 
     public function index()
@@ -387,8 +388,8 @@ class EventsController extends Controller
     private function updatePhotos(Event $event, Request $request)
     {
         $request->validate([
+            'photos' => ['required'],
             'photos.*' => [
-                'nullable',
                 'image',
                 'max:' . (5 * 1024),
                 'mimes:jpeg,png'

@@ -25,7 +25,7 @@ class Create extends Component
     public $rules = [
         'subject' => ['required', 'string', 'max:255', 'min:2'],
         'preacher' => ['required', 'string', 'max:255', 'min:2'],
-        'description' => ['nullable', 'string', 'max:255', 'max:10'],
+        'description' => ['nullable', 'string', 'mix:10'],
         'date' => ['required', 'date'],
         'image' => [
             'nullable',

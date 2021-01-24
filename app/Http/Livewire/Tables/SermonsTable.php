@@ -11,6 +11,8 @@ use Mediconesystems\LivewireDatatables\NumberColumn;
 
 class SermonsTable extends LivewireDatatable
 {
+    public $sort = 'desc';
+
     public $hideable = 'select';
 
 

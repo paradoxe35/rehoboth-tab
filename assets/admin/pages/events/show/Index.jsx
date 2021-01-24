@@ -6,7 +6,6 @@ import Details from './Tabs/Details'
 import Tickets from './Tabs/Tickets'
 import Schedules from './Tabs/Schedules'
 import Photos from './Tabs/Photos'
-import Registrations from './Tabs/Registrations'
 import OtherInfo from './Tabs/OtherInfo'
 import { resetEventDataForm } from "../create/DatasForm"
 
@@ -29,10 +28,6 @@ const Main = () => {
 
             <Tab title="Photos">
                 <Photos />
-            </Tab>
-
-            <Tab title="Inscriptions">
-                <Registrations />
             </Tab>
 
             <Tab title="Autre Info">

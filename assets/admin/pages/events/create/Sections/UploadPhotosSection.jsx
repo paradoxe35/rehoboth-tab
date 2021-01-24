@@ -6,7 +6,7 @@ import FilePond, { fileLabel } from "/@/plugins/filepond"
 
 const SECTION_KEY = "photos"
 
-const UploadPhotosSection = () => {
+const UploadPhotosSection = React.memo(() => {
     const ref = useRef(null)
 
     useEffect(() => {
@@ -39,6 +39,6 @@ const UploadPhotosSection = () => {
     return <Card title={<H5 text="Télécharger des photos" />} bodyClass="bg-light" cardClass="my-3">
         <input type="file" ref={ref} />
     </Card>
-}
+})
 
 export default UploadPhotosSection

@@ -7,6 +7,7 @@ import EventIndex from "./pages/events/EventIndex"
 import EventCreate from "./pages/events/EventCreate"
 import EventShow from "./pages/events/EventShow"
 import BsTabs from "./components/BsTabs"
+import GalleriesIndex from "./pages/galleries/GalleriesIndex"
 
 
 const controllers = {
@@ -18,7 +19,8 @@ const controllers = {
     EventIndex,
     EventCreate,
     EventShow,
-    BsTabs
+    BsTabs,
+    GalleriesIndex
 }
 
 export default controllers

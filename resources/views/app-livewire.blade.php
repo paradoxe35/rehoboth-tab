@@ -41,7 +41,7 @@
 </head>
 
 <body>
-    @livewire($component, $attribute)
+    @livewire($component, array_merge($attribute, ['params' => $attribute]))
 
 
     @if (app()->environment() === "local")

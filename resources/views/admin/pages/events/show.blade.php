@@ -15,12 +15,22 @@
     ]
 ]])
 
+
 <script type="text/javascript" data-swup-reload-script>
     window.$event = @json($event)
 </script>
 
-<div g-component="EventShow">
-    <x-spinner />
-</div>
+<x-nav-tab :tabs='["Profil et edit", "Inscriptions"]'>
+    <x-slot name="profil_et_edit">
+        <div g-component="EventShow">
+            <x-spinner />
+        </div>
+    </x-slot>
+
+    <x-slot name="inscriptions">
+        <x-livewire.frame ref="tables.events.registrations-table" event="{{ $event->id }}" />
+    </x-slot>
+</x-nav-tab>
+
 
 @endsection

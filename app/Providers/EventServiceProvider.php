@@ -19,9 +19,6 @@ class EventServiceProvider extends ServiceProvider
     protected $listen = [
         Registered::class => [
             SendEmailVerificationNotification::class,
-        ],
-        SermonDeleted::class => [
-            CleanSermonFiles::class
         ]
     ];
 
@@ -33,5 +30,16 @@ class EventServiceProvider extends ServiceProvider
     public function boot()
     {
         //
+    }
+
+
+    /**
+     * Determine if events and listeners should be automatically discovered.
+     *
+     * @return bool
+     */
+    public function shouldDiscoverEvents()
+    {
+        return true;
     }
 }

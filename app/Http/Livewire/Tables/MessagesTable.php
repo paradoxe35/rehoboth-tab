@@ -7,6 +7,8 @@ use Mediconesystems\LivewireDatatables\Http\Livewire\LivewireDatatable;
 
 class MessagesTable extends LivewireDatatable
 {
+    public $sort = 'desc';
+
     public $model = Message::class;
 
     public function columns()

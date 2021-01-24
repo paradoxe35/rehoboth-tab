@@ -26,7 +26,7 @@
                 </div>
 
                 <div class="mb-3">
-                    <x-input type="text" :optional="true" model="description" label="Description" />
+                    <x-textarea type="text" :optional="true" model="description" label="Description" />
                 </div>
 
                 <div class="mb-3">

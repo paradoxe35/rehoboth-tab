@@ -2,7 +2,7 @@
     <ul class="nav nav-pills my-4" id="pills-tab-{{ Str::kebab(implode('-', $tabs)) }}" role="tablist" wire:ignore>
         @foreach ($tabs as $key => $tab)
         <li class="nav-item" role="presentation">
-            <a class="nav-link {{ $key == 0 ? 'active' : '' }} " id="pills-{{ Str::snake(Str::ascii($tab)) }}-tab"
+            <a class="nav-link {{ $key == 0 ? 'active' : 'mx-2' }} border-darken border" id="pills-{{ Str::snake(Str::ascii($tab)) }}-tab"
                 data-bs-toggle="pill" href="#pills-{{ Str::snake(Str::ascii($tab)) }}" role="tab"
                 aria-controls="pills-{{ Str::snake(Str::ascii($tab)) }}" aria-selected="true">
                 {{ __($tab) }}

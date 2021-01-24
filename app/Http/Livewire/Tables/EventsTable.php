@@ -12,6 +12,8 @@ use Mediconesystems\LivewireDatatables\NumberColumn;
 
 class EventsTable extends LivewireDatatable
 {
+    public $sort = 'desc';
+
     public $model = Event::class;
 
     public $hideable = 'select';
