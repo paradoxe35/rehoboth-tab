@@ -1,5 +1,5 @@
 import "/@/utils/devtool"
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { render, unmountComponentAtNode } from 'react-dom'
 import Button from "/@/components/admin/Button"
 import { ApiRequest } from "/@/api/api"
@@ -11,7 +11,9 @@ import Card from "/@/components/Card"
 import { useListDataPaginator, useScrollBottom } from "/@/utils/hooks"
 import Skeleton from "react-loading-skeleton"
 import { LozadImage } from "/@/components/LozadImage"
+import { PhotoSwipe } from 'react-pswp';
 
+import 'react-pswp/dist/index.css';
 
 const trueArr = new Array(4).fill(true)
 
@@ -77,17 +79,25 @@ export const Image = styled(LozadImage)`
     will-change: transform;
     width: 100%;
     display: block;
+    cursor: pointer;
 `
 
-const ImageFlipped = ({ setKey, img }) => {
+const ImageFlipped = ({ setKey, img, onClick = null }) => {
 
-    return <Flipped
-        stagger
-        onAppear={onDelayedAppear}
-        onExit={onExit}
-        flipId={`imagekey-${setKey}`}>
-        <Image data-src={img.public_path} />
-    </Flipped>
+    const handleClick = (e) => {
+        e.preventDefault()
+        onClick && onClick(img.uid)
+    }
+
+    return <a href={img.public_path} onClick={handleClick}>
+        <Flipped
+            stagger
+            onAppear={onDelayedAppear}
+            onExit={onExit}
+            flipId={`imagekey-${setKey}`}>
+            <Image data-src={img.public_path} />
+        </Flipped>
+    </a>
 }
 
 const LoaderFlipped = ({ setKey }) => {
@@ -102,7 +112,7 @@ const LoaderFlipped = ({ setKey }) => {
     </Flipped>
 }
 
-const Content = ({ images = [] }) => {
+const Content = ({ images = [], onClick = null }) => {
     return <>
         <Flipped flipId="list">
             <ResponsiveMasonry columnsCountBreakPoints={{ 576: 1, 768: 2, 992: 3, 1200: 4 }}>
@@ -112,7 +122,8 @@ const Content = ({ images = [] }) => {
                             return <LoaderFlipped setKey={i} />
                         } else {
                             const key = img.path.replace(pathId, '-')
-                            return <ImageFlipped key={key} setKey={key} img={img} />
+                            img.uid = i
+                            return <ImageFlipped onClick={onClick} key={key} setKey={key} img={img} />
                         }
                     })}
 
@@ -123,7 +134,8 @@ const Content = ({ images = [] }) => {
     </>
 }
 
-const Main = () => {
+
+const useImagesState = () => {
     const [images, setImages] = useState([])
     const [group, setGroup] = useState("all")
 
@@ -174,6 +186,31 @@ const Main = () => {
         }
     }, [group, listData])
 
+    return { images, setGroup }
+}
+
+const Main = () => {
+    const { setGroup, images } = useImagesState()
+
+    const [index, setIndex] = useState(null);
+    const [open, setOpen] = useState(false);
+
+
+    const pswpContainer = useMemo(() => images.map((img, i) => ({
+        uid: i,
+        src: img.public_path,
+        msrc: img.public_path,
+        w: img.width,
+        h: img.height,
+        title: img.caption,
+    })), [images])
+
+    const handleClickImage = useCallback((uid) => setIndex(uid), [setIndex])
+
+    useEffect(() => {
+        if (!open && index !== null) setOpen(true);
+    }, [index]);
+
     return <>
         <div className="row">
             <div className="col">
@@ -188,10 +225,21 @@ const Main = () => {
             <Card>
                 {/* @ts-ignore */}
                 <Flipper staggerConfig={{ default: { reverse: true, speed: .3 }, }} spring="gentle" flipKey={images}>
-                    <Content images={images} />
+                    <Content onClick={handleClickImage} images={images} />
                 </Flipper>
             </Card>
         </div>
+        <PhotoSwipe
+            container={pswpContainer}
+            onIndexChange={setIndex}
+            onOpenChange={setOpen}
+            index={index}
+            open={open}
+            theme={{
+                foreground: '#fff',
+                background: '#1A202C',
+            }}
+        />
     </>
 }
 

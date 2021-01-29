@@ -83,6 +83,7 @@
         "react-icons": "^4.1.0",
         "react-laravel-paginex": "^2.0.8",
         "react-loading-skeleton": "^2.1.1",
+        "react-pswp": "^0.0.5",
         "react-responsive-masonry": "^2.1.0",
         "react-select": "^3.2.0",
         "styled-components": "^5.2.1",
