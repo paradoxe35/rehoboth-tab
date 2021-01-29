@@ -23,7 +23,7 @@ class EventsController extends Controller
 
     public function __construct()
     {
-        $this->middleware(['optimizeImages:auto'])
+        $this->middleware(['optimizeImages'])
             ->only(['store', 'updateEvent']);
     }
 
@@ -271,10 +271,11 @@ class EventsController extends Controller
             $uploaded = $file->storePublicly(File::EVENTS_COVERS_PATH . "/{$event->id}");
             [$width, $height] = getimagesize($file->getPathname());
 
-            $event->image()->create([
+            $event->images()->create([
                 'path' => $uploaded,
                 'width' => $width,
                 'height' => $height,
+                'type' => 'cover',
                 'caption' => $file->getClientOriginalName()
             ]);
         }
@@ -287,12 +288,12 @@ class EventsController extends Controller
                 $uploaded = $file->storePublicly(File::EVENTS_PHOTOS_PATH . "/{$event->id}");
                 [$width, $height] = getimagesize($file->getPathname());
 
-                $event->photos()->create([
+                $event->images()->create([
                     'path' => $uploaded,
                     'type' => 'photo',
                     'width' => $width,
                     'height' => $height,
-                    'name' => $file->getClientOriginalName()
+                    'caption' => $file->getClientOriginalName()
                 ]);
             }
         }
@@ -352,7 +353,7 @@ class EventsController extends Controller
 
     public function show(Event $event)
     {
-        $event->load(['image', 'photos', 'address', 'ticket', 'schedules', 'tags', 'organizers']);
+        $event->load(['address', 'ticket', 'schedules', 'tags', 'organizers']);
 
         $event->ticket->load('options');
 
@@ -400,7 +401,7 @@ class EventsController extends Controller
 
         $event->refresh();
 
-        return $event->photos()->get();
+        return $event->photos;
     }
 
     private function updateCover(Event $event, Request $request)

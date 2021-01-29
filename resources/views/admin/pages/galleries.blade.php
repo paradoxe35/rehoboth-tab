@@ -10,8 +10,6 @@
     ]
 ]])
 
-
-
 <div g-component="GalleriesIndex">
     <x-spinner />
 </div>

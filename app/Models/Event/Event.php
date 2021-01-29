@@ -32,9 +32,9 @@ class Event extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 
-        'label', 
-        'description', 
+        'name',
+        'label',
+        'description',
         'text',
         'start_date',
         'start_time',
@@ -44,20 +44,38 @@ class Event extends Model
         'registration_deadline'
     ];
 
+    /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array
+     */
+    protected $appends = ['image', 'photos'];
+
+
+
+    public function getImageAttribute()
+    {
+        return $this->images()
+            ->getQuery()
+            ->firstWhere('type', 'cover');
+    }
+
+    public function getPhotosAttribute()
+    {
+        return $this->images()
+            ->getQuery()
+            ->where('type', 'photo')->get();
+    }
+
 
     public function registrations()
     {
         return $this->hasMany(EventRegistration::class);
     }
 
-    public function image()
+    public function images()
     {
-        return $this->morphOne(Image::class, 'imageable');
-    }
-
-    public function photos()
-    {
-        return $this->morphMany(File::class, 'fileable');
+        return $this->morphMany(Image::class, 'imageable');
     }
 
     public function address()

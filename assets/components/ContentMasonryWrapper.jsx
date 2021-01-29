@@ -4,11 +4,12 @@ import Masonry, { ResponsiveMasonry } from "react-responsive-masonry"
 
 
 
-const MasonryImageStyled = styled.img`
-    border-radius: 10px;
+export const MasonryImageStyled = styled.img`
+    /* border-radius: 10px; */
+    will-change: transform;
 `
 
-const ItemFolio = styled.div`
+export const ItemFolio = styled.div`
     position: relative;
     overflow: hidden;
     .item-folio__thumb img {
@@ -114,7 +115,7 @@ const ContentMasonryWrapper = ({ images = [], imgKey = null, children }) => {
     const content = images.map((image, i) => (
         <ItemFolio>
             <div className="item-folio__thumb">
-                <a href={imgKey ? image[imgKey] : image} className="thumb-link" title="Palmeira">
+                <a href={imgKey ? image[imgKey] : image} className="thumb-link" title="">
                     <MasonryImageStyled
                         key={i}
                         src={imgKey ? image[imgKey] : image}

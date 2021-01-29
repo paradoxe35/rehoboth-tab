@@ -25,7 +25,7 @@ class Image extends Model
      *
      * @var array
      */
-    protected $fillable = ['path', 'width', 'height', 'caption', 'date'];
+    protected $fillable = ['path', 'width', 'height', 'caption', 'date', 'type'];
 
 
     /**

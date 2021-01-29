@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react"
+import { throttle } from "../functions/functions"
 
 
 export const useInputElementRefs = function () {
@@ -81,17 +82,40 @@ export const mergeRefs = (...refs) => {
     };
 };
 
-export const useListDataPaginator = (datas, fn) => {
+export const useListDataPaginator = (datas = null, fn) => {
     const [listData, setListData] = useState(datas || {})
+    const paginator = useRef(null)
 
     useEffect(() => {
         setListData(datas || {})
     }, [datas])
 
-    const onPageChange = useCallback(({ page }) => {
-        if (!listData.meta || listData.meta.current_page == page) return
-        fn && fn(page)
+    useEffect(() => {
+        paginator.current = listData
     }, [listData])
 
-    return [listData, setListData, onPageChange]
+    const onPageChange = useCallback(({ page }, param) => {
+        const { meta } = paginator.current
+        if (!meta || meta.current_page == page) return
+        fn && fn(page, param)
+    }, [])
+
+    return { listData, setListData, onPageChange, paginator }
+}
+
+export const useScrollBottom = (handler) => {
+    const canLoad = useRef(true)
+
+    useEffect(() => {
+        const scroll = () => {
+            if ((window.innerHeight + window.pageYOffset - 30) >= document.body.offsetHeight && canLoad.current) {
+                if (handler) {
+                    handler(canLoad)
+                    canLoad.current = false
+                }
+            }
+        }
+        window.addEventListener('scroll', throttle(scroll, 50))
+        return () => window.removeEventListener('scroll', scroll)
+    }, [])
 }
