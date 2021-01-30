@@ -7,7 +7,7 @@ import { ApiRequest } from '/@/api/api'
 import Button from '/@/components/admin/Button'
 import { Tab, Tabs } from '/@/components/admin/Tabs'
 import Card from '/@/components/Card'
-import ContentMasonryWrapper from '/@/components/ContentMasonryWrapper'
+import ContentMasonryWrapper, { ItemFolioText } from '/@/components/ContentMasonryWrapper'
 import { confirmed } from '/@/functions/functions'
 import { Notifier } from '/@/utils/notifier'
 
@@ -75,15 +75,13 @@ const ITab = () => {
                             <h5>Photos</h5>
                             <ContentMasonryWrapper images={photos} imgKey="public_path" >
                                 {img => (
-                                    <div className="item-folio__text">
-                                        <h5 className="item-folio__title">
-                                            <button
-                                                onClick={() => onDeletePhoto(img)}
-                                                type="button" className="btn btn-link">
-                                                Supprimer
-                                            </button>
-                                        </h5>
-                                    </div>
+                                    <ItemFolioText title={(
+                                        <button
+                                            onClick={() => onDeletePhoto(img)}
+                                            type="button" className="btn btn-link">
+                                            Supprimer
+                                        </button>
+                                    )} />
                                 )}
                             </ContentMasonryWrapper>
                         </div>

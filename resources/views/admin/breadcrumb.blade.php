@@ -11,4 +11,6 @@
         @endforeach
     </ol>
 </nav>
+@if (!isset($hr))
 <hr>
+@endif

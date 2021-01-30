@@ -1,7 +1,15 @@
 import { GiaComponent } from '/@/admin/gia';
 import { ApiRequest } from '/@/api/api';
-import { capitalize, confirmed, eventListenOne, ytLinkToEmbedCode } from '/@/functions/functions';
-import { Btn, dispatchEventUpdatedModalItems, onDeleteItemModal, openModalEventFrame } from '/@/utils/dom';
+import { confirmed, ytLinkToEmbedCode } from '/@/functions/functions';
+import {
+    Btn,
+    dispatchEventUpdatedModalItems,
+    htmlDeleteModalButton,
+    htmlInfoModal,
+    htmlTitleModal,
+    onDeleteItemModal,
+    openModalEventFrame
+} from '/@/utils/dom';
 
 export default class extends GiaComponent {
     constructor(element) {
@@ -32,17 +40,6 @@ export default class extends GiaComponent {
         this.unmoutModal && this.unmoutModal()
     }
 
-    htmlTitle(text) {
-        return /*html*/`
-            <div class="my-3"><h4>${capitalize(text)}</h4></div>
-        `
-    }
-
-    htmlDeleteButton(id) {
-        return /*html*/`
-            <button data-id="${id}" class="btn delete--js text-xs btn-danger p-1 text-white">Supprimer</button>
-        `
-    }
 
     /**
      * @param { Object } audio 
@@ -59,7 +56,7 @@ export default class extends GiaComponent {
                     </audio>
                 </div>
                 <span>
-                    ${this.htmlDeleteButton(audio.id)}
+                    ${htmlDeleteModalButton(audio.id)}
                 </span>
             </div>
             <hr />
@@ -79,21 +76,12 @@ export default class extends GiaComponent {
                     <a target="_blank" class="text-sm text-decoration-underline" href="${file.public_path}">${file.name}</a>
                 </span>
                 <span>
-                    ${this.htmlDeleteButton(file.id)}
+                    ${htmlDeleteModalButton(file.id)}
                 </span>
             </div>
             <hr />
         `
     }
-
-    htmlInfo(text) {
-        return  /*html*/`
-            <div class="alert alert-info" role="alert">
-                ${text}
-            </div>
-        `
-    }
-
 
     deleteFileFetch(el) {
         if (!confirmed()) return
@@ -124,16 +112,16 @@ export default class extends GiaComponent {
         return /*html*/`
             <div id="${parentId}">
                 <div class="d-flex justify-content-between">
-                    ${this.htmlTitle(type)}
+                    ${htmlTitleModal(type)}
                     <span>
-                        ${data ? this.htmlDeleteButton(data.id) : ''}
+                        ${data ? htmlDeleteModalButton(data.id) : ''}
                     </span>
                 </div>
                 
                 <div class="w-100 d-flex justify-content-center">
                     ${data ? /*html*/`
                         <img src="${data.public_path}" class="img-fluid img-thumbnail" />
-                    `: this.htmlInfo("Aucune image enregistrée")}
+                    `: htmlInfoModal("Aucune image enregistrée")}
                 </div>
             </div>
         `
@@ -151,14 +139,14 @@ export default class extends GiaComponent {
         return /*html*/`
             <div id="${parentId}">
                 <div class="d-flex justify-content-between">
-                    ${this.htmlTitle(type)}
+                    ${htmlTitleModal(type)}
                     <span>
-                        ${data ? this.htmlDeleteButton(data.id) : ''}
+                        ${data ? htmlDeleteModalButton(data.id) : ''}
                     </span>
                 </div>
                 
                 <div class="w-100 d-flex justify-content-center">
-                ${data ? ytLinkToEmbedCode(data.path) : this.htmlInfo("Aucune video enregistrée")}
+                ${data ? ytLinkToEmbedCode(data.path) : htmlInfoModal("Aucune video enregistrée")}
                 </div>
             </div>
         `
@@ -178,8 +166,8 @@ export default class extends GiaComponent {
 
         return /*html*/`
             <div id="${parentId}">
-                ${this.htmlTitle(type)}
-                ${!!views.length ? views.join('\n') : this.htmlInfo("Aucun audio enregistré")}
+                ${htmlTitleModal(type)}
+                ${!!views.length ? views.join('\n') : htmlInfoModal("Aucun audio enregistré")}
             </div>`
     }
 
@@ -196,8 +184,8 @@ export default class extends GiaComponent {
 
         return /*html*/`
             <div id="${parentId}">
-                ${this.htmlTitle(type)}
-                ${!!views.length ? views.join('\n') : this.htmlInfo("Aucun document enregistré")}
+                ${htmlTitleModal(type)}
+                ${!!views.length ? views.join('\n') : htmlInfoModal("Aucun document enregistré")}
             </div>
         `
     }

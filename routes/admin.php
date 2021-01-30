@@ -41,6 +41,7 @@ Route::prefix('dash')
 
         Route::resource('/galleries', GalleriesController::class)->only(['index', 'destroy', 'store']);
         Route::get('/galleries/images', [GalleriesController::class, 'getImages'])->name('galleries.images');
+        Route::get('/galleries/articles', [GalleriesController::class, 'articles'])->name('galleries.articles');
 
         Route::resource('/blogs',  BlogsController::class);
 

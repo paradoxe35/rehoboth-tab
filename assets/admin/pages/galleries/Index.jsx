@@ -3,10 +3,9 @@ import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { render, unmountComponentAtNode } from 'react-dom'
 import Button from "/@/components/admin/Button"
 import { ApiRequest } from "/@/api/api"
-import { Flipper, Flipped } from 'react-flip-toolkit'
-import Masonry, { ResponsiveMasonry } from "react-responsive-masonry"
+import { Flipper } from 'react-flip-toolkit'
 import anime from "animejs"
-import { useListDataPaginator, useScrollBottom } from "/@/utils/hooks"
+import { useListDataPaginator } from "/@/utils/hooks"
 
 import { PhotoSwipe } from 'react-pswp';
 import 'react-pswp/dist/index.css';
@@ -18,6 +17,8 @@ import FilePond, { imageOptions } from "/@/plugins/filepond"
 import { FormControl } from "../events/create/FormControl"
 import { FlatpickrDate } from "../events/create/Flatpickr"
 import { Notifier } from "/@/utils/notifier"
+import { ContentMasonrySimpleWrapper, ItemFolio, ItemFolioText, ItemFolioThumb } from "/@/components/ContentMasonryWrapper"
+import { confirmed } from "/@/functions/functions"
 
 const trueArr = new Array(5).fill(true)
 
@@ -54,128 +55,6 @@ const Tabs = ({ setGroup }) => {
     </ul>
 }
 
-const onDelayedAppear = (el, index) => {
-    anime({
-        targets: el,
-        opacity: [0, 1],
-        scale: [0.9, 1],
-        easing: "easeOutSine",
-        delay: index * 40,
-        duration: 400
-    })
-}
-
-const onExit = (el, index, removeElement) => {
-    anime({
-        targets: el,
-        opacity: 0,
-        scale: 0.9,
-        easing: "easeOutSine",
-        duration: 400,
-        delay: index * 40,
-        complete: removeElement
-    })
-}
-
-const pathId = /(\/|\\|\.)/g
-
-const Content = ({ images = [], onClick = null }) => {
-    return <>
-        <Flipped flipId="list">
-            <ResponsiveMasonry columnsCountBreakPoints={{ 576: 1, 768: 2, 992: 3, 1200: 4 }}>
-                <Masonry gutter="10px">
-                    {images.map((img, i) => {
-                        if (typeof img === 'boolean') {
-                            return <LoaderFlipped
-                                onDelayedAppear={onDelayedAppear}
-                                onExit={onExit} 
-                                setKey={i} />
-                        } else {
-                            const key = img.path.replace(pathId, '-')
-                            img.uid = i
-                            return <ImageFlipped
-                                onClick={onClick}
-                                onDelayedAppear={onDelayedAppear}
-                                onExit={onExit}
-                                key={key}
-                                setKey={key}
-                                img={img} />
-                        }
-                    })}
-
-                    {!images.length && <div className="py-5" />}
-                </Masonry>
-            </ResponsiveMasonry>
-        </Flipped>
-    </>
-}
-
-
-const useImagesState = () => {
-    const [images, setImages] = useState([])
-    const [group, setGroup] = useState("all")
-
-    const {
-        listData,
-        setListData,
-        onPageChange: getPaginatorChange,
-        paginator
-    } = useListDataPaginator(null, onLoadNextItems)
-
-    const imagesRef = useRef(trueArr)
-    const groupRef = useRef(group)
-
-    groupRef.current = group
-
-    useEffect(() => {
-        ApiRequest('get', route('admin.galleries.images').toString())
-            .then(({ data: pdata }) => {
-                setListData(pdata)
-                setImages(pdata.data)
-                imagesRef.current = pdata.data
-            })
-    }, [])
-
-
-    const prependImages = useCallback((imgs) => {
-        imagesRef.current.push(...imgs)
-        setImages(im => [
-            ...(groupRef.current === "all" ? imgs : imgs.filter(i => i.imageable == group)),
-            ...im,
-        ])
-    }, [imagesRef, setImages, group])
-
-    function onLoadNextItems(page, canLoad) {
-        setImages(im => [...im, ...trueArr])
-
-        ApiRequest('get', route('admin.galleries.images', { page }).toString())
-            .then(({ data: pdata }) => {
-                imagesRef.current.push(...pdata.data)
-                setListData(pdata)
-            })
-            .finally(() => {
-                canLoad.current = true
-            })
-    }
-
-    useScrollBottom((canLoad) => {
-        const { links, meta } = paginator.current
-        links?.next && getPaginatorChange({ page: meta.current_page + 1 }, canLoad)
-    })
-
-    useEffect(() => {
-        switch (group) {
-            case 'all':
-                setImages(imagesRef.current)
-                break;
-            default:
-                setImages(imagesRef.current.filter(i => i.imageable == group))
-                break;
-        }
-    }, [group, listData])
-
-    return { images, setGroup, prependImages }
-}
 
 const AddImagesModalContent = ({ imagesRef, formId }) => {
     const ref = useRef(null)
@@ -202,18 +81,18 @@ const AddImagesModalContent = ({ imagesRef, formId }) => {
     }, [])
 
     return <>
-        <h5 className="mb-4">Ajouter des images à la galerie</h5>
+        <h5 className="mb-4">Nouvelle galerie</h5>
         <form id={formId} autoComplete="off">
             <div className="row">
                 <div className="col-lg-5">
-                    <FormControl label="Titre de la galerie" name="title" />
+                    <FormControl label="Nom de la galerie" name="title" />
                     <div className="mb-3">
                         <label htmlFor="description" className="form-label">
                             Description
                         </label>
-                        <textarea className="form-control" id="description" rows={2}></textarea>
+                        <textarea className="form-control" name="description" id="description" rows={2}></textarea>
                     </div>
-                    <FlatpickrDate label="Date" />
+                    <FlatpickrDate label="Date" name="date" />
                 </div>
                 <div className="col-lg-7">
                     <div ref={ref} />
@@ -268,9 +147,179 @@ const AddImages = React.memo(({ prependImages }) => {
     </>
 })
 
+const LoadMoreButton = ({ listData, getPaginatorChange }) => {
+
+    const handleClick = () => {
+        const { links, meta } = listData
+        links?.next && getPaginatorChange({ page: meta.current_page + 1 })
+    }
+
+    return <>
+        {listData?.links?.next && (
+            <button
+                className="btn btn-primary text-center text-xs text-white btn-sm"
+                onClick={handleClick}
+                type="button">
+                <span className="loading">• • •</span>
+                <span className="visually-hidden">Charge plus</span>
+            </button>
+        )}
+    </>
+}
+
+const useImagesState = () => {
+    const [images, setImages] = useState([])
+    const [group, setGroup] = useState("all")
+
+    const {
+        listData,
+        setListData,
+        onPageChange: getPaginatorChange,
+    } = useListDataPaginator(null, onLoadNextItems)
+
+    const imagesRef = useRef(trueArr)
+    const groupRef = useRef(group)
+
+    groupRef.current = group
+
+    useEffect(() => {
+        ApiRequest('get', route('admin.galleries.images').toString())
+            .then(({ data: pdata }) => {
+                setListData(pdata)
+                setImages(pdata.data)
+                imagesRef.current = pdata.data
+            })
+    }, [])
+
+
+    const prependImages = useCallback((imgs) => {
+        imagesRef.current.push(...imgs)
+        setImages(im => [
+            ...(groupRef.current === "all" ? imgs : imgs.filter(i => i.imageable == group)),
+            ...im,
+        ])
+    }, [imagesRef, setImages, group])
+
+    const removeImage = useCallback((img) => {
+        imagesRef.current = imagesRef.current.filter(i => i.id != img.id)
+        setImages(im => im.filter(i => i.id != img.id))
+    }, [imagesRef, setImages])
+
+    function onLoadNextItems(page) {
+        setImages(im => [...im, ...trueArr])
+
+        ApiRequest('get', route('admin.galleries.images', { page }).toString())
+            .then(({ data: pdata }) => {
+                imagesRef.current.push(...pdata.data)
+                setListData(pdata)
+            })
+    }
+
+    useEffect(() => {
+        switch (group) {
+            case 'all':
+                setImages(imagesRef.current)
+                break;
+            default:
+                setImages(imagesRef.current.filter(i => i.imageable == group))
+                break;
+        }
+    }, [group, listData])
+
+    return { images, setGroup, prependImages, listData, getPaginatorChange, removeImage }
+}
+
+const onDelayedAppear = (el, index) => {
+    anime({
+        targets: el,
+        opacity: [0, 1],
+        scale: [0.9, 1],
+        translateY: [-15, 0],
+        easing: "easeOutSine",
+        delay: index * 40,
+        duration: 400
+    })
+}
+
+const onExit = (el, index, removeElement) => {
+    anime({
+        targets: el,
+        opacity: 0,
+        scale: 0.9,
+        easing: "easeOutSine",
+        duration: 400,
+        delay: index * 40,
+        complete: removeElement
+    })
+}
+
+const pathId = /(\/|\\|\.)/g
+
+const ImageFlippedContent = ({ img, onClick, i, removeImage }) => {
+    const key = img.path.replace(pathId, '-')
+    img.uid = i
+
+    const image = <ImageFlipped
+        lozad={false}
+        onClick={onClick}
+        onDelayedAppear={onDelayedAppear}
+        onExit={onExit}
+        key={key}
+        setKey={key}
+        img={img} />
+
+    const onDeletePhoto = (item) => {
+        if (confirmed()) {
+            removeImage(item)
+            ApiRequest("delete", route("admin.images.destroy", { image: img.id }).toString())
+        }
+    }
+
+    return img.gallery ? (
+        <ItemFolio>
+            <ItemFolioThumb>
+                {image}
+                <ItemFolioText title={(
+                    <button
+                        onClick={(e) => {
+                            e.stopPropagation()
+                            onDeletePhoto(img)
+                        }}
+                        type="button" className="btn btn-link">
+                        Supprimer
+                    </button>
+                )} />
+            </ItemFolioThumb>
+        </ItemFolio>
+    ) : image
+}
+
+const Content = ({ images = [], onClick = null, removeImage }) => {
+    return <ContentMasonrySimpleWrapper>
+        {images.map((img, i) => {
+            if (typeof img === 'boolean') {
+                return <LoaderFlipped
+                    onDelayedAppear={onDelayedAppear}
+                    onExit={onExit}
+                    setKey={i} />
+            } else {
+                return <ImageFlippedContent removeImage={removeImage} img={img} onClick={onClick} i={i} />
+            }
+        })}
+
+        {!images.length && <div className="py-5" />}
+    </ContentMasonrySimpleWrapper>
+}
 
 const Main = () => {
-    const { setGroup, images, prependImages } = useImagesState()
+    const {
+        setGroup,
+        images,
+        prependImages,
+        listData,
+        getPaginatorChange,
+        removeImage
+    } = useImagesState()
 
     const [index, setIndex] = useState(null);
     const [open, setOpen] = useState(false);
@@ -282,7 +331,8 @@ const Main = () => {
         msrc: img.public_path,
         w: img.width,
         h: img.height,
-        title: img.caption,
+        title: img?.gallery?.title || img.caption,
+        description: img?.gallery?.description,
     })), [images])
 
     const handleClickImage = useCallback((uid) => setIndex(uid), [setIndex])
@@ -303,10 +353,13 @@ const Main = () => {
 
         <div className="my-3">
             {/* @ts-ignore */}
-            <Flipper staggerConfig={{ default: { reverse: true, speed: .3 }, }} spring="gentle" flipKey={images}>
-                <Content onClick={handleClickImage} images={images} />
+            <Flipper spring="stiff" flipKey={images}>
+                <Content removeImage={removeImage} onClick={handleClickImage} images={images} />
             </Flipper>
         </div>
+
+        <LoadMoreButton getPaginatorChange={getPaginatorChange} listData={listData} />
+
         <PhotoSwipe
             container={pswpContainer}
             onIndexChange={setIndex}

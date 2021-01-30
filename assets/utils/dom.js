@@ -1,5 +1,5 @@
 import { Modal } from 'bootstrap'
-import { eventListenOne } from '../functions/functions'
+import { capitalize, eventListenOne } from '../functions/functions'
 import { modalItemsUpdatedEvent, openModalEvent } from './vars'
 
 /**
@@ -220,4 +220,24 @@ export const onDeleteItemModal = (eventName, parentId, callback) => {
             .forEach(el => el.addEventListener('click', callback.bind(undefined, el)))
 
     })
+}
+
+export const htmlDeleteModalButton = (id) => {
+    return /*html*/`
+        <button data-id="${id}" class="btn delete--js text-xs btn-danger p-1 text-white">Supprimer</button>
+    `
+}
+
+export const htmlTitleModal = (text) => {
+    return /*html*/`
+        <div class="my-3"><h4>${capitalize(text)}</h4></div>
+    `
+}
+
+export const htmlInfoModal = (text) => {
+    return  /*html*/`
+        <div class="alert alert-info" role="alert">
+            ${text}
+        </div>
+    `
 }

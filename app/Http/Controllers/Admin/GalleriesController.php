@@ -19,12 +19,17 @@ class GalleriesController extends Controller
 
     public function index()
     {
-        return view('admin.pages.galleries');
+        return view('admin.pages.galleries.index');
+    }
+
+    public function articles()
+    {
+        return view('admin.pages.galleries.articles');
     }
 
     public function getImages()
     {
-        $images = Image::query()->latest()->paginate(16);
+        $images = Image::query()->latest()->paginate(10);
         return new ImageCollection($images);
     }
 
@@ -50,7 +55,7 @@ class GalleriesController extends Controller
                 $uploaded = $file->storePublicly(File::GALLERY_IMAGES_PATH . "/{$gallery->id}");
                 [$width, $height] = getimagesize($file->getPathname());
 
-                $image = $gallery->image()->create([
+                $image = $gallery->images()->create([
                     'path' => $uploaded,
                     'width' => $width,
                     'height' => $height,

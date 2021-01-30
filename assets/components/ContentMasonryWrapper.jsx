@@ -110,11 +110,32 @@ export const ItemFolio = styled.div`
     }
 `
 
+export const ItemFolioThumb = ({ children }) => <div className="item-folio__thumb">{children}</div>
+
+export const ItemFolioText = ({ title = null, cat = null }) => {
+    return <div className="item-folio__text">
+        <h5 className="item-folio__title">
+            {title}
+        </h5>
+        <p className="item-folio__cat">
+            {cat}
+        </p>
+    </div>
+}
+
+export const ContentMasonrySimpleWrapper = ({ children }) => {
+    return <ResponsiveMasonry columnsCountBreakPoints={{ 576: 1, 768: 2, 992: 3, 1200: 4 }}>
+        <Masonry gutter="10px">
+            {children}
+        </Masonry>
+    </ResponsiveMasonry>
+}
+
 const ContentMasonryWrapper = ({ images = [], imgKey = null, children }) => {
 
     const content = images.map((image, i) => (
         <ItemFolio>
-            <div className="item-folio__thumb">
+            <ItemFolioThumb>
                 <a href={imgKey ? image[imgKey] : image} className="thumb-link" title="">
                     <MasonryImageStyled
                         key={i}
@@ -122,17 +143,12 @@ const ContentMasonryWrapper = ({ images = [], imgKey = null, children }) => {
                         style={{ width: "100%", display: "block" }}
                     />
                 </a>
-            </div>
+            </ItemFolioThumb>
 
             {children(image)}
         </ItemFolio>
     ))
 
-    if (process.env.NODE_ENV === "development") {
-        return <Masonry columnsCount={3} gutter="10px">
-            {content}
-        </Masonry>
-    }
     return <ResponsiveMasonry columnsCountBreakPoints={{ 576: 1, 768: 2, 992: 3, 1200: 4 }}>
         <Masonry gutter="10px">
             {content}
