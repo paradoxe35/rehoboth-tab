@@ -8,7 +8,6 @@ use App\Models\Sermon;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
-
 class Create extends Component
 {
     use WithFileUploads;
@@ -27,12 +26,7 @@ class Create extends Component
         'preacher' => ['required', 'string', 'max:255', 'min:2'],
         'description' => ['nullable', 'string', 'mix:10'],
         'date' => ['required', 'date'],
-        'image' => [
-            'nullable',
-            'image',
-            'max:' . (5 * 1024),
-            'mimes:jpeg,png'
-        ],
+        'image' => File::IMAGE_RULES_OPTIONAL,
         'video' => [
             'nullable',
             'regex:/^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/',
@@ -78,11 +72,11 @@ class Create extends Component
         $this->storeImage($sermon);
 
         $this->storeVideo($sermon);
-        
+
         $this->storeFiles($sermon, $this->audios, 'audio');
 
         $this->storeFiles($sermon, $this->documents, 'document');
-        
+
         $this->storeAudios($sermon);
 
         $this->storeDocuments($sermon);

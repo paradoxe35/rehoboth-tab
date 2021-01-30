@@ -120,12 +120,7 @@ class Edit extends Component
     public function saveImage()
     {
         $this->validate([
-            'imageModel' => [
-                'required',
-                'image',
-                'max:' . (5 * 1024),
-                'mimes:jpeg,png'
-            ],
+            'imageModel' => File::IMAGE_RULES,
         ]);
 
         if ($this->image) {

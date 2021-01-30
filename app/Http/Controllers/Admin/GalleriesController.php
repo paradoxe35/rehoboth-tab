@@ -37,18 +37,14 @@ class GalleriesController extends Controller
     {
         $request->validate([
             'images' => ['required'],
-            'images.*' => [
-                'image',
-                'max:' . (5 * 1024),
-                'mimes:jpeg,png'
-            ],
+            'images.*' => array_slice(File::IMAGE_RULES, 1),
             'title' => ['nullable', 'string'],
             'description' => ['nullable', 'string'],
             'date' => ['nullable', 'date']
         ]);
 
         $images = collect();
-        $gallery = Gallery::query()->create($request->only(['title', 'description']));
+        $gallery = Gallery::create($request->only(['title', 'description']));
 
         if ($request->hasfile('images')) {
             foreach ($request->file('images') as $file) {

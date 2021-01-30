@@ -1,6 +1,7 @@
 <?php
 
-use App\Http\Controllers\Admin\BlogsController;
+use App\Http\Controllers\Admin\Blogs\BlogsCategoriesController;
+use App\Http\Controllers\Admin\Blogs\BlogsController;
 use App\Http\Controllers\Admin\EventsController;
 use App\Http\Controllers\Admin\GalleriesController;
 use App\Http\Controllers\Admin\HomeController;
@@ -9,6 +10,7 @@ use App\Http\Controllers\Admin\Morph\FilesController;
 use App\Http\Controllers\Admin\Morph\ImagesController;
 use App\Http\Controllers\Admin\SermonsController;
 use App\Http\Controllers\Organizers\OrganizersController;
+use App\Http\Controllers\Services\OgController;
 use App\Http\Controllers\Tags\TagsController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
@@ -43,7 +45,13 @@ Route::prefix('dash')
         Route::get('/galleries/images', [GalleriesController::class, 'getImages'])->name('galleries.images');
         Route::get('/galleries/articles', [GalleriesController::class, 'articles'])->name('galleries.articles');
 
-        Route::resource('/blogs',  BlogsController::class);
+        Route::resource('/blogs',  BlogsController::class)->only([
+            'index', 'store', 'update', 'create', 'show'
+        ]);
+
+        Route::apiResource('/blog-categories', BlogsCategoriesController::class)->only([
+            'index', 'store', 'destroy'
+        ]);
 
         Route::resource('/messages', MessagesController::class);
 
@@ -54,4 +62,6 @@ Route::prefix('dash')
         Route::apiResource("organizers", OrganizersController::class);
 
         // });
+
+        Route::get('/og-meta', OgController::class)->name('og-meta');
     });

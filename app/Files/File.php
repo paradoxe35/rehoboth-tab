@@ -12,27 +12,20 @@ class File
     /**
      * @var array
      */
-    public const IMAGE_RULES = ['required', 'file', "max:" . (self::SIZE * 5) . "", 'dimensions:min_width=400', 'mimes:jpeg,jpg,png,gif'];
+    public const IMAGE_RULES = ['required', 'image', "max:" . (self::SIZE * 5) . "", "mimes:jpeg,png"];
+
+
+    public const IMAGE_RULES_OPTIONAL = ['nullable', 'image', "max:" . (self::SIZE * 5) . "", "mimes:jpeg,png"];
 
     /**
      * @var string MUSIC_IMG_PATH
      */
-    public const BLOG_IMG_PATH = 'blog/articles';
-
-    /**
-     * @var string AGENTS_IMG_PATH
-     */
-    public const AGENTS_IMG_PATH = 'agents';
+    public const BLOG_IMG_PATH = 'blogs/images';
 
     /**
      * @var string SERMONS_PATH
      */
     public const SERMONS_PATH = 'sermons';
-
-    /**
-     * @var string EVENTS_PATH
-     */
-    public const EVENTS_PATH = 'events';
 
     /**
      * @var string EVENTS_COVERS_PATH
@@ -47,5 +40,5 @@ class File
     /**
      * @var string GALLERY_IMAGES_PATH
      */
-    public const GALLERY_IMAGES_PATH = 'gallery/images';
+    public const GALLERY_IMAGES_PATH = 'galleries/images';
 }

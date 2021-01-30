@@ -302,18 +302,8 @@ class EventsController extends Controller
     private function savePhotos(Request $request)
     {
         $request->validate([
-            'cover' => [
-                'required',
-                'image',
-                'max:' . (5 * 1024),
-                'mimes:jpeg,png'
-            ],
-            'photos.*' => [
-                'nullable',
-                'image',
-                'max:' . (5 * 1024),
-                'mimes:jpeg,png'
-            ],
+            'cover' => File::IMAGE_RULES,
+            'photos.*' => File::IMAGE_RULES_OPTIONAL,
         ]);
 
         $event = Event::query()->findOrFail($request->query('event_id'));
@@ -388,13 +378,10 @@ class EventsController extends Controller
 
     private function updatePhotos(Event $event, Request $request)
     {
+
         $request->validate([
             'photos' => ['required'],
-            'photos.*' => [
-                'image',
-                'max:' . (5 * 1024),
-                'mimes:jpeg,png'
-            ],
+            'photos.*' => array_slice(File::IMAGE_RULES, 1),
         ]);
 
         $this->storeImagesPhotos($request, $event);
@@ -407,12 +394,7 @@ class EventsController extends Controller
     private function updateCover(Event $event, Request $request)
     {
         $request->validate([
-            'cover' => [
-                'required',
-                'image',
-                'max:' . (5 * 1024),
-                'mimes:jpeg,png'
-            ],
+            'cover' => File::IMAGE_RULES,
         ]);
 
         $event->image->delete();

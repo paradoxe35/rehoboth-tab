@@ -1,0 +1,123 @@
+<?php
+
+namespace App\Http\Controllers\Admin\Blogs;
+
+use App\Files\File;
+use App\Http\Controllers\Controller;
+use App\Models\Blog\Blog;
+use App\Models\Blog\BlogCategory;
+use Illuminate\Http\Request;
+use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
+
+class BlogsController extends Controller
+{
+
+    public function index()
+    {
+        return view('admin.pages.blogs.index');
+    }
+
+
+    public function create()
+    {
+        $categories = BlogCategory::query()->latest()->get();
+
+        $blog = null;
+        if ($id = request('article')) {
+            $blog = Blog::query()->findOrFail($id);
+        }
+
+        return view('admin.pages.blogs.create', compact('categories', 'blog'));
+    }
+
+
+    /**
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        $request->validate([
+            'title' => ['required', 'string', 'min:5', 'max:255', 'unique:blogs'],
+            'author' => ['required', 'string', 'max:255'],
+            'description' => ['required', 'string', 'min:5', 'max:255'],
+            'category' => ['nullable', 'numeric', 'min:1'],
+            'image' => File::IMAGE_RULES,
+            'json' => ['required', 'json']
+        ]);
+
+        $blog = Blog::create([
+            'title' => $request->title,
+            'slug' => Str::slug($request->title),
+            'json' => $request->json,
+            'description' => $request->description,
+            'author' => $request->author,
+            'blog_category_id' => $request->category
+        ]);
+
+        if ($request->hasFile('image')) {
+            $file = $request->file('image');
+            $this->storeImage($file, $blog);
+            $blog->save();
+        }
+
+        return [
+            'message' => trans("L'article a été créé avec succès")
+        ];
+    }
+
+
+    private function storeImage($file, Blog $blog)
+    {
+        $uploaded = $file->storePublicly(File::BLOG_IMG_PATH . "/{$blog->id}");
+        [$width, $height] = getimagesize($file->getPathname());
+
+        $blog->image()->create([
+            'path' => $uploaded,
+            'width' => $width,
+            'height' => $height,
+            'type' => 'cover',
+            'caption' => $file->getClientOriginalName()
+        ]);
+    }
+
+    /**
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, Blog $blog)
+    {
+
+        $request->validate([
+            'title' => [
+                'required', 'string', 'min:5', 'max:255',
+                Rule::unique('blogs')->ignore($blog->id)
+            ],
+            'author' => ['required', 'string', 'max:255'],
+            'description' => ['nullable', 'string', 'max:255'],
+            'category' => ['nullable', 'numeric', 'min:1'],
+            'image' => File::IMAGE_RULES_OPTIONAL,
+            'json' => ['required', 'json']
+        ]);
+
+        $blog->fill([
+            'title' => $request->title,
+            'slug' => Str::slug($request->title),
+            'json' => $request->json,
+            'description' => $request->description,
+            'author' => $request->author,
+            'blog_category_id' => $request->category
+        ])->save();
+
+        if ($request->hasFile('image')) {
+            $blog->image->delete();
+
+            $file = $request->file('image');
+            $this->storeImage($file, $blog);
+        }
+
+        return [
+            'message' => trans("L'article a été modifié avec succès"),
+            'redirect_url' => route('admin.blogs.create', [], false)
+        ];
+    }
+}

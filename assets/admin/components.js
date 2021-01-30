@@ -9,6 +9,8 @@ import EventShow from "./pages/events/EventShow"
 import BsTabs from "./components/BsTabs"
 import GalleryIndex from "./pages/galleries/GalleryIndex"
 import GalleryArticles from "./pages/galleries/GalleryArticles"
+import BlogCreate from "./pages/blogs/BlogCreate"
+import BlogIndex from "./pages/blogs/BlogIndex"
 
 
 const controllers = {
@@ -22,7 +24,9 @@ const controllers = {
     EventShow,
     BsTabs,
     GalleryIndex,
-    GalleryArticles
+    GalleryArticles,
+    BlogCreate,
+    BlogIndex
 }
 
 export default controllers
