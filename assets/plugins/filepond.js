@@ -126,9 +126,22 @@ export const createInstance = (el, options) => {
     return pond
 }
 
-
 export const fileLabel = (type) => {
     return `${type} ou <span class="filepond--label-action">Parcourir</span>`
 }
+
+/**
+ * @type {import('filepond').FilePondOptions}
+ */
+export const imageOptions = {
+    labelIdle: fileLabel('Déposez vos fichiers images'),
+    allowMultiple: true,
+    maxFiles: 10,
+    // @ts-ignore
+    acceptedFileTypes: ['image/png', 'image/jpeg'],
+    maxFileSize: "5MB",
+    minFileSize: "50KB",
+}
+
 
 export default FilePond

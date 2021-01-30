@@ -2,7 +2,7 @@ import React, { useRef, useEffect } from "react"
 import { EVENT_DATA_FORM } from "../DatasForm"
 import H5 from "../H5"
 import Card from "/@/components/Card"
-import FilePond, { fileLabel } from "/@/plugins/filepond"
+import FilePond, { imageOptions } from "/@/plugins/filepond"
 
 const SECTION_KEY = "photos"
 
@@ -12,13 +12,7 @@ const UploadPhotosSection = React.memo(() => {
     useEffect(() => {
         if (ref.current) {
             const pont = FilePond.create(ref.current, {
-                labelIdle: fileLabel('Déposez vos fichiers images'),
-                allowMultiple: true,
-                maxFiles: 10,
-                // @ts-ignore
-                acceptedFileTypes: ['image/png', 'image/jpeg'],
-                maxFileSize: "5MB",
-                minFileSize: "50KB",
+                ...imageOptions,
                 onaddfile: (err, { file }) => {
                     if (!err) {
                         EVENT_DATA_FORM[SECTION_KEY].push(file)
@@ -37,7 +31,7 @@ const UploadPhotosSection = React.memo(() => {
 
 
     return <Card title={<H5 text="Télécharger des photos" />} bodyClass="bg-light" cardClass="my-3">
-        <input type="file" ref={ref} />
+        <div ref={ref} />
     </Card>
 })
 

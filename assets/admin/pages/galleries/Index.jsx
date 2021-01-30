@@ -6,16 +6,20 @@ import { ApiRequest } from "/@/api/api"
 import { Flipper, Flipped } from 'react-flip-toolkit'
 import Masonry, { ResponsiveMasonry } from "react-responsive-masonry"
 import anime from "animejs"
-import styled from "styled-components"
-import Card from "/@/components/Card"
 import { useListDataPaginator, useScrollBottom } from "/@/utils/hooks"
-import Skeleton from "react-loading-skeleton"
-import { LozadImage } from "/@/components/LozadImage"
-import { PhotoSwipe } from 'react-pswp';
 
+import { PhotoSwipe } from 'react-pswp';
 import 'react-pswp/dist/index.css';
 
-const trueArr = new Array(4).fill(true)
+import LoaderFlipped from "/@/components/LoaderFlipped"
+import ImageFlipped from "/@/components/ImageFlipped"
+import BsModal from "/@/components/admin/Modal"
+import FilePond, { imageOptions } from "/@/plugins/filepond"
+import { FormControl } from "../events/create/FormControl"
+import { FlatpickrDate } from "../events/create/Flatpickr"
+import { Notifier } from "/@/utils/notifier"
+
+const trueArr = new Array(5).fill(true)
 
 const Tabs = ({ setGroup }) => {
     return <ul className="nav nav-pills" role="tablist">
@@ -50,8 +54,6 @@ const Tabs = ({ setGroup }) => {
     </ul>
 }
 
-const pathId = /(\/|\\|\.)/g
-
 const onDelayedAppear = (el, index) => {
     anime({
         targets: el,
@@ -75,42 +77,7 @@ const onExit = (el, index, removeElement) => {
     })
 }
 
-export const Image = styled(LozadImage)`
-    will-change: transform;
-    width: 100%;
-    display: block;
-    cursor: pointer;
-`
-
-const ImageFlipped = ({ setKey, img, onClick = null }) => {
-
-    const handleClick = (e) => {
-        e.preventDefault()
-        onClick && onClick(img.uid)
-    }
-
-    return <a href={img.public_path} onClick={handleClick}>
-        <Flipped
-            stagger
-            onAppear={onDelayedAppear}
-            onExit={onExit}
-            flipId={`imagekey-${setKey}`}>
-            <Image data-src={img.public_path} />
-        </Flipped>
-    </a>
-}
-
-const LoaderFlipped = ({ setKey }) => {
-
-    return <Flipped
-        stagger
-        onAppear={onDelayedAppear}
-        onExit={onExit}
-        flipId={`imagekey-${setKey}`}>
-        {/* @ts-ignore */}
-        <Skeleton height={200} />
-    </Flipped>
-}
+const pathId = /(\/|\\|\.)/g
 
 const Content = ({ images = [], onClick = null }) => {
     return <>
@@ -119,11 +86,20 @@ const Content = ({ images = [], onClick = null }) => {
                 <Masonry gutter="10px">
                     {images.map((img, i) => {
                         if (typeof img === 'boolean') {
-                            return <LoaderFlipped setKey={i} />
+                            return <LoaderFlipped
+                                onDelayedAppear={onDelayedAppear}
+                                onExit={onExit} 
+                                setKey={i} />
                         } else {
                             const key = img.path.replace(pathId, '-')
                             img.uid = i
-                            return <ImageFlipped onClick={onClick} key={key} setKey={key} img={img} />
+                            return <ImageFlipped
+                                onClick={onClick}
+                                onDelayedAppear={onDelayedAppear}
+                                onExit={onExit}
+                                key={key}
+                                setKey={key}
+                                img={img} />
                         }
                     })}
 
@@ -146,7 +122,10 @@ const useImagesState = () => {
         paginator
     } = useListDataPaginator(null, onLoadNextItems)
 
-    const imagesRef = useRef([])
+    const imagesRef = useRef(trueArr)
+    const groupRef = useRef(group)
+
+    groupRef.current = group
 
     useEffect(() => {
         ApiRequest('get', route('admin.galleries.images').toString())
@@ -156,6 +135,15 @@ const useImagesState = () => {
                 imagesRef.current = pdata.data
             })
     }, [])
+
+
+    const prependImages = useCallback((imgs) => {
+        imagesRef.current.push(...imgs)
+        setImages(im => [
+            ...(groupRef.current === "all" ? imgs : imgs.filter(i => i.imageable == group)),
+            ...im,
+        ])
+    }, [imagesRef, setImages, group])
 
     function onLoadNextItems(page, canLoad) {
         setImages(im => [...im, ...trueArr])
@@ -186,11 +174,103 @@ const useImagesState = () => {
         }
     }, [group, listData])
 
-    return { images, setGroup }
+    return { images, setGroup, prependImages }
 }
 
+const AddImagesModalContent = ({ imagesRef, formId }) => {
+    const ref = useRef(null)
+
+    useEffect(() => {
+        imagesRef.current = [];
+        if (ref.current) {
+            const pont = FilePond.create(ref.current, {
+                ...imageOptions,
+                maxFiles: 20,
+                onaddfile: (err, { file }) => {
+                    if (!err) {
+                        imagesRef.current.push(file)
+                    }
+                },
+                onremovefile: (err, { file }) => {
+                    if (!err) {
+                        imagesRef.current = imagesRef.current.filter(f => f != file)
+                    }
+                }
+            })
+            return () => pont.destroy()
+        }
+    }, [])
+
+    return <>
+        <h5 className="mb-4">Ajouter des images à la galerie</h5>
+        <form id={formId} autoComplete="off">
+            <div className="row">
+                <div className="col-lg-5">
+                    <FormControl label="Titre de la galerie" name="title" />
+                    <div className="mb-3">
+                        <label htmlFor="description" className="form-label">
+                            Description
+                        </label>
+                        <textarea className="form-control" id="description" rows={2}></textarea>
+                    </div>
+                    <FlatpickrDate label="Date" />
+                </div>
+                <div className="col-lg-7">
+                    <div ref={ref} />
+                </div>
+            </div>
+        </form>
+    </>
+}
+
+/**
+ * @type { * }
+ */
+// @ts-ignore
+const AddImages = React.memo(({ prependImages }) => {
+    const modalRef = useRef(null)
+    const [loading, setLoading] = useState(false);
+    const imagesRef = useRef([]);
+    const formId = useRef(`form-${Math.random()}`)
+
+    const handleUpload = () => {
+        /** @type { HTMLFormElement } */
+        // @ts-ignore
+        const formEl = document.getElementById(formId.current);
+
+        const imagesData = new FormData(formEl)
+        imagesRef.current.forEach(img => imagesData.append('images[]', img))
+
+        setLoading(true)
+        ApiRequest('post', route('admin.galleries.store').toString(), imagesData)
+            .then(({ data: { data } }) => {
+                prependImages(data)
+                Notifier.success("Enregistrés")
+                modalRef.current && modalRef.current.hide()
+            })
+            .finally(() => setLoading(false))
+    }
+
+    const footer = <Button
+        loading={loading}
+        onClick={handleUpload}
+        className="btn-sm text-sm"
+        text="Sauvegarder" />
+
+    return <>
+        <Button
+            text="Ajouter images"
+            onClick={() => modalRef.current && modalRef.current.show()}
+            className="btn-sm text-sm" />
+        <BsModal size="xl" footer={footer} modalRef={modalRef}>
+            {() => <AddImagesModalContent formId={formId.current} imagesRef={imagesRef} />}
+        </BsModal>
+    </>
+})
+
+
 const Main = () => {
-    const { setGroup, images } = useImagesState()
+    const { setGroup, images, prependImages } = useImagesState()
 
     const [index, setIndex] = useState(null);
     const [open, setOpen] = useState(false);
@@ -217,17 +297,15 @@ const Main = () => {
                 <Tabs setGroup={setGroup} />
             </div>
             <div className="col-auto">
-                <Button text="Ajouter images" className="btn-sm text-sm" />
+                <AddImages prependImages={prependImages} />
             </div>
         </div>
 
         <div className="my-3">
-            <Card>
-                {/* @ts-ignore */}
-                <Flipper staggerConfig={{ default: { reverse: true, speed: .3 }, }} spring="gentle" flipKey={images}>
-                    <Content onClick={handleClickImage} images={images} />
-                </Flipper>
-            </Card>
+            {/* @ts-ignore */}
+            <Flipper staggerConfig={{ default: { reverse: true, speed: .3 }, }} spring="gentle" flipKey={images}>
+                <Content onClick={handleClickImage} images={images} />
+            </Flipper>
         </div>
         <PhotoSwipe
             container={pswpContainer}

@@ -39,7 +39,7 @@ Route::prefix('dash')
         Route::post('/events/{event}/updateEvent', [EventsController::class, 'updateEvent'])->name('events.updateEvent');
         Route::get('/events/{event}/registrations', [EventsController::class, 'registrations'])->name('events.registrations');
 
-        Route::resource('/galleries', GalleriesController::class)->only(['index', 'destroy']);
+        Route::resource('/galleries', GalleriesController::class)->only(['index', 'destroy', 'store']);
         Route::get('/galleries/images', [GalleriesController::class, 'getImages'])->name('galleries.images');
 
         Route::resource('/blogs',  BlogsController::class);

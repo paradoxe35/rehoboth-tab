@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { Modal } from 'bootstrap'
 
-const BsModal = ({ children, modalRef = null, keepAlive = false, render = null, size = 'lg' }) => {
+const BsModal = ({ children, modalRef = null, keepAlive = false, render = null, size = 'lg', footer = null }) => {
     const modal = useRef(null)
     const ref = useRef(null)
     const [open, setOpen] = useState(false)
@@ -30,6 +30,7 @@ const BsModal = ({ children, modalRef = null, keepAlive = false, render = null, 
                         type="button"
                         className="btn btn-secondary btn-sm text-white"
                         data-bs-dismiss="modal">Fermer</button>
+                    {footer}
                 </div>
             </div>
         </div>

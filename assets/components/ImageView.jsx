@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
-import Skeleton from 'react-loading-skeleton';
+import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 
 
 const ImageView = ({ src, width = null, height = null, className = null }) => {
@@ -14,9 +14,16 @@ const ImageView = ({ src, width = null, height = null, className = null }) => {
     }, [ref.current])
 
     return <>
-        {/*  @ts-ignore */}
-        {loader && <Skeleton height={height} width={width} />}
-        <img src={src} className={className}  ref={ref} />
+        {loader && (
+            /* @ts-ignore */
+            <SkeletonTheme color="#e9e6e6">
+                <p>
+                    {/* @ts-ignore */}
+                    <Skeleton height={keyH} height={height} width={width} />
+                </p>
+            </SkeletonTheme>
+        )}
+        <img src={src} className={className} ref={ref} />
     </>
 }
 

@@ -43,4 +43,9 @@ class File
      * @var string EVENTS_PHOTOS_PATH
      */
     public const EVENTS_PHOTOS_PATH = 'events/photos';
+
+    /**
+     * @var string GALLERY_IMAGES_PATH
+     */
+    public const GALLERY_IMAGES_PATH = 'gallery/images';
 }
