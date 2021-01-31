@@ -13,6 +13,7 @@ import BlogCreate from "./pages/blogs/BlogCreate"
 import BlogIndex from "./pages/blogs/BlogIndex"
 import BlogProfile from "./pages/blogs/BlogProfile"
 import BlogContent from "./pages/blogs/BlogContent"
+import MessageIndex from "./pages/messages/MessageIndex"
 
 
 const controllers = {
@@ -30,7 +31,8 @@ const controllers = {
     BlogCreate,
     BlogIndex,
     BlogProfile,
-    BlogContent
+    BlogContent,
+    MessageIndex
 }
 
 export default controllers

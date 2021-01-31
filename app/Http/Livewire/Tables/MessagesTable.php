@@ -13,6 +13,8 @@ class MessagesTable extends LivewireDatatable
 
     public function columns()
     {
-        //
+        return [
+            
+        ];
     }
 }
