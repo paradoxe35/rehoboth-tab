@@ -14,7 +14,6 @@ export const ItemFolio = styled.div`
     overflow: hidden;
     .item-folio__thumb img {
         vertical-align: bottom;
-        transition: all 0.5s ease-in-out;
     }
 
     .item-folio__thumb a {
