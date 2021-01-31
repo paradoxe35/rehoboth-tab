@@ -56,7 +56,7 @@ Route::prefix('dash')
             'index', 'store', 'destroy'
         ]);
 
-        Route::resource('/messages', MessagesController::class);
+        Route::resource('/messages', MessagesController::class)->only(['index', 'update']);
 
 
         Route::apiResource("files", FilesController::class);

@@ -7,7 +7,7 @@ import {
     htmlDeleteModalButton,
     htmlInfoModal,
     htmlTitleModal,
-    onDeleteItemModal,
+    onActionItemModal,
     openModalEventFrame
 } from '/@/utils/dom';
 
@@ -56,7 +56,7 @@ export default class extends GiaComponent {
 
         const parentId = `images-${Math.random()}`
 
-        onDeleteItemModal("galleriesArticles", parentId, (el) => {
+        onActionItemModal("galleriesArticles", parentId, (el) => {
             if (!confirmed()) return
 
             Btn.loading(el)

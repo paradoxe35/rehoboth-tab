@@ -185,6 +185,10 @@ export const openModalEventFrame = (types, fn) => {
                             finaldata.data = idata
                         }
                         break;
+
+                    case "put":
+                        finaldata.data = idata
+                        break;
                     case "remove":
                         if (Array.isArray(finaldata.data)) {
                             finaldata.data = finaldata.data.filter(e => e.id != idata.id)
@@ -219,11 +223,11 @@ export const dispatchEventUpdatedModalItems = (type, data, more = {}) => {
     }))
 }
 
-export const onDeleteItemModal = (eventName, parentId, callback) => {
+export const onActionItemModal = (eventName, parentId, callback) => {
     eventListenOne(null, eventName, (e) => {
 
         const el = document.getElementById(parentId)
-        Array.from(el.querySelectorAll('.delete--js'))
+        Array.from(el.querySelectorAll('.action--js'))
             .forEach(el => el.addEventListener('click', callback.bind(undefined, el)))
 
     })
@@ -231,7 +235,13 @@ export const onDeleteItemModal = (eventName, parentId, callback) => {
 
 export const htmlDeleteModalButton = (id) => {
     return /*html*/`
-        <button data-id="${id}" class="btn delete--js text-xs btn-danger p-1 text-white">Supprimer</button>
+        <button data-id="${id}" class="btn action--js text-xs btn-danger p-1 text-white">Supprimer</button>
+    `
+}
+
+export const htmlModalButton = (id, text = "", color = "btn-primary") => {
+    return /*html*/`
+        <button data-id="${id}" class="btn action--js text-xs ${color} p-1 text-white">${text}</button>
     `
 }
 

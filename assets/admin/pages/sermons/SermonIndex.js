@@ -7,7 +7,7 @@ import {
     htmlDeleteModalButton,
     htmlInfoModal,
     htmlTitleModal,
-    onDeleteItemModal,
+    onActionItemModal,
     openModalEventFrame
 } from '/@/utils/dom';
 
@@ -100,7 +100,7 @@ export default class extends GiaComponent {
     viewImageSermon(type, data) {
         const parentId = `image-${Math.random()}`
 
-        onDeleteItemModal("sermonsIndex", parentId, (el) => {
+        onActionItemModal("sermonsIndex", parentId, (el) => {
             if (!confirmed()) return
 
             Btn.loading(el)
@@ -134,7 +134,7 @@ export default class extends GiaComponent {
     viewVideoSermon(type, data) {
         const parentId = `video-${Math.random()}`
 
-        onDeleteItemModal("sermonsIndex", parentId, this.deleteFileFetch.bind(this))
+        onActionItemModal("sermonsIndex", parentId, this.deleteFileFetch.bind(this))
 
         return /*html*/`
             <div id="${parentId}">
@@ -162,7 +162,7 @@ export default class extends GiaComponent {
 
         const parentId = `audios-${Math.random()}`
 
-        onDeleteItemModal("sermonsIndex", parentId, this.deleteFileFetch.bind(this))
+        onActionItemModal("sermonsIndex", parentId, this.deleteFileFetch.bind(this))
 
         return /*html*/`
             <div id="${parentId}">
@@ -180,7 +180,7 @@ export default class extends GiaComponent {
 
         const parentId = `documents-${Math.random()}`
 
-        onDeleteItemModal("sermonsIndex", parentId, this.deleteFileFetch.bind(this))
+        onActionItemModal("sermonsIndex", parentId, this.deleteFileFetch.bind(this))
 
         return /*html*/`
             <div id="${parentId}">

@@ -14,5 +14,5 @@ class Message extends Model
      *
      * @var array
      */
-    protected $fillable = ['email', 'phone', 'subject', 'sended', 'message', 'country_name', 'country_code'];
+    protected $fillable = ['email', 'phone', 'subject', 'sent', 'message', 'country_name', 'country_code'];
 }
