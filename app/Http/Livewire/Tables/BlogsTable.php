@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Tables;
 
 use App\Models\Blog\Blog;
+use App\Models\Blog\BlogCategory;
 use Mediconesystems\LivewireDatatables\Http\Livewire\LivewireDatatable;
 use Mediconesystems\LivewireDatatables\Column;
 use Mediconesystems\LivewireDatatables\DateColumn;
@@ -33,6 +34,10 @@ class BlogsTable extends LivewireDatatable
                 ->editable()
                 ->label(trans("Auteur")),
 
+            Column::name('blogCategory.name')
+                ->filterable($this->categories->pluck('name'))
+                ->label('Catégorie'),
+
             DateColumn::name('created_at')
                 ->filterable()
                 ->label(trans('Ajouté le')),
@@ -53,5 +58,11 @@ class BlogsTable extends LivewireDatatable
                 ->alignCenter()
                 ->label(trans('Supprimer')),
         ];
+    }
+
+
+    public function getCategoriesProperty()
+    {
+        return BlogCategory::all();
     }
 }

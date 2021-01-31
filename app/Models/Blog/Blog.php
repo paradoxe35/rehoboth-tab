@@ -33,6 +33,11 @@ class Blog extends Model
         return $this->belongsTo(BlogCategory::class);
     }
 
+    public function blogCategory()
+    {
+        return $this->belongsTo(BlogCategory::class);
+    }
+
     public function image()
     {
         return $this->morphOne(Image::class, 'imageable');
