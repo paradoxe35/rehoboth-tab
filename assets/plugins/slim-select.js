@@ -1,8 +1,9 @@
 import SlimSelect from 'slim-select'
+import 'slim-select/dist/slimselect.css'
 
 /**
  * @param { HTMLElement|Element } element 
- * @param { import('slim-select').Constructor } option
+ * @param { * } option
  */
 export const slim = (element, option = {}) => {
     return new SlimSelect({

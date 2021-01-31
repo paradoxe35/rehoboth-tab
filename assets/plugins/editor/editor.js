@@ -1,21 +1,23 @@
 //@ts-check
-import Ejs, { EditorConfig } from '@editorjs/editorjs';
-import Header from '@editorjs/header';
-import Embed from '@editorjs/embed'
-import SimpleImage from '@editorjs/simple-image'
-import Marker from '@editorjs/marker'
-import LinkTool from '@editorjs/link'
-import List from '@editorjs/list';
-import Delimiter from '@editorjs/delimiter'
 import CodeTool from '@editorjs/code';
-import Underline from '@editorjs/underline';
+import Delimiter from '@editorjs/delimiter';
+import Ejs, { EditorConfig } from '@editorjs/editorjs';
+import Embed from '@editorjs/embed';
+import Header from '@editorjs/header';
 import InlineCode from '@editorjs/inline-code';
+import LinkTool from '@editorjs/link';
+import List from '@editorjs/list';
+import Marker from '@editorjs/marker';
+import SimpleImage from '@editorjs/simple-image';
+import Underline from '@editorjs/underline';
 import DragDrop from 'editorjs-drag-drop';
-import './style.css'
+import './style.css';
 
 /**
  * @param { EditorConfig } configuration 
  * @param { string } linkToolEndPoint 
+ * 
+ * @returns { Ejs }
  */
 export const EditorJS = (configuration = {}, linkToolEndPoint) => {
     const editor = new Ejs({

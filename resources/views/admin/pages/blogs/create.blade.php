@@ -18,13 +18,13 @@
         'link' => route('admin.blogs.index')
     ],
     [
-        'name' => 'Nouvel article',
+        'name' => ($blog ? "Editer article - {$blog->title}" : 'Nouvel article'),
         'active' => true
     ]
 ]])
 
 
-@include('admin.pages.blogs.create.formModal')
+@include('admin.pages.blogs.create.form')
 
 <script type="text/javascript" data-swup-reload-script>
     window.article_edit = JSON.parse(@json($blog ? $blog->json : null))

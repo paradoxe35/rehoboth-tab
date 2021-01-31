@@ -1,22 +1,22 @@
 <form g-ref="store"
-    action="{{ $blog ? route('admin.blogs.update', ['blog' => $blog->id]) : route('admin.blogs.store') }}"
-    method="post" autocomplete="off" enctype="multipart/form-data">
+    action="{{ $blog ? route('admin.blogs.update', ['blog' => $blog->id]) : route('admin.blogs.store') }}" method="post"
+    autocomplete="off" enctype="multipart/form-data">
     <div class="row">
         <div class="col-lg-6">
 
-            <div class="form-group mb-3">
+            <div class="mb-3">
                 <span>{{ __('Titre') }}</span>
-                <input type="text" g-ref="title" value="{{ $blog ? $blog->title : '' }}"
-                    class="form-control" name="title">
+                <input type="text" g-ref="title" value="{{ $blog ? $blog->title : '' }}" class="form-control"
+                    name="title">
             </div>
 
-            <div class="form-group mb-3">
+            <div class="mb-3">
                 <span>{{ __('Auteur') }}</span>
                 <input name="author" class="form-control" value="{{ $blog ? $blog->author : $app_name }}"
                     placeholder="{{ __('Auteur') }}">
             </div>
 
-            <div class="form-group mb-3">
+            <div class="mb-3">
                 <label for="categories">
                     {{ __('Catégories') }}
                     <button type="button" g-ref="categoryBtn" class="btn btn-secondary btn-sm text-white mb-2">
@@ -33,7 +33,7 @@
                     @endforeach
                 </select>
             </div>
-            <div class="form-group mb-3">
+            <div class="mb-3">
                 <label>{{ __('Description') }}</label>
                 <textarea class="form-control" name="description"
                     rows="2">{{ $blog ? $blog->description : '' }}</textarea>
@@ -41,9 +41,11 @@
         </div>
 
         <div class="col-lg-6">
-            <div class="form-group mb-3">
+            <div class="mb-3">
                 <label>{{ __('Image') }}</label>
-                <div g-ref="coverImage"></div>
+                <x-card>
+                    <div g-ref="coverImage"></div>
+                </x-card>
             </div>
         </div>
 
@@ -63,7 +65,7 @@
     </div>
 
     <div>
-        <button type="submit" class="btn btn-primary btn-sm">{{ __('Enregistrer') }}</button>
+        <button type="submit" class="btn text-white btn-primary btn-sm">{{ __('Enregistrer') }}</button>
         <a type="button" g-ref="preview" class="btn btn-secondary btn-sm text-white">{{ __('Aperçu') }}</a>
     </div>
 </form>

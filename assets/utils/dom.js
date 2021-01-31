@@ -146,6 +146,13 @@ export const HtmlAlert = {
     }
 }
 
+/**
+ * @param { HTMLElement | EventTarget } target
+ * @returns { HTMLButtonElement }
+*/
+// @ts-ignore
+export const FormBtn = (target) => target ? target.querySelector('button[type="submit"]') : null
+
 
 export const openModalEventFrame = (types, fn) => {
 
