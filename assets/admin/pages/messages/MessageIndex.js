@@ -47,7 +47,10 @@ export default class extends GiaComponent {
         return /*html*/`
             <div id="${parentId}">
                 ${htmlTitleModal(type)}
-                ${data.read ? htmlModalButton(data.id, 'Marquer comme lu') : /*html*/`<div class="text-success">Lu</div>`}
+                ${
+                    !data.read ? htmlModalButton(data.id, 'Marquer comme lu') :
+                     /*html*/`<div class="text-success">Déjà Lu</div>`
+                }
                 <hr />
                 <h5 class="text-muted mb-3">Object: ${data.subject}</h5>
                 <hr />

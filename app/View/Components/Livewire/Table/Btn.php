@@ -10,19 +10,19 @@ class Btn extends Component
     public $label;
     public $event;
     public $type;
-    public $data;
+    public $datas;
 
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct(string $label, string $event, string $type, $data)
+    public function __construct(string $label, string $event, string $type, $datas)
     {
         $this->label = $label;
         $this->event = $event;
         $this->type = $type;
-        $this->data = $data;
+        $this->datas = $datas;
     }
 
     /**

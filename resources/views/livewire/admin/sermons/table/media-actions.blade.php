@@ -1,21 +1,9 @@
 <div>
-    <button class="button"
-        onclick='openParentModal("sermonsIndex", { type: "video", data: @json($video) }, "{{ Str::random() }}")'>
-        {{ __("Video") }}
-    </button>
+    <x-livewire.table.btn label="Video" type="video" event="sermonsIndex" :datas="$video" />
 
-    <button class="button"
-        onclick='openParentModal("sermonsIndex", { type: "audios", data: @json($audios) }, "{{ Str::random() }}")'>
-        {{ __("Audios") }}
-    </button>
+    <x-livewire.table.btn label="Audios" type="audios" event="sermonsIndex" :datas="$audios" />
 
-    <button class="button"
-        onclick='openParentModal("sermonsIndex", { type: "documents", data: @json($documents) }, "{{ Str::random() }}")'>
-        {{ __("Documents") }}
-    </button>
+    <x-livewire.table.btn label="Documents" type="documents" event="sermonsIndex" :datas="$documents" />
 
-    <button class="button"
-        onclick='openParentModal("sermonsIndex", { type: "image", data: @json($image) }, "{{ Str::random() }}")'>
-        {{ __("Image") }}
-    </button>
+    <x-livewire.table.btn label="Image" type="image" event="sermonsIndex" :datas="$image" />
 </div>
