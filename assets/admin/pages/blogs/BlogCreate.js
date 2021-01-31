@@ -162,8 +162,9 @@ export default class extends GiaComponent {
     async storeFetch(e) {
         e.preventDefault()
 
-        if (!this.imageCover) {
-            Notifier.error("Image de couverture est requise")
+        const json = await this.editor.save()
+        if (!json.blocks.length) {
+            Notifier.error("Contenu article est requis")
             return
         }
 
@@ -171,7 +172,7 @@ export default class extends GiaComponent {
 
         // @ts-ignore
         const datas = new FormData(target)
-        const json = await this.editor.save()
+        
         datas.set('json', JSON.stringify(json))
 
         datas.set('image', this.imageCover)

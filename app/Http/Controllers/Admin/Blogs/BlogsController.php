@@ -7,11 +7,25 @@ use App\Http\Controllers\Controller;
 use App\Models\Blog\Blog;
 use App\Models\Blog\BlogCategory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 
 class BlogsController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware(['optimizeImages']);
+
+        $this->middleware(function (Request $request, \Closure $next) {
+            URL::defaults([
+                'blog' => $request->route()->originalParameter('blog')
+            ]);
+
+            return $next($request);
+        })->except(['index', 'create']);
+    }
 
     public function index()
     {
@@ -25,7 +39,7 @@ class BlogsController extends Controller
 
         $blog = null;
         if ($id = request('article')) {
-            $blog = Blog::query()->findOrFail($id);
+            $blog = Blog::findOrFail($id);
         }
 
         return view('admin.pages.blogs.create', compact('categories', 'blog'));
@@ -58,11 +72,11 @@ class BlogsController extends Controller
         if ($request->hasFile('image')) {
             $file = $request->file('image');
             $this->storeImage($file, $blog);
-            $blog->save();
         }
 
         return [
-            'message' => trans("L'article a été créé avec succès")
+            'message' => trans("L'article a été créé avec succès"),
+            'redirect_url' => route('admin.blogs.show', ['blog' =>  $blog->id], false)
         ];
     }
 
@@ -117,7 +131,52 @@ class BlogsController extends Controller
 
         return [
             'message' => trans("L'article a été modifié avec succès"),
-            'redirect_url' => route('admin.blogs.create', [], false)
+            'redirect_url' => route('admin.blogs.show', ['blog' =>  $blog->id], false)
+        ];
+    }
+
+
+    /**
+     * @return \Illuminate\Http\Response
+     */
+    public function show()
+    {
+        return redirect(route('admin.blogs.show.profile'));
+    }
+
+
+    /**
+     * @return \Illuminate\Http\Response
+     */
+    public function showProfile(Blog $blog)
+    {
+        return view('admin.pages.blogs.show.profile', compact('blog'));
+    }
+
+    /**
+     * @return \Illuminate\Http\Response
+     */
+    public function showContent(Blog $blog)
+    {
+        return view('admin.pages.blogs.show.content', compact('blog'));
+    }
+
+    /**
+     * @return \Illuminate\Http\Response
+     */
+    public function showComments(Blog $blog)
+    {
+        return view('admin.pages.blogs.show.comments', compact('blog'));
+    }
+
+    /**
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(Blog $blog)
+    {
+        $blog->delete();
+        return [
+            'redirect_url' => route('admin.blogs.index', [], false)
         ];
     }
 }

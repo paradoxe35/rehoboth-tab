@@ -11,6 +11,8 @@ import GalleryIndex from "./pages/galleries/GalleryIndex"
 import GalleryArticles from "./pages/galleries/GalleryArticles"
 import BlogCreate from "./pages/blogs/BlogCreate"
 import BlogIndex from "./pages/blogs/BlogIndex"
+import BlogProfile from "./pages/blogs/BlogProfile"
+import BlogContent from "./pages/blogs/BlogContent"
 
 
 const controllers = {
@@ -26,7 +28,9 @@ const controllers = {
     GalleryIndex,
     GalleryArticles,
     BlogCreate,
-    BlogIndex
+    BlogIndex,
+    BlogProfile,
+    BlogContent
 }
 
 export default controllers

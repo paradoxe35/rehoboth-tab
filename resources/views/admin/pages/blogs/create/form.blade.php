@@ -47,6 +47,13 @@
                     <div g-ref="coverImage"></div>
                 </x-card>
             </div>
+            @if ($blog)
+            <div class="mb-3">
+                <x-card>
+                    <img class="img-fluid img-thumbnail" src="{{ $blog->image->public_path }}" alt="{{ $blog->title }}">
+                </x-card>
+            </div>
+            @endif
         </div>
 
     </div>
