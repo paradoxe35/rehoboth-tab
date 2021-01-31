@@ -11,10 +11,6 @@ export const MasonryImageStyled = styled.img`
 
 export const ItemFolio = styled.div`
     position: relative;
-    overflow: hidden;
-    .item-folio__thumb img {
-        vertical-align: bottom;
-    }
 
     .item-folio__thumb a {
         display: block;
