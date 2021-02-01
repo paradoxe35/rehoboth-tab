@@ -4,7 +4,8 @@
             <div class="pb-0 card-header">
                 <h6>{{ __("Sermons") }}</h6>
             </div>
-            <div class="d-flex align-items-end card-body">
+            <div class="d-flex align-items-end card-body bg-light justify-content-center">
+                <h4>{{ $sermon }}</h4>
             </div>
         </div>
     </div>
@@ -13,33 +14,29 @@
             <div class="pb-0 card-header">
                 <h6>{{ __("Événements") }}</h6>
             </div>
-            <div class="d-flex align-items-end card-body">
-                <div class="flex-grow-1 row">
-                </div>
+            <div class="d-flex align-items-end card-body bg-light justify-content-center">
+                <h4>{{ $event }}</h4>
             </div>
         </div>
     </div>
     <div class="col-xxl-3 mb-3 pr-md-2 col-md-6">
         <div class="h-md-100 card">
             <div class="pb-0 card-header">
-                <h6>{{ __("Articles") }}</h6>
+                <h6>{{ __("Blogs") }}</h6>
             </div>
-            <div class="d-flex align-items-end card-body">
+            <div class="d-flex align-items-end card-body bg-light justify-content-center">
+                <h4>{{ $blog }}</h4>
             </div>
         </div>
     </div>
-    <div class="col-xxl-3 mb-3 pl-md-2 col-md-6">
+
+    <div class="col-xxl-3 mb-3 pr-md-2 col-md-6">
         <div class="h-md-100 card">
             <div class="pb-0 card-header">
-                <div class="align-items-center row">
-                    <div class="col">
-                        <h6>{{ __("Galeries") }}</h6>
-                    </div>
-                    <div class="text-right col-auto">
-                    </div>
-                </div>
+                <h6>{{ __("Galeries") }}</h6>
             </div>
-            <div class="pt-2 card-body">
+            <div class="d-flex align-items-end card-body bg-light justify-content-center">
+                <h4>{{ $gallery }}</h4>
             </div>
         </div>
     </div>

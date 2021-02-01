@@ -4,11 +4,18 @@
         data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
-    <input class="form-control form-control-dark w-100 bg-transparent" type="text" disabled placeholder="Paradoxe Ngwasi" aria-label="Search">
+    <input class="form-control form-control-dark w-100 bg-transparent" type="text" disabled
+        placeholder="{{ Auth::user()->name }}" aria-label="Search">
     <livewire:loader />
     <ul class="navbar-nav px-3">
         <li class="nav-item text-nowrap">
-            <a class="nav-link" href="#">{{ __("Déconnexion") }}</a>
+            <a class="nav-link" data-no-swup href="{{ route('admin.logout') }}" onclick="event.preventDefault();
+                                                 document.getElementById('logout-form').submit();">
+                {{ __('Déconnexion') }}
+            </a>
+            <form id="logout-form" action="{{ route('admin.logout') }}" method="POST" style="display: none;">
+                @csrf
+            </form>
         </li>
     </ul>
 </header>
