@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\MessagesController;
 use App\Http\Controllers\Admin\Morph\FilesController;
 use App\Http\Controllers\Admin\Morph\ImagesController;
 use App\Http\Controllers\Admin\SermonsController;
+use App\Http\Controllers\Admin\SettingsController;
 use App\Http\Controllers\Organizers\OrganizersController;
 use App\Http\Controllers\Services\OgController;
 use App\Http\Controllers\Tags\TagsController;
@@ -63,6 +64,9 @@ Route::prefix('dash')
                 Route::apiResource("images", ImagesController::class);
                 Route::apiResource("tags", TagsController::class);
                 Route::apiResource("organizers", OrganizersController::class);
+
+                Route::get('settings/profiles', [SettingsController::class, 'profiles'])->name('settings.profiles');
+                Route::get('settings/church-details', [SettingsController::class, 'churchDetails'])->name('settings.church-details');
             });
 
         Route::get('/og-meta', OgController::class)->name('og-meta');
