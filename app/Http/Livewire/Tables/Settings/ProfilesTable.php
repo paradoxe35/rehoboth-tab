@@ -35,6 +35,9 @@ class ProfilesTable extends LivewireDatatable
                 ->editable()
                 ->label(trans("Phone")),
 
+            Column::name('created_at')
+                ->label(trans('Ajouté le')),
+
             Column::callback(['id'], function ($id) {
                 $profile = Profil::find($id);
                 return view('livewire.admin.profiles.table.profile-actions', compact('profile'));
