@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\Files\File;
 use App\Http\Controllers\Controller;
+use App\Models\ChurchDetail;
 use App\Models\Profil;
+use App\Models\Programme;
 use Illuminate\Http\Request;
 
 class SettingsController extends Controller
@@ -49,6 +51,27 @@ class SettingsController extends Controller
 
     public function churchDetails()
     {
-        return view('admin.pages.settings.church-details');
+        $details = ChurchDetail::first();
+
+        if ($details) {
+            $details->load('address');
+        }
+
+        return view('admin.pages.settings.church-details', compact('details'));
+    }
+
+
+    public function storeChurchDetails(Request $request)
+    {
+    }
+
+    public function programmes()
+    {
+        return view('admin.pages.settings.programmes');
+    }
+
+    public function programmesItems()
+    {
+        return Programme::all();
     }
 }

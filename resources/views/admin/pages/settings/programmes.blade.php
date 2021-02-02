@@ -8,18 +8,14 @@
         'active' => true
     ],
     [
-        'name' => "Détails de l'église",
+        'name' => "Programmes",
         'active' => true
     ]
 ]])
 @endsection
 
 @section('settings-content')
-<div g-component="ChurchDetailsPage">
+<div g-component="ProgrammesPage">
     <x-spinner />
 </div>
-
-<script type="text/javascript" data-swup-reload-script>
-    window.$details = @json($details);
-</script>
 @endsection

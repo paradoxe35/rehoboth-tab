@@ -31,6 +31,7 @@ export const useSyncFormDataInputElements = (refs, key) => {
     const refElements = useRef([])
 
     const onChange = useCallback(({ target: { value, name, type, checked } }) => {
+        if (!key) return
         let keys = key.split('.')
         const ivalue = ((type === "checkbox" || type === 'radio') ? checked : value)
         if (keys.length <= 1) {

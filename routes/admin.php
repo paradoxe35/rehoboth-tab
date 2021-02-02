@@ -67,7 +67,15 @@ Route::prefix('dash')
 
                 Route::get('settings/profiles', [SettingsController::class, 'profiles'])->name('settings.profiles');
                 Route::post('settings/profiles', [SettingsController::class, 'storeProfile']);
+
                 Route::get('settings/church-details', [SettingsController::class, 'churchDetails'])->name('settings.church-details');
+                Route::post('settings/church-details', [SettingsController::class, 'storeChurchDetails']);
+
+                Route::get('settings/programmes/items', [SettingsController::class, 'programmesItems'])->name('settings.programmes.items');
+
+                Route::get('settings/programmes', [SettingsController::class, 'programmes'])->name('settings.programmes');
+                Route::post('settings/programmes', [SettingsController::class, 'StoreProgrammes']);
+                Route::delete('settings/programmes/{programme}', [SettingsController::class, 'deleteProgramme']);
             });
 
         Route::get('/og-meta', OgController::class)->name('og-meta');

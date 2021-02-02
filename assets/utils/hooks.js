@@ -31,7 +31,11 @@ export const useOnChangeRef = (onChange) => {
 
     onChangeRef.current = onChange
 
-    return onChangeRef
+    const handleChange = useCallback((...datas) => {
+        onChangeRef.current && onChangeRef.current(...datas)
+    }, [])
+
+    return handleChange
 }
 
 

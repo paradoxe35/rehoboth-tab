@@ -16,6 +16,7 @@ import BlogContent from "./pages/blogs/BlogContent"
 import MessageIndex from "./pages/messages/MessageIndex"
 import ProfilesPage from "./pages/settings/profiles/ProfilesPage"
 import ChurchDetailsPage from "./pages/settings/church-details/ChurchDetailsPage"
+import ProgrammesPage from "./pages/settings/programmes/ProgrammesPage"
 
 
 const controllers = {
@@ -36,7 +37,8 @@ const controllers = {
     BlogContent,
     MessageIndex,
     ProfilesPage,
-    ChurchDetailsPage
+    ChurchDetailsPage,
+    ProgrammesPage
 }
 
 export default controllers
