@@ -5,5 +5,6 @@ export default class extends GiaComponent {
         super(element);
     }
 
-    mount() { }
+    mount() {
+    }
 }

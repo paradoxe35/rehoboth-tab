@@ -58,7 +58,7 @@ const Titles = () => {
 const FromGallery = () => {
     return <div className="container-fluid mb-4">
         <ContainerStyled>
-            <div className="container my-4" data-aos="fade-up">
+            <div className="container my-4 overflow-hidden" data-aos="fade-up">
                 <div className="row justify-content-center">
                     <div className="col-lg-10">
 

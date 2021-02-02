@@ -11,7 +11,7 @@ class Gallery extends Model
 {
     use HasFactory;
 
-/**
+    /**
      * The event map for the model.
      *
      * @var array

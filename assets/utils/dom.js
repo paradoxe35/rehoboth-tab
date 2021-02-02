@@ -153,6 +153,14 @@ export const HtmlAlert = {
 // @ts-ignore
 export const FormBtn = (target) => target ? target.querySelector('button[type="submit"]') : null
 
+export const clearInput = (parent) => {
+    const inptus = parent.querySelectorAll('input[type="text"]');
+    const textarea = parent.querySelectorAll('textarea');
+    const emails = parent.querySelectorAll('input[type="email"]');
+    const tels = parent.querySelectorAll('input[type="tel"]');
+    ([...inptus, ...textarea, ...emails, ...tels]).forEach(element => element.value = '')
+}
+
 
 export const openModalEventFrame = (types, fn) => {
 

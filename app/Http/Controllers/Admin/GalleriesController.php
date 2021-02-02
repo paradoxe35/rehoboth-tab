@@ -48,16 +48,16 @@ class GalleriesController extends Controller
 
         if ($request->hasfile('images')) {
             foreach ($request->file('images') as $file) {
-                $uploaded = $file->storePublicly(File::GALLERY_IMAGES_PATH . "/{$gallery->id}");
-                [$width, $height] = getimagesize($file->getPathname());
 
-                $image = $gallery->images()->create([
-                    'path' => $uploaded,
-                    'width' => $width,
-                    'height' => $height,
-                    'caption' => $file->getClientOriginalName(),
-                    'date' => $request->date
-                ]);
+                $image = File::storeImageMorph(
+                    $file,
+                    File::GALLERY_IMAGES_PATH,
+                    $gallery->images(),
+                    $gallery,
+                    null,
+                    null,
+                    $request->date
+                );
 
                 $images->add($image);
             }

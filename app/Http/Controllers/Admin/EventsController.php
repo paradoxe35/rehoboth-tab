@@ -267,17 +267,13 @@ class EventsController extends Controller
     {
         if ($request->hasfile('cover')) {
             $file = $request->file('cover');
-
-            $uploaded = $file->storePublicly(File::EVENTS_COVERS_PATH . "/{$event->id}");
-            [$width, $height] = getimagesize($file->getPathname());
-
-            $event->images()->create([
-                'path' => $uploaded,
-                'width' => $width,
-                'height' => $height,
-                'type' => 'cover',
-                'caption' => $file->getClientOriginalName()
-            ]);
+            File::storeImageMorph(
+                $file,
+                File::EVENTS_COVERS_PATH,
+                $event->images(),
+                $event,
+                'cover'
+            );
         }
     }
 
@@ -285,16 +281,13 @@ class EventsController extends Controller
     {
         if ($request->hasfile('photos')) {
             foreach ($request->file('photos') as $file) {
-                $uploaded = $file->storePublicly(File::EVENTS_PHOTOS_PATH . "/{$event->id}");
-                [$width, $height] = getimagesize($file->getPathname());
-
-                $event->images()->create([
-                    'path' => $uploaded,
-                    'type' => 'photo',
-                    'width' => $width,
-                    'height' => $height,
-                    'caption' => $file->getClientOriginalName()
-                ]);
+                File::storeImageMorph(
+                    $file,
+                    File::EVENTS_PHOTOS_PATH,
+                    $event->images(),
+                    $event,
+                    'photo'
+                );
             }
         }
     }

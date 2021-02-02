@@ -94,10 +94,6 @@ export const ItemFolio = styled.div`
         transform: scale(1);
     }
 
-    &:hover .item-folio__thumb img {
-        transform: scale(1.05);
-    }
-
     &:hover .item-folio__text {
         opacity: 1;
         visibility: visible;

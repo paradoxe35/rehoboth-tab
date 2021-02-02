@@ -92,16 +92,17 @@ class Edit extends Component
         (new ImageCompression)
             ->compress_image($filetmp);
 
-        $uploaded = $this->imageModel->storePublicly(File::SERMONS_PATH . "/{$sermon->id}");
-
-        [$width, $height] = getimagesize($filetmp);
-
-        return [
-            'path' => $uploaded,
-            'width' => $width,
-            'height' => $height,
-            'caption' => $this->imageModel->getClientOriginalName()
-        ];
+        return File::storeImageMorphWithFileTmp(
+            $this->imageModel,
+            File::SERMONS_PATH,
+            null,
+            $sermon,
+            $filetmp,
+            null,
+            null,
+            null,
+            false
+        );
     }
 
     private function storeFiles($models, $type)

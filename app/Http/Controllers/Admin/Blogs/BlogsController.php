@@ -83,16 +83,13 @@ class BlogsController extends Controller
 
     private function storeImage($file, Blog $blog)
     {
-        $uploaded = $file->storePublicly(File::BLOG_IMG_PATH . "/{$blog->id}");
-        [$width, $height] = getimagesize($file->getPathname());
-
-        $blog->image()->create([
-            'path' => $uploaded,
-            'width' => $width,
-            'height' => $height,
-            'type' => 'cover',
-            'caption' => $file->getClientOriginalName()
-        ]);
+        File::storeImageMorph(
+            $file,
+            File::BLOG_IMG_PATH,
+            $blog->image(),
+            $blog,
+            'cover',
+        );
     }
 
     /**

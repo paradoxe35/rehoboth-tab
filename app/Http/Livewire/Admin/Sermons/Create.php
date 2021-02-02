@@ -94,16 +94,13 @@ class Create extends Component
             (new ImageCompression)
                 ->compress_image($filetmp);
 
-            $uploaded = $this->image->storePublicly(File::SERMONS_PATH . "/{$sermon->id}");
-
-            [$width, $height] = getimagesize($filetmp);
-
-            $sermon->image()->create([
-                'path' => $uploaded,
-                'width' => $width,
-                'height' => $height,
-                'caption' => $this->image->getClientOriginalName()
-            ]);
+            File::storeImageMorphWithFileTmp(
+                $this->image,
+                File::SERMONS_PATH,
+                $sermon->image(),
+                $sermon,
+                $filetmp
+            );
         }
     }
 

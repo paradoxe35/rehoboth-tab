@@ -66,6 +66,7 @@ Route::prefix('dash')
                 Route::apiResource("organizers", OrganizersController::class);
 
                 Route::get('settings/profiles', [SettingsController::class, 'profiles'])->name('settings.profiles');
+                Route::post('settings/profiles', [SettingsController::class, 'storeProfile']);
                 Route::get('settings/church-details', [SettingsController::class, 'churchDetails'])->name('settings.church-details');
             });
 
