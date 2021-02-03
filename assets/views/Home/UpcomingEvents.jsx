@@ -1,10 +1,8 @@
 import React, { useCallback, useState } from 'react'
 import styled from 'styled-components'
-import { useTranslation } from 'react-i18next'
 import { InertiaLink } from '@inertiajs/inertia-react'
 import Countdown from 'react-countdown';
 import NoContainerPadding from '/@/components/NoContainerPadding'
-import { withTranslation } from 'react-i18next'
 import SubtitleLead from '/@/components/SubtitleLead'
 import {
     LatestSectioCardItemStyled,
@@ -60,24 +58,23 @@ const datas = [
     {
         title: "Family Baptism Class",
         date: "February 6, 2017",
-        image: "http://www.satriathemes.club/blessing/img/events/pic%20(1).jpg"
+        // image: "http://www.satriathemes.club/blessing/img/events/pic%20(1).jpg"
     },
     {
         title: "Transforming Live",
         date: "February 10, 2017",
-        image: "http://www.satriathemes.club/blessing/img/events/pic%20(2).jpg"
+        // image: "http://www.satriathemes.club/blessing/img/events/pic%20(2).jpg"
     },
     {
         title: "Relationship With God",
         date: "February 20, 2017",
-        image: "http://www.satriathemes.club/blessing/img/events/pic%20(3).jpg"
+        // image: "http://www.satriathemes.club/blessing/img/events/pic%20(3).jpg"
     }
 ].slice(0, 3)
 
 
 
 const CardItemLabel = ({ col = 3 }) => {
-    const { t } = useTranslation()
 
     return <LatestSectionItemLabel col={col}>
         <LatestSectionSpanStyled>
@@ -85,11 +82,11 @@ const CardItemLabel = ({ col = 3 }) => {
                 preserveScroll
                 className="text-secondary text-decoration-underline"
                 href={route("guest.events").toString()}>
-                {t("événements")}
+                événements
             </InertiaLink>
         </LatestSectionSpanStyled>
         <LatestSectionH3Styled className="text-muted">
-            {t("à venir")}
+            à venir
         </LatestSectionH3Styled>
     </LatestSectionItemLabel>
 }
@@ -144,21 +141,20 @@ const CountdownRow = ({ amount, title }) => {
 
 
 const rendererCountdown = ({ days, hours, minutes, seconds, completed }) => {
-    const { t } = useTranslation()
 
     if (!completed) {
         return <>
             <div className="row justify-content-between align-items-center">
-                <CountdownRow amount={days} title={t("Jours")} />
-                <CountdownRow amount={hours} title={t("Heures")} />
-                <CountdownRow amount={minutes} title={t("Minutes")} />
-                <CountdownRow amount={seconds} title={t("Secondes")} />
+                <CountdownRow amount={days} title={"Jours"} />
+                <CountdownRow amount={hours} title={"Heures"} />
+                <CountdownRow amount={minutes} title={"Minutes"} />
+                <CountdownRow amount={seconds} title={"Secondes"} />
             </div>
         </>;
     }
 };
 
-const FirstEventCountdown = withTranslation()(({ datas = [], t }) => {
+const FirstEventCountdown = ({ datas = [] }) => {
     const data = datas[0];
     const [isReady, setIsReady] = useState(data.ready || false)
     const handleComplete = useCallback(() => setIsReady(true), [setIsReady])
@@ -168,7 +164,7 @@ const FirstEventCountdown = withTranslation()(({ datas = [], t }) => {
             <CountdownRowStyled className="row align-items-center">
                 <div className="col-lg-6 h-100 mt-3 mt-lg-0">
                     <SubtitleLead>
-                        {!isReady ? t("Bientôt un événement") : t("Événement prêt")}
+                        {!isReady ? "Bientôt un événement" : "Événement prêt"}
                     </SubtitleLead>
                     <H3CDStyled className="h2 my-auto mb-2">
                         <InertiaLink href="/">
@@ -193,11 +189,10 @@ const FirstEventCountdown = withTranslation()(({ datas = [], t }) => {
             </CountdownRowStyled>
         </div>
     </CountdownParentStyled>
-})
+}
 
 const UpcomingEvent = () => {
     return <div className="container-fluid">
-        {/* @ts-ignore */}
         {!!datas.length && <FirstEventCountdown datas={datas} />}
         {datas.length > 1 && (
             <LatestSectionParentStyled data-aos="fade-up" className="row justify-content-center align-items-center pb-3">

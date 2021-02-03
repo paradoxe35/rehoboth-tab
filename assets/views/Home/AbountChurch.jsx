@@ -1,6 +1,5 @@
 import { usePage } from '@inertiajs/inertia-react'
 import React from 'react'
-import { useTranslation } from 'react-i18next'
 import styled from 'styled-components'
 import Card from '/@/components/Card'
 import CenterTitle from '/@/components/CenterTitle'
@@ -13,17 +12,16 @@ const ImgStyled = styled.img`
 `
 
 const AbountChurch = () => {
-    const { t } = useTranslation()
     // @ts-ignore
     const { pastorName, appName } = usePage().props
 
     return <div className="container py-3">
         <CenterTitle className="h3 my-5" data-aos="fade-up">
-            {t("À propos de l'Église")}
+            À propos de l'Église
         </CenterTitle>
 
-        <h2  data-aos="fade-up" className="h6 text-center text-secondary subtitle font-weight-600">
-            {appName} {t("Tabernacle")}
+        <h2 data-aos="fade-up" className="h6 text-center text-secondary subtitle font-weight-600">
+            {appName} {"Tabernacle"}
         </h2>
 
         <div data-aos="fade-up" className="row justify-content-center mt-4">
@@ -50,7 +48,7 @@ const AbountChurch = () => {
                     </div>
                     <div className="subtitle text-center text-secondary my-2">
                         <small>
-                            {t("Pasteur")} {pastorName}
+                            {"Pasteur"} {pastorName}
                         </small>
                     </div>
                 </Card>

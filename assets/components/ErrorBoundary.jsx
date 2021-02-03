@@ -1,6 +1,5 @@
 //@ts-check
 import React from 'react'
-import { withTranslation } from 'react-i18next';
 
 class ErrorBoundaryComponent extends React.Component {
     constructor(props) {
@@ -18,22 +17,20 @@ class ErrorBoundaryComponent extends React.Component {
     }
 
     render() {
-        const { t } = this.props;
 
         if (this.state.hasError) {
-            return <div>{this.props.message || t('Erreur')}</div>;
+            return <div>{this.props.message || 'Erreur'}</div>;
         }
         return this.props.children;
     }
 }
 
-const NewErrorBoundaryComponent = withTranslation()(ErrorBoundaryComponent)
 
 const ErrorBoundary = ({ children, message = null }) => {
     // @ts-ignore
-    return <NewErrorBoundaryComponent message={message}>
+    return <ErrorBoundaryComponent message={message}>
         {children}
-    </NewErrorBoundaryComponent>
+    </ErrorBoundaryComponent>
 }
 
 export default ErrorBoundary

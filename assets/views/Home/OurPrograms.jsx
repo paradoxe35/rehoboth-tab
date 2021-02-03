@@ -1,5 +1,4 @@
 import React from 'react'
-import { useTranslation } from 'react-i18next'
 import styled from 'styled-components'
 import CenterTitle from '/@/components/CenterTitle'
 
@@ -65,11 +64,10 @@ const DayWeek = ({ data }) => {
 }
 
 const OurPrograms = () => {
-    const { t } = useTranslation()
 
     return <div className="container py-3">
         <CenterTitle className="h4 my-5" data-aos="fade-up">
-            {t("Nos Programmes")}
+            Nos Programmes
         </CenterTitle>
 
         <div className="row justify-content-center">

@@ -1,5 +1,4 @@
 import React from 'react'
-import { withTranslation } from 'react-i18next'
 import styled from 'styled-components'
 
 
@@ -32,22 +31,21 @@ const Inputubmit = styled.button`
 `
 
 
-const GetNotifiedForm = withTranslation()(({ t }) => {
+const GetNotifiedForm = ({ t }) => {
 
     return <SubscribeFormStyled>
         <FormGroup noValidate={true} className="row g-3" >
             <InputParentText className="col">
-                <InputText type="email" className="form-control" placeholder={t("Adresse e-mail")} />
+                <InputText type="email" className="form-control" placeholder={"Adresse e-mail"} />
             </InputParentText>
             <InputParentSubmit className="col mb-3">
                 <Inputubmit type="submit" className="btn btn-primary text-white ">
-                    {t("Souscrire")}
+                    Souscrire
                 </Inputubmit>
             </InputParentSubmit>
         </FormGroup>
     </SubscribeFormStyled>
-})
+}
 
-const GetNotified = () => <GetNotifiedForm />
 
-export default GetNotified
+export default GetNotifiedForm

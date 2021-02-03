@@ -1,6 +1,5 @@
 import { InertiaLink } from '@inertiajs/inertia-react'
 import React from 'react'
-import { useTranslation } from 'react-i18next'
 import styled from 'styled-components'
 import NoContainerPadding from '/@/components/NoContainerPadding'
 import SubtitleLead from '/@/components/SubtitleLead'
@@ -21,33 +20,32 @@ const SpanAutoStyled = styled.span`
 `
 
 const images = [
-    "https://cdn.pixabay.com/photo/2017/06/12/19/02/cat-2396473__480.jpg",
-    "http://www.satriathemes.club/blessing/img/gallery/pic%20(1).jpg",
-    "http://www.satriathemes.club/blessing/img/gallery/pic%20(2).jpg",
-    "http://www.satriathemes.club/blessing/img/gallery/pic%20(3).jpg",
-    "http://www.satriathemes.club/blessing/img/gallery/pic%20(4).jpg",
-    "http://www.satriathemes.club/blessing/img/gallery/pic%20(5).jpg",
-    "https://cdn.pixabay.com/photo/2014/04/13/20/49/cat-323262__480.jpg",
-    "https://cdn.pixabay.com/photo/2015/02/14/10/16/cat-636172__480.jpg",
-    "https://cdn.pixabay.com/photo/2013/10/28/14/30/cat-201855__480.jpg",
-    "https://cdn.pixabay.com/photo/2015/04/16/15/21/cat-725793__480.jpg",
+    // "https://cdn.pixabay.com/photo/2017/06/12/19/02/cat-2396473__480.jpg",
+    // "http://www.satriathemes.club/blessing/img/gallery/pic%20(1).jpg",
+    // "http://www.satriathemes.club/blessing/img/gallery/pic%20(2).jpg",
+    // "http://www.satriathemes.club/blessing/img/gallery/pic%20(3).jpg",
+    // "http://www.satriathemes.club/blessing/img/gallery/pic%20(4).jpg",
+    // "http://www.satriathemes.club/blessing/img/gallery/pic%20(5).jpg",
+    // "https://cdn.pixabay.com/photo/2014/04/13/20/49/cat-323262__480.jpg",
+    // "https://cdn.pixabay.com/photo/2015/02/14/10/16/cat-636172__480.jpg",
+    // "https://cdn.pixabay.com/photo/2013/10/28/14/30/cat-201855__480.jpg",
+    // "https://cdn.pixabay.com/photo/2015/04/16/15/21/cat-725793__480.jpg",
 ].slice(0, 10);
 
 const Titles = () => {
-    const { t } = useTranslation()
 
     return <div className="row mb-4" data-aos="fade-up">
         <div className="col">
             <h5>
                 <SubtitleLead>
-                    {t("Galerie")}
+                    Galerie
                 </SubtitleLead>
             </h5>
         </div>
         <div className="col-auto">
             <SpanAutoStyled className="h6 text-center subtitle font-weight-600">
                 <InertiaLink className="text-secondary" href={route('guest.gallery').toString()}>
-                    {t("Toutes les images")}
+                    Toutes les images
                 </InertiaLink>
             </SpanAutoStyled>
         </div>

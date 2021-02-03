@@ -1,12 +1,10 @@
 import React from "react";
-import { useTranslation } from "react-i18next";
 import Hero from "/@/layouts/Hero/Hero";
 
 
 const Sermons = () => {
-    const { t } = useTranslation()
 
-    return <Hero title={t("Sermons")}>
+    return <Hero title={"Sermons"}>
         Sermons
     </Hero>
 }

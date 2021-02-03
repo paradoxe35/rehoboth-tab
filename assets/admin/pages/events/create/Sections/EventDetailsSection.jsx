@@ -179,7 +179,6 @@ const DescriptionAndText = () => {
 
     useEffect(() => {
         if (ref.current) {
-            delete defaultOption.modules.imageUploader
             quill.current = new Quill(ref.current, defaultOption);
             if ($event.text) {
                 quill.current.clipboard.dangerouslyPasteHTML($event.text)

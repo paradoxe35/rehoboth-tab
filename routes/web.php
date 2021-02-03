@@ -38,7 +38,7 @@ Route::name('guest.')
     });
 
 
-Route::middleware([])
+Route::middleware('auth')
     ->prefix('livewire')
     ->group(function () {
         Route::get('', LivewireController::class)->name('livewire');

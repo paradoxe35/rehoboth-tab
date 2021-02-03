@@ -5,7 +5,6 @@ import FromGallery from '/@/views/Home/FromGallery';
 import HomeHero from '/@/views/Home/HomeHero';
 import LatestBlog from '/@/views/Home/LatestBlog';
 import LatestSermons from '/@/views/Home/LatestSermons';
-import NewsLetter from '/@/views/Home/Newsletter';
 import UpcomingEvent from '/@/views/Home/UpcomingEvents';
 import OurPrograms from '/@/views/Home/OurPrograms';
 
@@ -29,7 +28,6 @@ const Home = () => {
             <FromGallery />
             <LatestBlog />
             <OurPrograms />
-            <NewsLetter />
         </>
     </BodyClassName>
 }

@@ -2,10 +2,10 @@ const mix = require('laravel-mix')
 const path = require('path')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
+const { InjectManifest } = require('workbox-webpack-plugin');
 
 require('laravel-mix-clean');
 require('laravel-mix-versionhash')
-require('laravel-mix-workbox');
 
 /*
  |--------------------------------------------------------------------------
@@ -28,9 +28,6 @@ mix.react('assets/App.jsx', 'main.js')
             extractComments: false,
         }
     })
-    .injectManifest({
-        swSrc: './assets/service-worker.js'
-    })
     .webpackConfig({
         optimization: {
             splitChunks: {
@@ -48,7 +45,12 @@ mix.react('assets/App.jsx', 'main.js')
             ],
         },
         plugins: [
-            new MiniCssExtractPlugin()
+            new MiniCssExtractPlugin(),
+            new InjectManifest({
+                swSrc: './assets/service-worker.js',
+                maximumFileSizeToCacheInBytes: 1000000 * 3,
+                mode: mix.inProduction() ? 'production' : 'development'
+            })
         ],
         module: {
             rules: [

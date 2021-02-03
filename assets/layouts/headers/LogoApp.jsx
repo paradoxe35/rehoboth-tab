@@ -1,6 +1,5 @@
 import { InertiaLink, usePage } from '@inertiajs/inertia-react'
 import React from 'react'
-import { useTranslation } from 'react-i18next'
 import styled from 'styled-components'
 import Cross from '/@/images/logo/cross.svg'
 
@@ -26,13 +25,12 @@ const Logo = styled.h1`
 `
 
 const LogoApp = ({ className = '' }) => {
-    const { t } = useTranslation()
     // @ts-ignore
     const { appName } = usePage().props
 
     return <Logo className={className}>
         <InertiaLink href="/">
-            <img src={Cross} alt={t("La Croix")} />
+            <img src={Cross} alt={'La Croix'} />
             {appName}
         </InertiaLink>
     </Logo>

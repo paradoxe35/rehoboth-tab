@@ -1,6 +1,5 @@
 import { InertiaLink } from '@inertiajs/inertia-react'
 import React from 'react'
-import { useTranslation } from 'react-i18next'
 import styled from 'styled-components'
 import Card from '/@/components/Card'
 import CenterTitle from '/@/components/CenterTitle'
@@ -11,7 +10,7 @@ const datas = [
         theme: "Transforming Live, Restoring Hope",
         preacher: "Charles Ngwasi",
         date: "February 08, 2017",
-        image: "http://www.satriathemes.club/blessing/img/sermons/pic%20(1).jpg",
+        // image: "http://www.satriathemes.club/blessing/img/sermons/pic%20(1).jpg",
         media: {
             document: {},
             video: {},
@@ -22,7 +21,7 @@ const datas = [
         theme: "Put Your Faith Into Action",
         preacher: "Charles Ngwasi",
         date: "February 15, 2017",
-        image: "http://www.satriathemes.club/blessing/img/sermons/pic%20(2).jpg",
+        // image: "http://www.satriathemes.club/blessing/img/sermons/pic%20(2).jpg",
         media: {
             document: {},
             video: {},
@@ -33,7 +32,7 @@ const datas = [
         theme: "Find And You Shall Seek",
         preacher: "Charles Ngwasi",
         date: "February 22, 2017",
-        image: "http://www.satriathemes.club/blessing/img/sermons/pic%20(3).jpg",
+        // image: "http://www.satriathemes.club/blessing/img/sermons/pic%20(3).jpg",
         media: {
             document: {},
             video: {},
@@ -102,8 +101,6 @@ const MediaLinksStyled = styled.span`
 `
 
 const SermonsItem = ({ data }) => {
-    const { t } = useTranslation()
-
     const { media } = data
 
     return <ItemRowStyled className="row align-items-center justify-content-between" data-aos="fade-up">
@@ -123,7 +120,7 @@ const SermonsItem = ({ data }) => {
                     </H3TitleStyled>
                     <DivDetailsStyled className="text-muted">
                         <span>
-                            {t("Par")} <InertiaLink href="#">{data.preacher}</InertiaLink>, {data.date}
+                            {"Par"} <InertiaLink href="#">{data.preacher}</InertiaLink>, {data.date}
                         </span>
                     </DivDetailsStyled>
                 </div>
@@ -148,14 +145,13 @@ const SermonsItem = ({ data }) => {
 
 
 const LatestSermons = () => {
-    const { t } = useTranslation()
 
     return <>
         <div className="container py-3">
             <div className="row justify-content-center">
                 <div className="col-lg-10">
                     <CenterTitle className="h3 my-5">
-                        {t("Derniers sermons")}
+                        Derniers sermons
                     </CenterTitle>
                     {datas.map(data => <SermonsItem data={data} />)}
                 </div>

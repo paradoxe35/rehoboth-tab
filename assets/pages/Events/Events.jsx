@@ -1,12 +1,9 @@
 import React from "react";
-import { useTranslation } from "react-i18next";
 import Hero from "/@/layouts/Hero/Hero";
 
 
 const Events = () => {
-    const { t } = useTranslation()
-
-    return <Hero title={t("Événements")}>
+    return <Hero title={"Événements"}>
         Événements
     </Hero>
 }

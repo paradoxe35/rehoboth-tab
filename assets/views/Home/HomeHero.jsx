@@ -8,7 +8,6 @@ import styled from 'styled-components'
 import Home2 from '/@/images/home/home1.jpg';
 import Home1 from '/@/images/home/home2.jpg';
 import Home3 from '/@/images/home/home3.jpg';
-import { useTranslation } from 'react-i18next';
 
 SwiperCore.use([Navigation, Pagination, Parallax, Autoplay, A11y]);
 
@@ -42,7 +41,6 @@ const SwiperButtonNext = styled(SwiperButton)`
 
 const HomeHero = () => {
     const slides = "swiper--slide--item"
-    const { t } = useTranslation()
 
     useEffect(() => {
         Array.from(document.querySelectorAll(`.${slides}`))
@@ -80,30 +78,30 @@ const HomeHero = () => {
 
         <SwiperSlide className={slides} style={{ backgroundImage: `url(${Home1})`, ...classes }}>
             <SwiperSlideContent
-                subtitle={t("Il y a une place")}
-                title={t("Pour tout le monde")}
+                subtitle={"Il y a une place"}
+                title={"Pour tout le monde"}
                 action={{ text: "Lire plus", href: "#" }}
                 subtitleColor="text-primary"
-                description={t("Peu importe d'où vous venez ou qui vous êtes, le puits de la parole est ouvert à tous.")}
+                description={"Peu importe d'où vous venez ou qui vous êtes, le puits de la parole est ouvert à tous."}
             />
         </SwiperSlide>
 
         <SwiperSlide className={slides} style={{ backgroundImage: `url(${Home2})`, ...classes }}>
             <SwiperSlideContent
-                subtitle={t("Mettez votre foi")}
-                title={t("En action")}
+                subtitle={"Mettez votre foi"}
+                title={"En action"}
                 action={{ text: "Lire plus", href: "#" }}
                 colClass="offset-lg-6"
                 subtitleColor="text-primary"
-                description={t("Mettez votre foi en action aujourd'hui et laissez vos actions être alimentées par votre foi.")}
+                description={"Mettez votre foi en action aujourd'hui et laissez vos actions être alimentées par votre foi."}
             />
         </SwiperSlide>
 
         <SwiperSlide className={slides} style={{ backgroundImage: `url(${Home3})`, ...classes }}>
             <SwiperSlideContent
-                subtitle={t("Abandon total")}
-                title={t("À Dieu")}
-                action={{ text: t("Lire plus"), href: "#" }}
+                subtitle={"Abandon total"}
+                title={"À Dieu"}
+                action={{ text: "Lire plus", href: "#" }}
                 subtitleColor="text-primary"
                 description={"La première étape pour surmonter tout type de situation qui tient dans l'esclavage."}
             />

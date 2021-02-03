@@ -1,6 +1,5 @@
 import { InertiaLink } from '@inertiajs/inertia-react'
 import React from 'react'
-import { useTranslation } from 'react-i18next'
 import styled from 'styled-components'
 import {
     LatestSectioCardItemStyled,
@@ -34,12 +33,11 @@ const datas = [
 
 
 const CardItemLabel = ({ col = 3 }) => {
-    const { t } = useTranslation()
 
     return <LatestSectionItemLabel col={col}>
 
         <LatestSectionH3Styled className="text-muted">
-            {t("Derniers")}
+            Derniers
         </LatestSectionH3Styled>
 
         <LatestSectionSpanStyled>
@@ -47,7 +45,7 @@ const CardItemLabel = ({ col = 3 }) => {
                 preserveScroll
                 className="text-secondary text-decoration-underline"
                 href={route("guest.blog").toString()}>
-                {t("Blogs")}
+                Blogs
             </InertiaLink>
         </LatestSectionSpanStyled>
     </LatestSectionItemLabel>
