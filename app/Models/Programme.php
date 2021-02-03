@@ -8,4 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Programme extends Model
 {
     use HasFactory;
+
+      /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = ['day', 'start_time', 'end_time'];
 }

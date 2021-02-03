@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Card = ({ cardClass = '', bodyClass = "", children, border = false, className = '', title = null }) => {
+const Card = ({ cardClass = '', bodyClass = "", children, border = false, className = '', title = undefined }) => {
     return <div className={`card ${!border ? 'border-0' : ''} ${cardClass} ${className}`} >
         {title && <div className="card-header">{title}</div>}
         <div className={`card-body ${bodyClass}`}>

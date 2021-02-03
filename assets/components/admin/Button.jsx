@@ -6,7 +6,7 @@ const Button = ({
     className = '',
     type = 'button',
     loading = false,
-    onClick = null
+    onClick = undefined
 }) => {
     // @ts-ignore
     return <button onClick={onClick} disabled={loading} className={`btn btn-${color} ${className} text-white`} type={type} >

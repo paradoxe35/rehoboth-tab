@@ -1,4 +1,4 @@
-import React, { forwardRef } from "react"
+import React, { forwardRef, useMemo } from "react"
 
 
 /**
@@ -8,14 +8,14 @@ export const FormControl = forwardRef(/** @param {*} param0  */
     ({
         label = '',
         type = "text",
-        defaultValue = null,
-        value = null,
-        onChange = null,
-        name = null,
-        placeholder = null
+        defaultValue = undefined,
+        value = undefined,
+        onChange = undefined,
+        name = undefined,
+        placeholder = undefined
     }, ref) => {
 
-        const id = Math.random()
+        const id = useMemo(() => Math.random(), [])
 
         return <div className="mb-3">
             <label htmlFor={`input-${id}`} className="form-label">{label}</label>
@@ -36,8 +36,8 @@ export const FormControl = forwardRef(/** @param {*} param0  */
  * @type { any }
  */
 // @ts-ignore
-export const Checkbox = forwardRef(({ defaultChecked = null, label = '', checked = null, onChange = null, name = null }, ref) => {
-    const id = Math.random()
+export const Checkbox = forwardRef(({ defaultChecked = undefined, label = '', checked = undefined, onChange = undefined, name = undefined }, ref) => {
+    const id = useMemo(() => Math.random(), [])
 
     return <div className="form-check my-3">
         <input

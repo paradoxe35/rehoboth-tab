@@ -1,5 +1,5 @@
 import "/@/utils/devtool"
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useRef, useState } from 'react'
 import { render, unmountComponentAtNode } from 'react-dom'
 import Card from "/@/components/Card"
 import { ApiRequest } from "/@/api/api"
@@ -117,26 +117,36 @@ const FormContent = () => {
     </>
 }
 
-const Main = () => {
+
+const SaveContent = ({ formRef }) => {
     const [loading, setLoading] = useState(false)
 
-    const handleSubmit = (e) => {
-        e.preventDefault()
+    const handleSubmit = () => {
         setLoading(true)
 
-        ApiRequest('post', route('admin.settings.church-details').toString())
+        const form = new FormData(formRef.current)
+
+        ApiRequest('post', route('admin.settings.church-details').toString(), form)
             .finally(() => setLoading(false))
             .then(({ data: { message } }) => Notifier.success(message))
     }
 
+    return <Button
+        loading={loading}
+        onClick={handleSubmit}
+        type="button"
+        className="btn-sm text-sm mt-3"
+        text="Enregistrer" />
+}
+
+const Main = () => {
+
+    const ref = useRef(null)
+
     return <Card>
-        <form method="post" onSubmit={handleSubmit} autoComplete="off">
+        <form method="post" onSubmit={e => e.preventDefault()} ref={ref} autoComplete="off">
             <FormContent />
-            <Button
-                loading={loading}
-                type="submit"
-                className="btn-sm text-sm mt-3"
-                text="Enregistrer" />
+            <SaveContent formRef={ref} />
         </form>
     </Card>
 }

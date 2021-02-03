@@ -294,7 +294,7 @@ const ImageFlippedContent = ({ img, onClick, i, removeImage }) => {
     ) : image
 }
 
-const Content = ({ images = [], onClick = null, removeImage }) => {
+const Content = ({ images = [], onClick = undefined, removeImage }) => {
     return <ContentMasonrySimpleWrapper>
         {images.map((img, i) => {
             if (typeof img === 'boolean') {

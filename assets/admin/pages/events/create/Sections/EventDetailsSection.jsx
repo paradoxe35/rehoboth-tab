@@ -15,7 +15,7 @@ let $event = {}
 let $address = {}
 
 
-const Map = ({ placejsOnChange = null }) => {
+const Map = ({ placejsOnChange = undefined }) => {
     const [checked, setChecked] = useState(!!$address.map)
 
     const { ref, refs } = useInputElementRefs()

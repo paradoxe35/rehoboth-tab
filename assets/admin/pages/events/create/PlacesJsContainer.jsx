@@ -4,7 +4,7 @@ import { useOnChangeRef } from '/@/utils/hooks'
 
 
 
-const PlacesJsContainer = ({ onChange = null }) => {
+const PlacesJsContainer = ({ onChange = undefined }) => {
     const ref = useRef(null)
     const places = useRef(null)
 

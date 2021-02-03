@@ -74,8 +74,8 @@ Route::prefix('dash')
                 Route::get('settings/programmes/items', [SettingsController::class, 'programmesItems'])->name('settings.programmes.items');
 
                 Route::get('settings/programmes', [SettingsController::class, 'programmes'])->name('settings.programmes');
-                Route::post('settings/programmes', [SettingsController::class, 'StoreProgrammes']);
-                Route::delete('settings/programmes/{programme}', [SettingsController::class, 'deleteProgramme']);
+                Route::post('settings/programmes', [SettingsController::class, 'storeProgrammes']);
+                Route::delete('settings/programmes/{programme}', [SettingsController::class, 'deleteProgramme'])->name('settings.programmes.destroy');
             });
 
         Route::get('/og-meta', OgController::class)->name('og-meta');

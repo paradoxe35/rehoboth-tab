@@ -103,7 +103,7 @@ export const ItemFolio = styled.div`
 
 export const ItemFolioThumb = ({ children }) => <div className="item-folio__thumb">{children}</div>
 
-export const ItemFolioText = ({ title = null, cat = null }) => {
+export const ItemFolioText = ({ title = undefined, cat = undefined }) => {
     return <div className="item-folio__text">
         <h5 className="item-folio__title">
             {title}
