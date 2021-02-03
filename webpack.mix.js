@@ -5,7 +5,7 @@ const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 
 require('laravel-mix-clean');
 require('laravel-mix-versionhash')
-// require('laravel-mix-imagemin');
+require('laravel-mix-workbox');
 
 /*
  |--------------------------------------------------------------------------
@@ -23,11 +23,13 @@ mix.react('assets/App.jsx', 'main.js')
     .js("assets/modules/livewire-frame.js", "livewire-frame.js")
     .setPublicPath('public/assets/')
     .setResourceRoot('/assets/')
-    // .imagemin('public/assets/images/*')
     .options({
         terser: {
             extractComments: false,
         }
+    })
+    .injectManifest({
+        swSrc: './assets/service-worker.js'
     })
     .webpackConfig({
         optimization: {

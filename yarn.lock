@@ -1725,7 +1725,7 @@
   resolved "https://registry.yarnpkg.com/@types/mime/-/mime-2.0.3.tgz#c893b73721db73699943bfc3653b1deb7faa4a3a"
   integrity sha512-Jus9s4CDbqwocc5pOAnh8ShfrnMcPHuJYzVcSUU7lrh8Ni5HuIqX3oilL86p3dlTrk0LzHRCgA/GQ7uNCw6l2Q==
 
-"@types/minimatch@*", "@types/minimatch@^3.0.3":
+"@types/minimatch@*":
   version "3.0.3"
   resolved "https://registry.yarnpkg.com/@types/minimatch/-/minimatch-3.0.3.tgz#3dca0e3f33b200fc7d1139c0cd96c1268cadfd9d"
   integrity sha512-tHq6qdbT9U1IRSGf14CL0pUlULksvY9OZ+5eEgl1N7t+OA3tGvNpxJCzuKQlsNgCVwbAs670L1vcVQi8j9HjnA==
@@ -2385,11 +2385,6 @@ arr-union@^3.1.0:
   resolved "https://registry.yarnpkg.com/arr-union/-/arr-union-3.1.0.tgz#e39b09aea9def866a8f206e288af63919bae39c4"
   integrity sha1-45sJrqne+Gao8gbiiK9jkZuuOcQ=
 
-array-differ@^3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/array-differ/-/array-differ-3.0.0.tgz#3cbb3d0f316810eafcc47624734237d6aee4ae6b"
-  integrity sha512-THtfYS6KtME/yIAhKjZ2ul7XI96lQGHRputJQHO80LAWQnuGP4iCIN8vdMRboGbIEYBwU33q8Tch1os2+X0kMg==
-
 array-find-index@^1.0.1:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/array-find-index/-/array-find-index-1.0.2.tgz#df010aa1287e164bbda6f9723b0a96a1ec4187a1"
@@ -2436,11 +2431,6 @@ arrify@^1.0.0, arrify@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/arrify/-/arrify-1.0.1.tgz#898508da2226f380df904728456849c1501a4b0d"
   integrity sha1-iYUI2iIm84DfkEcoRWhJwVAaSw0=
-
-arrify@^2.0.1:
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/arrify/-/arrify-2.0.1.tgz#c9655e9331e0abcd588d2a7cad7e9956f66701fa"
-  integrity sha512-3duEwti880xqi4eAMN8AyR4a0ByT90zoYdLlevfrvU43vb0YZwZVfxOgxWrLXXXpyugL0hNZc9G6BiB5B3nUug==
 
 asn1.js@^5.2.0:
   version "5.4.1"
@@ -8334,19 +8324,17 @@ laravel-mix-clean@^0.1.0:
   resolved "https://registry.yarnpkg.com/laravel-mix-clean/-/laravel-mix-clean-0.1.0.tgz#85552a0b189756e022f1d3c583e08b83254175bf"
   integrity sha512-iOgVELzL0zJ2SNEVEmzCoduZ7tBQNWa/ViWXSTg9Z2QVK05Sld2efzTybR82Lu6ohZaA4btr+KsBBw7kt8aqTQ==
 
-laravel-mix-imagemin@^1.0.3:
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/laravel-mix-imagemin/-/laravel-mix-imagemin-1.0.3.tgz#c7f57d03ede46da985f1b2359f82302b5505543e"
-  integrity sha512-Q0M7XB+AjcFfeDIOcs2jfgXy/P3QwGeNmKODJQXNjlDUQNVlHjJPFUZ2J2Sllj1Op0C+sI0B/b2XJwOqocu6XQ==
-  dependencies:
-    multimatch "^4.0.0"
-
 laravel-mix-versionhash@^1.1.7:
   version "1.1.7"
   resolved "https://registry.yarnpkg.com/laravel-mix-versionhash/-/laravel-mix-versionhash-1.1.7.tgz#cf611bc64fec8ac1e40b1ccbd71a25c8aa931459"
   integrity sha512-Aj7q+IRriO6VFLU5EUJsyJULW2iiv/sDQRI+kxww2CZbtfPssjibBNrstxPkVtLcQaAwMB2V2efvMe9YeRzIpg==
   dependencies:
     proxy-method "^1.0.0"
+
+laravel-mix-workbox@^0.1.4:
+  version "0.1.4"
+  resolved "https://registry.yarnpkg.com/laravel-mix-workbox/-/laravel-mix-workbox-0.1.4.tgz#9bdd2cb6b4ab75c5e5ac8eb7e43ca488f42b5559"
+  integrity sha512-VWsWjLrOshJ8hP6zA5VGTl4uzh0w/AbL/jlOSMGF1QPqM1tP1s1OaXXP+a9VsXOoQoZuI+/BPysh4iWCsL5wLA==
 
 laravel-mix@^5.0.9:
   version "5.0.9"
@@ -9041,17 +9029,6 @@ multicast-dns@^6.0.1:
   dependencies:
     dns-packet "^1.3.1"
     thunky "^1.0.2"
-
-multimatch@^4.0.0:
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/multimatch/-/multimatch-4.0.0.tgz#8c3c0f6e3e8449ada0af3dd29efb491a375191b3"
-  integrity sha512-lDmx79y1z6i7RNx0ZGCPq1bzJ6ZoDDKbvh7jxr9SJcWLkShMzXrHbYVpTdnhNM5MXpDUxCQ4DgqVttVXlBgiBQ==
-  dependencies:
-    "@types/minimatch" "^3.0.3"
-    array-differ "^3.0.0"
-    array-union "^2.1.0"
-    arrify "^2.0.1"
-    minimatch "^3.0.4"
 
 mute-stream@0.0.5:
   version "0.0.5"

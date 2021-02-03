@@ -1,62 +1,54 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+# Rehoboth Tabernacle Website
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Ce project est le site officiel de l'eglise Rehoboth tabernacle a Bukavu.
+Il a ete pense pour etre open source, donc disponible a tout le monde qui voudrais faire une contribution.
 
-## About Laravel
+## Outils
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Le principal outil de stucturation de ce projet est Laravel.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+### - Laravel
+Laravel est framework web fait par le language de programmation PHP, pour plus d'information veuillez visiter le site officiel: www.laravel.com.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### - Front-End
+Actuellement le site a ete fait sous une pratique de SPA(Single Web Application) mais ce dernier a ete utilisee seulement dans la section client grance a la library inertial avec le library [Preact](https://preactjs.com/), pour plus de details veuillez visiter leur site officiel: https://inertiajs.com/.
 
-## Learning Laravel
+### - Autres
+Comme dans autres grands projects, celui-ci a utiliser plusieurs composants, library etc. de sorte de vous sentir a l'aise dans la contibution de ce project, veuillez regarder dans les deux principaux fichiers de gestionnaire de packages:
+- package.json, pour les libraries nodejs avec NPM | Yarn
+- composer.json, pour les liraries php avec Composer
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## Installation
+- `git clone https://pngwasi@bitbucket.org/pngwasi/rehoboth.git`
+- `cd rehoboth`
+- `cp .env.example .env`
+- `composer install`
+- `php artisan key:generate`
+- `php artisan webpush:vapid`
+- Edit .env
+- creer une base de donnee avec mysql (requis)
+- `php artisan migrate`
+- `yarn install && yarn watch`
+- Demarer le server web `php artisan serve`
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## Assets Bundler
+Pour la compilation des assets:
 
-## Laravel Sponsors
+- Development (ViteJs)
+- Production (WebPack).
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+Ceci dit pour ne pas se compliquer webpack est plus utilise que vite dans dans les deux parties (DEV et PROD).
 
-### Premium Partners
+### Compilation
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/)**
-- **[OP.GG](https://op.gg)**
+- `yarn build` pour la production
+- `yarn dev` pour le development
 
-## Contributing
+## Back Office
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+Dans la partie administration, y a pas grand chose a dire mis a part le route d'entre est sur le path: `/dash/login`
 
 ## License
+MIT
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Fait par Paradoxe Ngwasi (PNG_)
