@@ -38,6 +38,52 @@ const SwiperButtonNext = styled(SwiperButton)`
     right: 30px !important;
 `
 
+const DivContentScroll = styled.div`
+    position: absolute;
+    right: 5.5rem;
+    bottom: 4.4rem;
+    margin: 0;
+    padding: 0;
+    z-index: 1;
+    a {
+        font-size: 0.7rem;
+        text-transform: uppercase;
+        letter-spacing: .2rem;
+        color: var(--bs-light);
+        position: relative;
+        display: inline-block;
+        padding-left: 1.5rem;
+        transition: all 0.3s ease-in-out;
+        text-decoration: none;
+        background-color: transparent;
+        &:before {
+            border-bottom: 2px solid var(--bs-primary);
+            border-right: 2px solid var(--bs-primary);
+            content: '';
+            display: block;
+            height: 8px;
+            width: 8px;
+            margin-top: -6px;
+            pointer-events: none;
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform-origin: 66% 66%;
+            transform: rotate(45deg);
+            transition: all 0.15s ease-in-out;
+        }
+    }
+`
+
+
+const HomeContentScroll = () => {
+    return <DivContentScroll>
+        <a href="#hero-bottom" className="scroll-link smoothscroll">
+            <span>Défiler vers le bas</span>
+        </a>
+    </DivContentScroll>
+}
+
 
 const HomeHero = () => {
     const slides = "swiper--slide--item"
@@ -57,6 +103,7 @@ const HomeHero = () => {
     return <Swiper
         slidesPerView={1}
         allowTouchMove
+        className="position-relative"
         navigation={{
             nextEl: '.swiper-button-next',
             prevEl: '.swiper-button-prev',
@@ -75,6 +122,7 @@ const HomeHero = () => {
 
         <SwiperButtonNext className="swiper-button-next" />
         <SwiperButtonPrev className="swiper-button-prev" />
+        <HomeContentScroll />
 
         <SwiperSlide className={slides} style={{ backgroundImage: `url(${Home1})`, ...classes }}>
             <SwiperSlideContent

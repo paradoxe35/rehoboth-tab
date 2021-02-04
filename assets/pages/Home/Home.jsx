@@ -22,6 +22,7 @@ const Home = () => {
     return <BodyClassName className="nav--muted">
         <>
             <HomeHero />
+            <div className="p-0 m-0" id="hero-bottom" />
             <UpcomingEvent />
             <AbountChurch />
             <LatestSermons />
