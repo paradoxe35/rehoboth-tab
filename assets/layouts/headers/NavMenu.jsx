@@ -10,10 +10,27 @@ import { Inertia } from '@inertiajs/inertia';
 const LinkRoute = ({ routeName, text }) => {
     // @ts-ignore
     return <li className={route().current(routeName) ? 'active' : ''}>
-        <InertiaLink href={route(routeName).toString()}>
+        <InertiaLink className="link" href={route(routeName).toString()}>
             {text}
         </InertiaLink>
     </li>
+}
+
+const SocialIcons = ({ className = null, children = null }) => {
+    return <SocialLinks>
+        <div className={className}>
+            <a href="#" className="twitter">
+                <FiFacebook />
+            </a>
+            <a href="#" className="facebook">
+                <FiTwitter />
+            </a>
+            <a href="#" className="instagram">
+                <FiInstagram />
+            </a>
+        </div>
+        {children}
+    </SocialLinks>
 }
 
 const bodyEl = document.querySelector('body')
@@ -56,19 +73,16 @@ const NavBar = () => {
                     <LinkRoute routeName="guest.blog" text={"Blog"} />
                     <LinkRoute routeName="guest.gallery" text={"Galerie"} />
                     <LinkRoute routeName="guest.contact" text={"Contact"} />
+
+                    <li className="mx-0 px-0">
+                        <SocialIcons className="d-sm-block d-md-none mx-3" />
+                    </li>
                 </ul>
+
+
             </NavHeader>
 
-            <SocialLinks>
-                <a href="#" className="twitter">
-                    <FiFacebook />
-                </a>
-                <a href="#" className="facebook">
-                    <FiTwitter />
-                </a>
-                <a href="#" className="instagram">
-                    <FiInstagram />
-                </a>
+            <SocialIcons className="text-center d-sm-none d-md-inline-block">
                 <span className="d-lg-none d-xl-none mx-2"></span>
                 <ToggleButton
                     className="btn d-lg-none d-xl-none"
@@ -81,7 +95,7 @@ const NavBar = () => {
                         <span className="toggle-line"></span>
                     </span>
                 </ToggleButton>
-            </SocialLinks>
+            </SocialIcons>
         </div>
     </>
 }

@@ -15,7 +15,7 @@ export const Nav = styled.nav`
         position: relative;
         white-space: nowrap;
         padding: 10px 0 10px 28px;
-        a:before {
+        .link:before {
             content: "";
             position: absolute;
             width: 0;
@@ -37,16 +37,16 @@ export const Nav = styled.nav`
         font-weight: 500;
     }
 
-    a:hover:before,
-    li:hover > a:before,
-    .active > a:before {
+    .link:hover:before,
+    li:hover > .link:before,
+    .active > .link:before {
         visibility: visible;
         width: 25px;
     }
 
-    a:hover,
-    .active > a,
-        li:hover > a {
+    .link:hover,
+    .active > .link,
+        li:hover > .link {
         color: var(--bs-primary);
     }
 `
