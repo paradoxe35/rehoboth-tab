@@ -46,11 +46,13 @@ mix.react('assets/App.jsx', 'main.js')
         },
         plugins: [
             new MiniCssExtractPlugin(),
-            new InjectManifest({
-                swSrc: './assets/service-worker.js',
-                maximumFileSizeToCacheInBytes: 1000000 * 3,
-                mode: mix.inProduction() ? 'production' : 'development'
-            })
+            ...(mix.inProduction() ? [
+                new InjectManifest({
+                    swSrc: './assets/service-worker.js',
+                    maximumFileSizeToCacheInBytes: 1000000 * 3,
+                    mode: mix.inProduction() ? 'production' : 'development'
+                })
+            ] : [])
         ],
         module: {
             rules: [
@@ -86,6 +88,11 @@ mix.browserSync({
     proxy: 'localhost:8000',
     watch: true,
     files: ["./resources", "./assets"],
+    // https: {
+    //     key: "./storage/app/localhost-key.pem",
+    //     cert: "./storage/app/localhost.pem"
+    // },
+    ui: false,
     notify: false,
     open: false,
 });

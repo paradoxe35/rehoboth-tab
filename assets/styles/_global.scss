@@ -155,3 +155,27 @@ a {
 .ls-2 {
     letter-spacing: 0.125rem;
 }
+
+.bs-visible {
+    visibility: visible;
+}
+
+.bs-invisible {
+    visibility: hidden;
+}
+
+@media (min-width: 992px) {
+    .d-lg-bs-visible {
+        visibility: visible;
+    }
+
+    .d-lg-bs-invisible {
+        visibility: hidden;
+    }
+}
+
+@media (min-width: 1200px) {
+    .d-xl-bs-invisible {
+        visibility: hidden;
+    }
+}

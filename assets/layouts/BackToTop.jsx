@@ -52,6 +52,7 @@ const BackToTop = () => {
     }, [linkRef.current])
 
     return <>
+        {/* @ts-ignore */}
         <Link ref={linkRef}>
             <Svg />
         </Link>

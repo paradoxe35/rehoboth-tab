@@ -34,4 +34,4 @@ const Main = () => (
 )
 
 render(<Main />, el)
-registerServiceWorker()
+// registerServiceWorker()

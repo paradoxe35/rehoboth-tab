@@ -1,79 +1,10 @@
-import React from 'react'
-import { InertiaLink, usePage } from '@inertiajs/inertia-react'
+import React, { useEffect } from 'react'
+import { InertiaLink } from '@inertiajs/inertia-react'
 import { FiFacebook, FiTwitter, FiInstagram } from "react-icons/fi";
-import styled from 'styled-components'
 import LogoApp from './LogoApp';
+import { NavHeader, SocialLinks, ToggleButton } from './NavHeader';
+import { Inertia } from '@inertiajs/inertia';
 
-
-const SocialLinks = styled.div`
-    padding-left: 20px;
-    a {
-        color: var(--bs-primary);
-        padding-left: 6px;
-        display: inline-block;
-        line-height: 1px;
-        transition: 0.3s;
-        font-size: 16px;
-    }
-    a:hover {
-        color: var(--bs-primary);
-    }
-    @media (max-width: 992px) {
-        & {
-            padding: 0 48px 0 0;
-        }
-    }
-`
-
-const Nav = styled.nav`
-        ul {
-        margin: 0;
-        padding: 0;
-        list-style: none;
-    }
-
-    & > ul {
-        display: flex;
-    }
-    & > ul > li {
-        position: relative;
-        white-space: nowrap;
-        padding: 10px 0 10px 28px;
-        a:before {
-            content: "";
-            position: absolute;
-            width: 0;
-            height: 2px;
-            bottom: -5px;
-            left: 0;
-            background-color: var(--bs-secondary);
-            visibility: hidden;
-            width: 0px;
-            transition: all 0.3s ease-in-out 0s;
-        }
-    }
-    a {
-        display: block;
-        position: relative;
-        color: var(--bs-light);
-        transition: 0.3s;
-        font-size: 15px;
-        font-weight: 500;
-    }
-
-    a:hover:before,
-    li:hover > a:before,
-    .active > a:before {
-        visibility: visible;
-        width: 25px;
-    }
-
-    a:hover,
-    .active > a,
-    li:hover > a {
-        color: var(--bs-primary);
-    }
-`
 
 
 const LinkRoute = ({ routeName, text }) => {
@@ -85,15 +16,39 @@ const LinkRoute = ({ routeName, text }) => {
     </li>
 }
 
+const bodyEl = document.querySelector('body')
+const menuIsOpen = {
+    toggle: () => bodyEl.classList.toggle('menu-is-open'),
+    remove: () => bodyEl.classList.remove('menu-is-open'),
+    add: () => bodyEl.classList.add('menu-is-open'),
+}
+
 const NavBar = () => {
-    // @ts-ignore
-    const { appName } = usePage().props
+    const handleCollapse = () => menuIsOpen.toggle()
+
+    useEffect(() => {
+        const closeMenu = () => menuIsOpen.remove()
+
+        const removeStartEventListener = Inertia.on('navigate', () => menuIsOpen.remove())
+        window.addEventListener('click', closeMenu)
+
+        return () => {
+            removeStartEventListener()
+            menuIsOpen.remove()
+            window.removeEventListener('click', closeMenu)
+        }
+    }, [])
 
     return <>
         <div className="container d-flex justify-content-between align-items-center">
             <LogoApp />
 
-            <Nav className="d-none d-lg-block">
+            <NavHeader onClick={e => e.stopPropagation()} className="bs-invisible d-lg-bs-visible">
+                <a href="javascript:;"
+                    onClick={handleCollapse}
+                    className="nav__close d-lg-none d-xl-none mb-2" title="Fermer">
+                    <span>Fermer</span>
+                </a>
                 <ul>
                     <LinkRoute routeName="guest.home" text={"Accueil"} />
                     <LinkRoute routeName="guest.events" text={"Événements"} />
@@ -102,7 +57,7 @@ const NavBar = () => {
                     <LinkRoute routeName="guest.gallery" text={"Galerie"} />
                     <LinkRoute routeName="guest.contact" text={"Contact"} />
                 </ul>
-            </Nav>
+            </NavHeader>
 
             <SocialLinks>
                 <a href="#" className="twitter">
@@ -114,6 +69,18 @@ const NavBar = () => {
                 <a href="#" className="instagram">
                     <FiInstagram />
                 </a>
+                <span className="d-lg-none d-xl-none mx-2"></span>
+                <ToggleButton
+                    className="btn d-lg-none d-xl-none"
+                    onClick={e => {
+                        e.stopPropagation()
+                        handleCollapse()
+                    }}
+                    data-toggle="tooltip" data-placement="left" title="" data-original-title="Toggle Navigation">
+                    <span className="navbar-toggle-icon">
+                        <span className="toggle-line"></span>
+                    </span>
+                </ToggleButton>
             </SocialLinks>
         </div>
     </>

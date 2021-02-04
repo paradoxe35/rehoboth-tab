@@ -15,6 +15,7 @@ use App\Http\Controllers\Services\OgController;
 use App\Http\Controllers\Tags\TagsController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\Livewire\LivewireController;
 
 
 Route::prefix('dash')
@@ -79,4 +80,12 @@ Route::prefix('dash')
             });
 
         Route::get('/og-meta', OgController::class)->name('og-meta');
+    });
+
+
+
+Route::middleware('auth')
+    ->prefix('livewire')
+    ->group(function () {
+        Route::get('', LivewireController::class)->name('livewire');
     });

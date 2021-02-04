@@ -5,8 +5,8 @@ use App\Http\Controllers\ContactController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\Livewire\LivewireController;
 use App\Http\Controllers\SermonController;
+use App\Http\Controllers\WebPush\WebPushController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -35,13 +35,13 @@ Route::name('guest.')
         Route::get('/gallery', [GalleryController::class, 'index'])->name('gallery');
 
         Route::get('/contact', [ContactController::class, 'index'])->name('contact');
-    });
 
-
-Route::middleware('auth')
-    ->prefix('livewire')
-    ->group(function () {
-        Route::get('', LivewireController::class)->name('livewire');
+        Route::prefix('web-push')
+            ->name('web-push')
+            ->group(function () {
+                Route::get('/vapid-public-key', [WebPushController::class, 'vapidPublicKey'])->name('vapid-public-key');
+                Route::get('/register', [WebPushController::class, 'register'])->name('register');
+            });
     });
 
 require __DIR__ . '/admin.php';
