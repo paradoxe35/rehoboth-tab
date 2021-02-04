@@ -180,7 +180,7 @@ export const ToggleButton = styled.button`
             transition: all 0.2s ease-in-out;
             border-radius: .25rem;
             height: 0.125rem;
-            background-color: var(--bs-secondary);
+            background-color: var(--bs-primary);
             left: 0;
         }
         &:after {
@@ -189,7 +189,7 @@ export const ToggleButton = styled.button`
             content: "";
             position: absolute;
             height: 0.125rem;
-            background-color: var(--bs-secondary);
+            background-color: var(--bs-primary);
             left: 0;
             transition: all 0.2s ease-in-out;
             border-radius: .25rem;
@@ -200,7 +200,7 @@ export const ToggleButton = styled.button`
             border-radius: .25rem;
             -webkit-transition: all 0.2s ease-in-out;
             transition: all 0.2s ease-in-out;
-            background-color: var(--bs-secondary);
+            background-color: var(--bs-primary);
             pointer-events: none;
         }
     }

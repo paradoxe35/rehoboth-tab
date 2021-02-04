@@ -67,7 +67,7 @@ const Footer = () => {
                 <div className="col-lg-1" />
                 <div className="col-lg-5 mb-3">
                     <H5Styled>
-                        <b>Notifications<FiMail /></b>
+                        <b>Notifications <FiMail /></b>
                     </H5Styled>
                     <p className="text-sm text-muted">
                         Restez informé de nos nouveaux événements en recevant des notifications par e-mail.

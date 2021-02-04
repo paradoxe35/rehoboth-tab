@@ -63,7 +63,7 @@ const NavBar = () => {
             <NavHeader onClick={e => e.stopPropagation()} className="bs-invisible d-lg-bs-visible">
                 <a href="javascript:;"
                     onClick={handleCollapse}
-                    className="nav__close d-lg-none d-xl-none mb-2" title="Fermer">
+                    className="nav__close d-lg-none mb-2" title="Fermer">
                     <span>Fermer</span>
                 </a>
                 <ul>
@@ -75,22 +75,19 @@ const NavBar = () => {
                     <LinkRoute routeName="guest.contact" text={"Contact"} />
 
                     <li className="mx-0 px-0">
-                        <SocialIcons className="d-sm-block d-md-none mx-3" />
+                        <SocialIcons className="d-block d-md-none mx-3" />
                     </li>
                 </ul>
-
-
             </NavHeader>
 
-            <SocialIcons className="text-center d-sm-none d-md-inline-block">
-                <span className="d-lg-none d-xl-none mx-2"></span>
+            <SocialIcons className="text-center d-none d-md-inline-block">
+                <span className="d-none d-md-inline-block d-lg-none mx-2"></span>
                 <ToggleButton
-                    className="btn d-lg-none d-xl-none"
+                    className="btn d-lg-none"
                     onClick={e => {
                         e.stopPropagation()
                         handleCollapse()
-                    }}
-                    data-toggle="tooltip" data-placement="left" title="" data-original-title="Toggle Navigation">
+                    }} title="Basculer la navigation">
                     <span className="navbar-toggle-icon">
                         <span className="toggle-line"></span>
                     </span>

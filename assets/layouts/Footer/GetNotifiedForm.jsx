@@ -31,7 +31,7 @@ const Inputubmit = styled.button`
 `
 
 
-const GetNotifiedForm = ({ t }) => {
+const GetNotifiedForm = () => {
 
     return <SubscribeFormStyled>
         <FormGroup noValidate={true} className="row g-3" >
