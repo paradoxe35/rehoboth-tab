@@ -2,6 +2,10 @@
 
 namespace App\Files;
 
+use App\Files\Images\ImageCompression;
+use Illuminate\Support\Facades\File as FacadesFile;
+use Illuminate\Support\Facades\Storage;
+
 class File
 {
     /**
@@ -76,7 +80,10 @@ class File
         $uploaded = $file->storePublicly($path . "/{$model->id}");
         [$width, $height] = getimagesize($file->getPathname());
 
+        $thumbnail = self::blurLazyImageBase64($uploaded);
+
         $fillable = [
+            'thumbnail' => $thumbnail,
             'path' => $uploaded,
             'width' => $width,
             'height' => $height,
@@ -86,6 +93,23 @@ class File
         ];
 
         return $store ? $modelImage->create($fillable) : $fillable;
+    }
+
+
+    /**
+     * @param string $filePath
+     * @param string $dest
+     * @param string $ext
+     * 
+     * @return string
+     */
+    public static function blurLazyImageBase64($filePath)
+    {
+        $image = new ImageCompression;
+
+        $absolutePathImage = Storage::path($filePath);
+
+        return $image->blurLazyImage($absolutePathImage, null, 6, true);
     }
 
 
@@ -118,7 +142,10 @@ class File
         $uploaded = $file->storePublicly($path . "/{$model->id}");
         [$width, $height] = getimagesize($fileTmp);
 
+        $thumbnail = self::blurLazyImageBase64($uploaded);
+
         $fillable = [
+            'thumbnail' => $thumbnail,
             'path' => $uploaded,
             'width' => $width,
             'height' => $height,

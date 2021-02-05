@@ -25,7 +25,7 @@ class Image extends Model
      *
      * @var array
      */
-    protected $fillable = ['path', 'width', 'height', 'caption', 'date', 'type'];
+    protected $fillable = ['path', 'width', 'height', 'caption', 'date', 'type', 'thumbnail'];
 
 
     /**
@@ -52,5 +52,10 @@ class Image extends Model
     public function imageable()
     {
         return $this->morphTo();
+    }
+
+
+    private function getParentPath() {
+
     }
 }

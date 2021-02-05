@@ -28,9 +28,7 @@ class CleanEventDatas
     {
         $ievent = $event->event;
 
-        $ievent->photos()->delete();
-
-        $ievent->image()->delete();
+        $ievent->images()->delete();
 
         $ievent->address()->delete();
 
