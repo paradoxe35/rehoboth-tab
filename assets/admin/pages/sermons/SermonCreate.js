@@ -1,4 +1,7 @@
 import { GiaComponent } from '/@/admin/gia';
+import { ApiRequest } from '/@/api/api';
+import { Btn, FormBtn } from '/@/utils/dom';
+import { Notifier } from '/@/utils/notifier';
 
 export default class extends GiaComponent {
     constructor(element) {
@@ -6,7 +9,8 @@ export default class extends GiaComponent {
         this.ref = {
             imageInput: [],
             audioInput: [],
-            documentInput: []
+            documentInput: [],
+            store: null
         }
     }
 
@@ -25,6 +29,8 @@ export default class extends GiaComponent {
         this.inputImage()
         this.documentInput()
         this.audioInput()
+
+        this.ref.store.addEventListener('submit', this.store.bind(this))
     }
 
     label(type) {
@@ -33,13 +39,10 @@ export default class extends GiaComponent {
 
     inputImage() {
         this.filePond.createInstance(this.ref.imageInput, {
+            ...this.filePond.imageOptions,
             labelIdle: this.label('images'),
             allowMultiple: false,
-            // @ts-ignore
-            acceptedFileTypes: ['image/png', 'image/jpeg'],
-            maxFileSize: "5MB",
-            minFileSize: "50KB"
-        })
+        }, false)
     }
 
     audioInput() {
@@ -49,7 +52,7 @@ export default class extends GiaComponent {
             acceptedFileTypes: ['audio/mpeg', 'audio/ogg', 'audio/aac', 'audio/wav'],
             maxFileSize: "200MB",
             minFileSize: "50KB"
-        })
+        }, false)
     }
 
     documentInput() {
@@ -59,6 +62,16 @@ export default class extends GiaComponent {
             acceptedFileTypes: ['application/pdf'],
             maxFileSize: "30MB",
             minFileSize: "5KB"
-        })
+        }, false)
+    }
+
+    async store(e) {
+        e.preventDefault()
+        const form = new FormData(e.target)
+
+        Btn.loading(FormBtn(e.target))
+        ApiRequest('post', route('admin.sermons.store').toString(), form)
+            .then(({ data: { message } }) => Notifier.success(message))
+            .finally(() => Btn.hide())
     }
 }

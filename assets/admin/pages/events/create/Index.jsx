@@ -55,17 +55,19 @@ const Submit = () => {
             ApiRequest('post',
                 route('admin.events.store', { section: 'pictures', event_id: data.event.id }
                 ).toString(), pictures)
+                .then(({ data: { message } }) => Notifier.success(message, 3000))
                 .finally(() => {
-
-                    $swup.loadPage({
-                        url: route('admin.events.show', { event: data.event.id }, false)
-                            .toString()
-                    })
-                    setLoading(false)
+                    window.setTimeout(() => {
+                        $swup.loadPage({
+                            url: route('admin.events.show', { event: data.event.id }, false)
+                                .toString()
+                        })
+                        setLoading(false)
+                    }, 2000)
                 })
 
         } catch (error) {
-            console.log(error)
+            console.error(error)
             setLoading(false)
         }
 

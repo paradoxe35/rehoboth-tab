@@ -99,7 +99,7 @@ class DropFilesData {
  * @param { Element[] | HTMLElement[] } el 
  * @param { import('filepond').FilePondOptions } options 
  */
-export const createInstance = (el, options) => {
+export const createInstance = (el, options, livewire = true) => {
     if (el.length < 2) {
         console.error("input file collection must contains at least 2 elements")
         return
@@ -114,7 +114,7 @@ export const createInstance = (el, options) => {
         onremovefile: (err, { file }) => {
             if (!err) {
                 const mfiles = files.deleteFile(file)
-                if (mfiles.length == 0 && livewireInstance) {
+                if (mfiles.length == 0 && livewireInstance && livewire) {
                     livewireInstance()
                         .set(el[1].getAttribute("wire:model"), options.allowMultiple ? [] : null)
                 }

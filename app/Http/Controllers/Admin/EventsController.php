@@ -11,6 +11,7 @@ use App\Models\Event\Event;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
+use function Matrix\trace;
 
 define('TICKET_FREE', 'free');
 define('TICKET_PAID', 'paid');
@@ -304,6 +305,10 @@ class EventsController extends Controller
         $this->storeImageCover($request, $event);
 
         $this->storeImagesPhotos($request, $event);
+
+        return [
+            'message' => trace('Événement enregistré avec succès')
+        ];
     }
 
 

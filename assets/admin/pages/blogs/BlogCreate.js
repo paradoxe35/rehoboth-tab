@@ -172,10 +172,10 @@ export default class extends GiaComponent {
 
         // @ts-ignore
         const datas = new FormData(target)
-        
+
         datas.set('json', JSON.stringify(json))
 
-        datas.set('image', this.imageCover)
+        this.imageCover && datas.set('image', this.imageCover)
 
         Btn.loading(FormBtn(target))
 

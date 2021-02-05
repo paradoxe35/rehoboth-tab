@@ -37,12 +37,13 @@ export const Btn = {
         if (!element) return
         const el = {
             element: element,
-            html: element.innerHTML
+            html: element.innerHTML,
+            text: element.innerText
         }
         this.btns.unshift(el)
         element.disabled = true
         element.innerHTML = `
-            <div class="d-flex align-content-center"> 
+            <div class="d-flex align-content-center align-items-center"> 
                 <span>${el.html}</span>
                 <span class="mx-1"></span>
                 <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>

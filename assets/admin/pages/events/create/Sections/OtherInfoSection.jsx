@@ -41,7 +41,10 @@ const Organizers = () => {
     const { options } = useFetchOptions(route('admin.organizers.index'))
     const defaultValue = ($event?.organizers || []).map(t => ({ label: t.name, value: t.name }))
 
+    const [dvalues, setDvalues] = useState(defaultValue)
+
     const handleChange = (newValue) => {
+        setDvalues(newValue || [])
         EVENT_DATA_FORM[SECTION_KEY].organizers = newValue
     };
 
@@ -50,7 +53,7 @@ const Organizers = () => {
     }, [])
 
     return <div className="mb-3">
-        <SelectLabel label="Organisateurs" />
+        <SelectLabel label={<span>Organisateurs ({dvalues.map(v => v.value).join(', ')})</span>} />
         {/*  @ts-ignore */}
         <CreatableSelect
             isMulti
@@ -71,7 +74,10 @@ const Tags = () => {
 
     const defaultValue = ($event?.tags || []).map(t => ({ label: t.name, value: t.name }))
 
+    const [dvalues, setDvalues] = useState(defaultValue)
+
     const handleChange = (newValue) => {
+        setDvalues(newValue || [])
         EVENT_DATA_FORM[SECTION_KEY].tags = newValue
     };
 
@@ -80,7 +86,7 @@ const Tags = () => {
     }, [])
 
     return <div className="mb-3">
-        <SelectLabel label="Tags" />
+        <SelectLabel label={<span>Tags ({dvalues.map(v => v.value).join(', ')})</span>} />
         {/*  @ts-ignore */}
         <CreatableSelect
             isMulti

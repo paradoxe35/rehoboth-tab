@@ -29,7 +29,6 @@ setTz()
  * @param { number } reloadStatus 
  */
 export const errorResponse = (error, mustNotifierErrors = false, reloadStatus = 0) => {
-    console.log(error.response);
     if (error.response) {
         !!reloadStatus && error.response.status === reloadStatus && window.location.reload()
         mustNotifierErrors && Notifier.error(HtmlAlert.message(error.response.data), 7000);

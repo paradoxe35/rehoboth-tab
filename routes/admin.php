@@ -36,7 +36,7 @@ Route::prefix('dash')
                 Route::get('/home', [HomeController::class, 'index'])->name('home');
 
                 Route::resource('/sermons', SermonsController::class)->only([
-                    'index', 'create', 'edit'
+                    'index', 'create', 'edit', 'store'
                 ]);
 
                 Route::resource('/events', EventsController::class);
@@ -48,8 +48,10 @@ Route::prefix('dash')
                 Route::get('/galleries/articles', [GalleriesController::class, 'articles'])->name('galleries.articles');
 
                 Route::resource('/blogs',  BlogsController::class)->only([
-                    'index', 'store', 'update', 'create', 'show', 'destroy'
+                    'index', 'store', 'create', 'show', 'destroy'
                 ]);
+                Route::post('blogs/update/{blog}', [BlogsController::class, 'update'])->name('blogs.update');
+
                 Route::get('blogs/{blog}/profile', [BlogsController::class, 'showProfile'])->name('blogs.show.profile');
                 Route::get('blogs/{blog}/content', [BlogsController::class, 'showContent'])->name('blogs.show.content');
                 Route::get('blogs/{blog}/comments', [BlogsController::class, 'showComments'])->name('blogs.show.comments');
