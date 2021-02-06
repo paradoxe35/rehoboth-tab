@@ -3,8 +3,8 @@
 namespace App\Models\Event;
 
 use App\Events\Models\EventDeleted;
+use App\FormattableDate;
 use App\Models\Morphs\Address;
-use App\Models\Morphs\File;
 use App\Models\Morphs\Image;
 use App\Models\Morphs\Organizer;
 use App\Models\Morphs\Schedule;
@@ -12,10 +12,11 @@ use App\Models\Morphs\Tag;
 use App\Models\Morphs\Ticket\Ticket;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class Event extends Model
 {
-    use HasFactory;
+    use HasFactory, FormattableDate;
 
     /**
      * The event map for the model.
@@ -24,6 +25,16 @@ class Event extends Model
      */
     protected $dispatchesEvents = [
         'deleted' => EventDeleted::class,
+    ];
+
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'start_date' => 'date',
+        'end_date' => 'date',
     ];
 
     /**
@@ -49,8 +60,54 @@ class Event extends Model
      *
      * @var array
      */
-    protected $appends = ['image', 'photos'];
+    protected $appends = [
+        'image', 'photos',
+        'start_fdate', 'end_fdate',
+        'start_idate', 'end_idate',
+        'start_datetime', 'end_datetime'
+    ];
 
+
+    public function getStartFdateAttribute()
+    {
+        return $this->formatDate($this->start_date);
+    }
+
+    public function guestRoute()
+    {
+        return route(
+            'guest.events.show',
+            ['event' => $this->id, 'slug' => Str::slug($this->name)],
+            false
+        );
+    }
+
+
+    public function getEndFdateAttribute()
+    {
+        return $this->formatDate($this->end_date);
+    }
+
+
+    public function getStartIdateAttribute()
+    {
+        return $this->getF($this->start_date);
+    }
+
+    public function getEndIdateAttribute()
+    {
+        return $this->getF($this->end_date);
+    }
+
+    public function getStartDatetimeAttribute()
+    {
+        return $this->getF($this->start_date) . " " . $this->start_time;
+    }
+
+    public function getEndDatetimeAttribute()
+    {
+        return $this->getF($this->end_date) . " " . $this->end_time;
+    }
 
 
     public function getImageAttribute()

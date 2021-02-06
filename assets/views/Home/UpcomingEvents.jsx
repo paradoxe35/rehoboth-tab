@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from 'react'
 import styled from 'styled-components'
-import { InertiaLink } from '@inertiajs/inertia-react'
+import { InertiaLink, usePage } from '@inertiajs/inertia-react'
 import Countdown from 'react-countdown';
 import NoContainerPadding from '/@/components/NoContainerPadding'
 import SubtitleLead from '/@/components/SubtitleLead'
@@ -13,13 +13,14 @@ import {
     LatestSectionSpanStyled
 } from './components/LatestSectionCard';
 import H5TitleLink from '/@/components/H5TitleLink';
+import ImageThumbnail from '/@/components/ImageThumbnail';
+import { letterLimit } from '/@/functions/functions';
 
 
 
-const CardItemImgStyled = styled.img`
+const CardItemImgStyled = styled.div`
     width: 100%;
     height: 200px;
-    object-fit: cover;
 `
 
 const TimeStyled = styled.span`
@@ -54,25 +55,6 @@ const CountdownRowStyled = styled.div`
     min-height: 196px;
 `
 
-const datas = [
-    {
-        title: "Family Baptism Class",
-        date: "February 6, 2017",
-        // image: "http://www.satriathemes.club/blessing/img/events/pic%20(1).jpg"
-    },
-    {
-        title: "Transforming Live",
-        date: "February 10, 2017",
-        // image: "http://www.satriathemes.club/blessing/img/events/pic%20(2).jpg"
-    },
-    {
-        title: "Relationship With God",
-        date: "February 20, 2017",
-        // image: "http://www.satriathemes.club/blessing/img/events/pic%20(3).jpg"
-    }
-].slice(0, 3)
-
-
 
 const CardItemLabel = ({ col = 3 }) => {
 
@@ -92,8 +74,12 @@ const CardItemLabel = ({ col = 3 }) => {
 }
 
 
+const CardH5TitleLink = styled(H5TitleLink)`
+    font-size: 1.10rem;
+`
 
-const CardItemData = ({ col = 3, data, showOnlySm = false, showOnlyMd = false, canShowInMd = false }) => {
+
+const CardItemData = ({ col = 3, event, showOnlySm = false, showOnlyMd = false, canShowInMd = false }) => {
     return <LatestSectionItemData
         col={col}
         showOnlySm={showOnlySm}
@@ -102,16 +88,18 @@ const CardItemData = ({ col = 3, data, showOnlySm = false, showOnlyMd = false, c
 
         <LatestSectioCardItemStyled border={true} cardClass="p-0" bodyClass="p-1">
 
-            <CardItemImgStyled src={data.image} alt={data.title} />
+            <CardItemImgStyled>
+                <ImageThumbnail height="100%" image={event.image} title={event.name} />
+            </CardItemImgStyled>
 
             <CardItemContentOverlayStyled>
                 <TimeStyled className="text-muted">
-                    {data.date}
+                    {event.start_date}
                 </TimeStyled>
 
-                <H5TitleLink href="#">
-                    {data.title}
-                </H5TitleLink>
+                <CardH5TitleLink title={event.name} href={event.route}>
+                    {letterLimit(event.name)}
+                </CardH5TitleLink>
 
             </CardItemContentOverlayStyled>
         </LatestSectioCardItemStyled>
@@ -141,7 +129,6 @@ const CountdownRow = ({ amount, title }) => {
 
 
 const rendererCountdown = ({ days, hours, minutes, seconds, completed }) => {
-
     if (!completed) {
         return <>
             <div className="row justify-content-between align-items-center">
@@ -154,9 +141,9 @@ const rendererCountdown = ({ days, hours, minutes, seconds, completed }) => {
     }
 };
 
-const FirstEventCountdown = ({ datas = [] }) => {
-    const data = datas[0];
-    const [isReady, setIsReady] = useState(data.ready || false)
+const FirstEventCountdown = ({ events = [] }) => {
+    const event = events[0];
+    const [isReady, setIsReady] = useState(event?.ready || false)
     const handleComplete = useCallback(() => setIsReady(true), [setIsReady])
 
     return <CountdownParentStyled data-aos="fade-up">
@@ -167,12 +154,12 @@ const FirstEventCountdown = ({ datas = [] }) => {
                         {!isReady ? "Bientôt un événement" : "Événement prêt"}
                     </SubtitleLead>
                     <H3CDStyled className="h2 my-auto mb-2">
-                        <InertiaLink href="/">
-                            {data.title}
+                        <InertiaLink href={event.route}>
+                            {letterLimit(event.name)}
                         </InertiaLink>
                     </H3CDStyled>
                     <TimeStyled className="text-muted d-block">
-                        {data.date}
+                        {event.start_date}
                     </TimeStyled>
                 </div>
                 <div className="col-lg-6 my-3">
@@ -182,7 +169,7 @@ const FirstEventCountdown = ({ datas = [] }) => {
                         <Countdown
                             onComplete={handleComplete}
                             renderer={rendererCountdown}
-                            date={Date.now() + 10000000}
+                            date={event.start_datetime}
                         />
                     }
                 </div>
@@ -192,22 +179,26 @@ const FirstEventCountdown = ({ datas = [] }) => {
 }
 
 const UpcomingEvent = () => {
+    // @ts-ignore
+    const { events } = usePage().props
+
     return <div className="container-fluid">
-        {!!datas.length && <FirstEventCountdown datas={datas} />}
-        {datas.length > 1 && (
+        {!!events.length && <FirstEventCountdown events={events} />}
+        {events.length > 1 && (
             <LatestSectionParentStyled data-aos="fade-up" className="row justify-content-center align-items-center pb-3">
                 {
-                    [null, ...datas]
-                        .map((data, i) => {
-                            const col = datas.length > 1 && datas.length < 3 ? 4 : 3
+                    [null, ...events]
+                        .map((event, i) => {
+                            const col = events.length > 1 && events.length < 3 ? 4 : 3
                             return i === 0 ?
-                                <CardItemLabel col={col} /> :
+                                <CardItemLabel key={i} col={col} /> :
                                 <CardItemData
+                                    key={event.id}
                                     canShowInMd={i == 1}
                                     showOnlyMd={i == 2}
                                     showOnlySm={i == 3}
                                     col={col}
-                                    data={data} />
+                                    event={event} />
                         })
                 }
             </LatestSectionParentStyled>

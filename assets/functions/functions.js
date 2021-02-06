@@ -199,3 +199,12 @@ export const respondToVisibility = (element, callback) => {
     observer.observe(element);
     return () => observer.unobserve(element)
 }
+
+
+export function letterLimit(text = '', limit = 24) {
+    const length = text.length
+    if (length <= limit) {
+        return text
+    }
+    return text.slice(0, limit) + '...'
+}

@@ -27,8 +27,10 @@ Route::name('guest.')
         Route::get('/', [HomeController::class, 'index'])->name('home');
 
         Route::get('/events', [EventController::class, 'index'])->name('events');
+        Route::get('/events/{event}/{slug}', [EventController::class, 'show'])->name('events.show');
 
         Route::get('/sermons', [SermonController::class, 'index'])->name('sermons');
+        Route::get('/sermons/{sermon}/{slug}', [SermonController::class, 'show'])->name('sermons.show');
 
         Route::get('/blog', [BlogController::class, 'index'])->name('blog');
 

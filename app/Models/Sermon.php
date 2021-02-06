@@ -3,14 +3,16 @@
 namespace App\Models;
 
 use App\Events\Models\SermonDeleted;
+use App\FormattableDate;
 use App\Models\Morphs\File;
 use App\Models\Morphs\Image;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class Sermon extends Model
 {
-    use HasFactory;
+    use HasFactory, FormattableDate;
 
 
     /**
@@ -20,6 +22,15 @@ class Sermon extends Model
      */
     protected $dispatchesEvents = [
         'deleted' => SermonDeleted::class,
+    ];
+
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'date' => 'date',
     ];
 
     /**
@@ -34,10 +45,26 @@ class Sermon extends Model
      *
      * @var array
      */
-    protected $appends = ['image', 'audios', 'video', 'documents'];
+    protected $appends = ['image', 'audios', 'video', 'documents', 'f_date'];
 
 
-   
+
+    public function getFDateAttribute()
+    {
+        return $this->formatDate($this->date);
+    }
+
+    public function guestRoute()
+    {
+        return route(
+            'guest.sermons.show',
+            ['sermon' => $this->id, 'slug' => Str::slug($this->subject)],
+            false
+        );
+    }
+
+
+
     public function getImageAttribute()
     {
         return  $this->image()->first();

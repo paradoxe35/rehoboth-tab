@@ -77,6 +77,9 @@ const ImageThumbnail = ({ image, title = null, height = "auto", className = null
                     img.src = el.getAttribute('data-src');;
                     img.style.width = "100%";
                     img.style.height = height;
+                    if (height == "100%") {
+                        img.style.objectFit = "cover"
+                    }
                     img.alt = title || image.caption
                     el.parentElement.appendChild(img)
                 }
@@ -85,7 +88,7 @@ const ImageThumbnail = ({ image, title = null, height = "auto", className = null
     }, [])
 
     // @ts-ignore
-    return <DivContainer ref={refParent} className={className}>
+    return <DivContainer ref={refParent} style={{ height }} className={className}>
         <img
             style={{ display: "block", width: "100%", height: "100%" }}
             src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMDAwIiBoZWlnaHQ9IjEwMDAiPjwvc3ZnPg==" role="presentation" />

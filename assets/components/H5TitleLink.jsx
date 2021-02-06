@@ -12,10 +12,10 @@ const H5Styled = styled.h5`
     }
 `
 
-const H5TitleLink = ({ children, href, inertialProps = {}, className = null }) => {
+const H5TitleLink = ({ children, href, inertialProps = {}, className = null, title = null }) => {
 
     return <H5Styled className={className}>
-        <InertiaLink href={href} {...inertialProps}>
+        <InertiaLink href={href} {...inertialProps} title={title}>
             {children}
         </InertiaLink>
     </H5Styled>
