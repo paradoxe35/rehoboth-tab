@@ -22,12 +22,22 @@ class SettingsController extends Controller
         return view('admin.pages.settings.profiles');
     }
 
+    public function tags()
+    {
+        return view('admin.pages.settings.tags');
+    }
+
+    public function organizers()
+    {
+        return view('admin.pages.settings.organizers');
+    }
+
 
     public function storeProfile(Request $request)
     {
         $request->validate([
             'name' => ['required', 'string', 'unique:profils'],
-            'phone' => ['required', 'regex:/^[0-9\-\(\)\/\+\s]*$/', 'unique:profils'],
+            'phone' => ['nullable', 'regex:/^[0-9\-\(\)\/\+\s]*$/', 'unique:profils'],
             'email' => ['nullable', 'email'],
             'description' => ['required', 'string', 'min:10'],
             'image' => File::IMAGE_RULES
@@ -136,6 +146,7 @@ class SettingsController extends Controller
             'day' => ['required', 'string', 'min:3'],
             'start_time' => ['required', 'string', 'regex:/^([0-1][0-9]|[2][0-3]):([0-5][0-9])$/'],
             'end_time' => ['required', 'string', 'regex:/^([0-1][0-9]|[2][0-3]):([0-5][0-9])$/'],
+            'description' => ['nullable', 'string']
         ]);
 
         $start = strtotime("{$data['start_time']}");
@@ -145,7 +156,7 @@ class SettingsController extends Controller
             abort(422, trans("La heure de fin doit être postérieure à la heure de début"));
         }
 
-        $programme = Programme::create($request->only(['day', 'start_time', 'end_time']));
+        $programme = Programme::create($request->only(['day', 'start_time', 'end_time', 'description']));
 
         return [
             'message' => trans('Programme enregistré avec succès'),

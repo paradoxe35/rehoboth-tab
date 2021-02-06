@@ -256,7 +256,6 @@ const ImageFlippedContent = ({ img, onClick, i, removeImage }) => {
         onClick={onClick}
         onDelayedAppear={onDelayedAppear}
         onExit={onExit}
-        key={key}
         setKey={key}
         img={img} />
 
@@ -291,11 +290,12 @@ const Content = ({ images = [], onClick = undefined, removeImage }) => {
         {images.map((img, i) => {
             if (typeof img === 'boolean') {
                 return <LoaderFlipped
+                    key={i}
                     onDelayedAppear={onDelayedAppear}
                     onExit={onExit}
                     setKey={i} />
             } else {
-                return <ImageFlippedContent removeImage={removeImage} img={img} onClick={onClick} i={i} />
+                return <ImageFlippedContent key={img.id} removeImage={removeImage} img={img} onClick={onClick} i={i} />
             }
         })}
 

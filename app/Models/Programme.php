@@ -14,5 +14,5 @@ class Programme extends Model
      *
      * @var array
      */
-    protected $fillable = ['day', 'start_time', 'end_time'];
+    protected $fillable = ['day', 'start_time', 'end_time', 'description'];
 }

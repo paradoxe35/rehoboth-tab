@@ -19,11 +19,11 @@
                             </div>
 
                             <div class="mb-3">
-                                <x-input type="tel" model="phone" label="Phone" />
+                                <x-input type="tel" :optional="true" model="phone" label="Phone" />
                             </div>
 
                             <div class="mb-3">
-                                <x-textarea type="text" :optional="true" model="description" label="Description" />
+                                <x-textarea type="text" model="description" label="Description" />
                             </div>
                         </div>
                         <div class="col-lg-6">

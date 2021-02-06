@@ -9,6 +9,7 @@ import { FlatpickrTime } from "../../events/create/Flatpickr";
 import { Notifier } from "/@/utils/notifier";
 import Button from "/@/components/admin/Button";
 import { confirmed } from "/@/functions/functions";
+import { FormControl } from "../../events/create/FormControl";
 
 
 const optionsDay = [
@@ -36,6 +37,7 @@ const TableContent = ({ data, onDelete }) => {
         <td>{data.day}</td>
         <td>{data.start_time}</td>
         <td>{data.end_time}</td>
+        <td>{data.description ? <a href="javascript:;" title={data.description}>Description</a> : '--'}</td>
         <td>
             <Button
                 loading={loading}
@@ -77,11 +79,11 @@ const Main = () => {
 
     return <Card>
         <div className="row">
-            <div className="col-lg-6">
+            <div className="col-lg-5">
                 <Label>
                     Ajouter Programme
                 </Label>
-                <form onSubmit={handleSubmit} method="post">
+                <form onSubmit={handleSubmit} method="post" autoComplete="off">
                     <div className="mb-3">
                         <div className="d-flex justify-content-between align-items-center">
                             <label className="form-label">Jour de la semaine</label>
@@ -104,6 +106,11 @@ const Main = () => {
                         label="heure de fin"
                     />
 
+                    <FormControl
+                        name="description"
+                        label="Description (Optionnel)"
+                    />
+
                     <Button
                         loading={loading}
                         type="submit"
@@ -111,7 +118,7 @@ const Main = () => {
                         text="Enregistrer" />
                 </form>
             </div>
-            <div className="col-lg-6">
+            <div className="col-lg-7">
                 <Label>
                     Programmes
                 </Label>
@@ -122,6 +129,7 @@ const Main = () => {
                                 <th scope="col">Jour</th>
                                 <th scope="col">Heure de début</th>
                                 <th scope="col">heure de fin</th>
+                                <th scope="col">Description</th>
                                 <th scope="col">Supprimer</th>
                             </tr>
                         </thead>

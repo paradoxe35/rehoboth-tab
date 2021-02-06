@@ -80,6 +80,9 @@ Route::prefix('dash')
                 Route::get('settings/programmes', [SettingsController::class, 'programmes'])->name('settings.programmes');
                 Route::post('settings/programmes', [SettingsController::class, 'storeProgrammes']);
                 Route::delete('settings/programmes/{programme}', [SettingsController::class, 'deleteProgramme'])->name('settings.programmes.destroy');
+                    
+                Route::get('settings/tags', [SettingsController::class, 'tags'])->name('settings.tags');
+                Route::get('settings/organizers', [SettingsController::class, 'organizers'])->name('settings.organizers');
             });
 
         Route::get('/og-meta', OgController::class)->name('og-meta');
