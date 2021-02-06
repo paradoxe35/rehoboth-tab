@@ -38,6 +38,7 @@ Route::prefix('dash')
                 Route::resource('/sermons', SermonsController::class)->only([
                     'index', 'create', 'edit', 'store'
                 ]);
+                Route::post('sermons/update/{sermon}', [SermonsController::class, 'update'])->name('sermons.update');
 
                 Route::resource('/events', EventsController::class);
                 Route::post('/events/{event}/updateEvent', [EventsController::class, 'updateEvent'])->name('events.updateEvent');

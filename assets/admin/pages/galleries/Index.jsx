@@ -13,12 +13,12 @@ import 'react-pswp/dist/index.css';
 import LoaderFlipped from "/@/components/LoaderFlipped"
 import ImageFlipped from "/@/components/ImageFlipped"
 import BsModal from "/@/components/admin/Modal"
-import FilePond, { imageOptions } from "/@/plugins/filepond"
 import { FormControl } from "../events/create/FormControl"
 import { FlatpickrDate } from "../events/create/Flatpickr"
 import { Notifier } from "/@/utils/notifier"
 import { ContentMasonrySimpleWrapper, ItemFolio, ItemFolioText, ItemFolioThumb } from "/@/components/ContentMasonryWrapper"
 import { confirmed } from "/@/functions/functions"
+import FilePondComponent from "/@/components/FilePond"
 
 const trueArr = new Array(5).fill(true)
 
@@ -57,27 +57,15 @@ const Tabs = ({ setGroup }) => {
 
 
 const AddImagesModalContent = ({ imagesRef, formId }) => {
-    const ref = useRef(null)
+    const onaddfile = (file) => {
+        imagesRef.current.push(file)
+    }
+    const onremovefile = (file) => {
+        imagesRef.current = imagesRef.current.filter(f => f != file)
+    }
 
     useEffect(() => {
         imagesRef.current = [];
-        if (ref.current) {
-            const pont = FilePond.create(ref.current, {
-                ...imageOptions,
-                maxFiles: 20,
-                onaddfile: (err, { file }) => {
-                    if (!err) {
-                        imagesRef.current.push(file)
-                    }
-                },
-                onremovefile: (err, { file }) => {
-                    if (!err) {
-                        imagesRef.current = imagesRef.current.filter(f => f != file)
-                    }
-                }
-            })
-            return () => pont.destroy()
-        }
     }, [])
 
     return <>
@@ -95,7 +83,12 @@ const AddImagesModalContent = ({ imagesRef, formId }) => {
                     <FlatpickrDate label="Date" name="date" />
                 </div>
                 <div className="col-lg-7">
-                    <div ref={ref} />
+                    <FilePondComponent
+                        onaddfile={onaddfile}
+                        allowMultiple={true}
+                        maxFiles={20}
+                        onremovefile={onremovefile}
+                    />
                 </div>
             </div>
         </form>

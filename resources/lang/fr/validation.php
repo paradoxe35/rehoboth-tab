@@ -176,5 +176,6 @@ return [
         'time'                  => 'heure',
         'available'             => 'disponible',
         'size'                  => 'taille',
+        'files'                 => 'fichiers'
     ],
 ];

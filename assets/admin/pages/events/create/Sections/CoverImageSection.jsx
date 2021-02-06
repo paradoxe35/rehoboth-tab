@@ -1,36 +1,24 @@
-import React, { useRef, useEffect } from "react"
+import React from "react"
 import { EVENT_DATA_FORM } from "../DatasForm"
 import Card from "/@/components/Card"
-import FilePond, { fileLabel, imageOptions } from "/@/plugins/filepond"
+import FilePondComponent from "/@/components/FilePond"
 
 const SECTION_KEY = "cover"
 
 const CoverImageSection = React.memo(() => {
-    const ref = useRef(null)
+    const onaddfile = (file) => {
+        EVENT_DATA_FORM[SECTION_KEY] = file
+    }
 
-    useEffect(() => {
-        if (ref.current) {
-            const pont = FilePond.create(ref.current, {
-                ...imageOptions,
-                labelIdle: fileLabel('Déposez une image de couverture'),
-                allowMultiple: false,
-                onaddfile: (err, { file }) => {
-                    if (!err) {
-                        EVENT_DATA_FORM[SECTION_KEY] = file
-                    }
-                },
-                onremovefile: (err) => {
-                    if (!err) {
-                        EVENT_DATA_FORM[SECTION_KEY] = null
-                    }
-                }
-            })
-            return () => pont.destroy()
-        }
-    }, [])
+    const onremovefile = () => {
+        EVENT_DATA_FORM[SECTION_KEY] = null
+    }
 
     return <Card bodyClass="p-1 bg-light" cardClass="p-0 my-3">
-        <div ref={ref} />
+        <FilePondComponent
+            onaddfile={onaddfile}
+            label="Déposez une image de couverture"
+            onremovefile={onremovefile} />
     </Card>
 })
 
