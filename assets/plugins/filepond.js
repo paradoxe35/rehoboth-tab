@@ -114,8 +114,10 @@ export const createInstance = (el, options, livewire = true) => {
         onremovefile: (err, { file }) => {
             if (!err) {
                 const mfiles = files.deleteFile(file)
-                if (mfiles.length == 0 && livewireInstance && livewire) {
-                    livewireInstance()
+                // @ts-ignore
+                if (mfiles.length == 0 && window.livewireInstance && livewire) {
+                    // @ts-ignore
+                    window.livewireInstance()
                         .set(el[1].getAttribute("wire:model"), options.allowMultiple ? [] : null)
                 }
             }

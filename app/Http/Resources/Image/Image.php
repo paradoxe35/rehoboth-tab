@@ -22,6 +22,7 @@ class Image extends JsonResource
             'width' => $this->width,
             'type' => $this->type,
             'date' => $this->date,
+            'thumbnail' => $this->thumbnail,
             'caption' => Str::beforeLast($this->caption, '.'),
             'path' => $this->path,
             'public_path' => $this->public_path,

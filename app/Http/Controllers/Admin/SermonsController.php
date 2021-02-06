@@ -30,7 +30,7 @@ class SermonsController extends Controller
         $request->validate([
             'subject' => ['required', 'string', 'max:255', 'min:2'],
             'preacher' => ['required', 'string', 'max:255', 'min:2'],
-            'description' => ['nullable', 'string', 'mix:10'],
+            'description' => ['nullable', 'string', 'min:10'],
             'date' => ['required', 'date'],
             'image' => File::IMAGE_RULES_OPTIONAL,
             'video' => [
@@ -53,7 +53,7 @@ class SermonsController extends Controller
         ]);
 
         abort_if(
-            $request->video && empty($request->audios) && empty($request->documents),
+            !$request->video && empty($request->file('audios')) && empty($request->file('documents')),
             422,
             trans("Veuillez remplir au moins un des champs média, (Video, audio, documents)")
         );
@@ -75,7 +75,7 @@ class SermonsController extends Controller
 
         $this->storeFiles($sermon, $request->file('audios'), 'audio');
 
-        $this->storeFiles($sermon, $this->file('documents'), 'document');
+        $this->storeFiles($sermon, $request->file('documents'), 'document');
 
         $sermon->save();
 
@@ -107,7 +107,7 @@ class SermonsController extends Controller
     {
         collect($models)
             ->each(function ($file) use ($sermon, $type) {
-                $uploaded = $file->storePublicly(File::SERMONS_PATH . "/{$sermon->id}");
+                $uploaded = $file->storePublicly(File::SERMONS_PATH . "/{$sermon->id}/{$type}");
                 $sermon->files()->create([
                     'path' => $uploaded,
                     'type' => $type,

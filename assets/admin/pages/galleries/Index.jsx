@@ -260,7 +260,6 @@ const ImageFlippedContent = ({ img, onClick, i, removeImage }) => {
     img.uid = i
 
     const image = <ImageFlipped
-        lozad={false}
         onClick={onClick}
         onDelayedAppear={onDelayedAppear}
         onExit={onExit}
@@ -279,17 +278,17 @@ const ImageFlippedContent = ({ img, onClick, i, removeImage }) => {
         <ItemFolio>
             <ItemFolioThumb>
                 {image}
-                <ItemFolioText title={(
-                    <button
-                        onClick={(e) => {
-                            e.stopPropagation()
-                            onDeletePhoto(img)
-                        }}
-                        type="button" className="btn btn-link">
-                        Supprimer
-                    </button>
-                )} />
             </ItemFolioThumb>
+            <ItemFolioText title={(
+                <button
+                    onClick={(e) => {
+                        e.stopPropagation()
+                        onDeletePhoto(img)
+                    }}
+                    type="button" className="btn btn-link">
+                    Supprimer
+                </button>
+            )} />
         </ItemFolio>
     ) : image
 }

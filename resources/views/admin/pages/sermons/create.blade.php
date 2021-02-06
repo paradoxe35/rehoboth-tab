@@ -49,11 +49,11 @@
                 </div>
 
                 <div class="mb-4">
-                    <x-input-file type="file" model="audios" g-ref="audioInput" label="Audio" multiple />
+                    <x-input-file type="file" model="audios[]" g-ref="audioInput" label="Audio" multiple="" />
                 </div>
 
                 <div class="mb-4">
-                    <x-input-file type="file" model="documents" g-ref="documentInput" label="Document" multiple />
+                    <x-input-file type="file" model="documents[]" g-ref="documentInput" label="Document" multiple="" />
                 </div>
 
             </div>

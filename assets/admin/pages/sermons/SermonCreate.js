@@ -71,7 +71,14 @@ export default class extends GiaComponent {
 
         Btn.loading(FormBtn(e.target))
         ApiRequest('post', route('admin.sermons.store').toString(), form)
-            .then(({ data: { message } }) => Notifier.success(message))
+            .then(({ data: { message } }) => {
+                Notifier.success(message, 3000)
+                    .then(() => {
+                        $swup.loadPage({
+                            url: window.location.pathname + window.location.search
+                        }, true)
+                    })
+            })
             .finally(() => Btn.hide())
     }
 }

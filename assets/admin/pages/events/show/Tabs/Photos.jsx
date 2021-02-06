@@ -8,6 +8,7 @@ import Button from '/@/components/admin/Button'
 import { Tab, Tabs } from '/@/components/admin/Tabs'
 import Card from '/@/components/Card'
 import ContentMasonryWrapper, { ItemFolioText } from '/@/components/ContentMasonryWrapper'
+import ImageThumbnail from '/@/components/ImageThumbnail'
 import { confirmed } from '/@/functions/functions'
 import { Notifier } from '/@/utils/notifier'
 
@@ -26,7 +27,7 @@ const ITab = () => {
     const onDeletePhoto = useCallback((img) => {
         if (confirmed()) {
             setPhotos(imgs => imgs.filter(i => i.id != img.id))
-            ApiRequest("delete", route("admin.files.destroy", { file: img.id }).toString())
+            ApiRequest("delete", route("admin.images.destroy", { image: img.id }).toString())
         }
     }, [setPhotos])
 
@@ -69,18 +70,18 @@ const ITab = () => {
                         <div className="col-lg-6 mb-3">
                             <h5>Image de couverture</h5>
 
-                            <img src={image.public_path} className="img-fluid img-thumbnail" alt={image.caption} />
+                            <ImageThumbnail image={image} />
                         </div>
                         <div className="col-lg-6 mb-3">
                             <h5>Photos</h5>
-                            <ContentMasonryWrapper images={photos} imgKey="public_path" >
+                            <ContentMasonryWrapper images={photos}>
                                 {img => (
                                     <ItemFolioText title={(
-                                        <button
+                                        <Button
+                                            color="danger"
+                                            text="supprimer"
                                             onClick={() => onDeletePhoto(img)}
-                                            type="button" className="btn btn-link">
-                                            Supprimer
-                                        </button>
+                                            type="button" className="p-1 text-xs" />
                                     )} />
                                 )}
                             </ContentMasonryWrapper>

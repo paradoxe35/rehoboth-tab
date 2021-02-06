@@ -186,3 +186,16 @@ export function urlBase64ToUint8Array(base64String) {
     }
     return outputArray;
 }
+
+export const respondToVisibility = (element, callback) => {
+    const options = {
+        root: document.documentElement
+    }
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            callback(entry.intersectionRatio > 0);
+        });
+    }, options);
+    observer.observe(element);
+    return () => observer.unobserve(element)
+}

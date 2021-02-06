@@ -1,18 +1,17 @@
 import React from "react"
 import { Flipped } from "react-flip-toolkit"
 import styled from "styled-components"
-import { LozadImage } from "./LozadImage"
+import ImageThumbnail from "./ImageThumbnail"
 
 
-
-export const Image = styled(LozadImage)`
+const Div = styled.div`
     width: 100%;
     height: auto;
     display: block;
     will-change: transform;
 `
 
-const ImageFlipped = ({ setKey, img, onClick = null, onDelayedAppear, onExit, lozad = true }) => {
+const ImageFlipped = ({ setKey, img, onClick = null, onDelayedAppear, onExit }) => {
 
     const handleClick = (e) => {
         e.preventDefault()
@@ -25,9 +24,9 @@ const ImageFlipped = ({ setKey, img, onClick = null, onDelayedAppear, onExit, lo
             onAppear={onDelayedAppear}
             onExit={onExit}
             flipId={`imagekey-${setKey}`}>
-            <Image
-                data-src={lozad ? img.public_path : undefined}
-                src={!lozad ? img.public_path : undefined} />
+            <Div>
+                <ImageThumbnail image={img} title={img?.gallery?.title} />
+            </Div>
         </Flipped>
     </a>
 }

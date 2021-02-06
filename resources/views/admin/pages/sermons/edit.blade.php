@@ -16,7 +16,9 @@
 ]])
 
 <div g-component="SermonEdit">
-    <livewire:admin.sermons.edit :sermon="$sermon" />
+    <x-spinner />
 </div>
-
+<script type="text/javascript" data-swup-reload-script>
+    window.$sermon = @json($sermon)
+</script>
 @endsection

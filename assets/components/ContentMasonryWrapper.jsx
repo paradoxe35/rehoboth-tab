@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from "styled-components"
 import Masonry, { ResponsiveMasonry } from "react-responsive-masonry"
-
+import ImageThumbnail from './ImageThumbnail'
 
 
 export const MasonryImageStyled = styled.img`
@@ -56,12 +56,14 @@ export const ItemFolio = styled.div`
         position: absolute;
         left: 0;
         bottom: 1.6rem;
-        padding: 0 3.3rem;
+        display: block;
+        width: 100%;
         z-index: 2;
         opacity: 0;
         visibility: hidden;
         transform: translate3d(0, 100%, 0);
         transition: all 0.3s ease-in-out;
+        text-align: center;
     }
 
     .item-folio__title {
@@ -77,7 +79,6 @@ export const ItemFolio = styled.div`
         line-height: 1.714;
         margin-bottom: 0;
     }
-
 
     /* on hover 
     * ----------------------------------------------- */
@@ -122,27 +123,17 @@ export const ContentMasonrySimpleWrapper = ({ children }) => {
     </ResponsiveMasonry>
 }
 
-const ContentMasonryWrapper = ({ images = [], imgKey = null, children }) => {
-
-    const content = images.map((image, i) => (
-        <ItemFolio>
-            <ItemFolioThumb>
-                <a href={imgKey ? image[imgKey] : image} className="thumb-link" title="">
-                    <MasonryImageStyled
-                        key={i}
-                        src={imgKey ? image[imgKey] : image}
-                        style={{ width: "100%", display: "block" }}
-                    />
-                </a>
-            </ItemFolioThumb>
-
-            {children(image)}
-        </ItemFolio>
-    ))
-
+const ContentMasonryWrapper = ({ images = [], children }) => {
     return <ResponsiveMasonry columnsCountBreakPoints={{ 576: 1, 768: 2, 992: 3, 1200: 4 }}>
         <Masonry gutter="10px">
-            {content}
+            {images.map(image => (
+                <ItemFolio key={image.id}>
+                    <ItemFolioThumb>
+                        <ImageThumbnail image={image} />
+                    </ItemFolioThumb>
+                    {children(image)}
+                </ItemFolio>
+            ))}
         </Masonry>
     </ResponsiveMasonry>
 }

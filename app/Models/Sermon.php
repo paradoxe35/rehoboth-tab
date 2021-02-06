@@ -29,6 +29,35 @@ class Sermon extends Model
      */
     protected $fillable = ['subject', 'preacher', 'description', 'date'];
 
+    /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array
+     */
+    protected $appends = ['image', 'audios', 'video', 'documents'];
+
+
+   
+    public function getImageAttribute()
+    {
+        return  $this->image()->first();
+    }
+
+    public function getAudiosAttribute()
+    {
+        return  $this->audios()->get();
+    }
+
+    public function getVideoAttribute()
+    {
+        return  $this->video()->first();
+    }
+
+    public function getDocumentsAttribute()
+    {
+        return  $this->documents()->get();
+    }
+
 
     public function files()
     {
