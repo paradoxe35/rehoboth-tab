@@ -34,6 +34,7 @@ Route::name('guest.')
         Route::get('/sermons/{sermon}/{slug}', [SermonController::class, 'show'])->name('sermons.show');
 
         Route::get('/blog', [BlogController::class, 'index'])->name('blog');
+        Route::get('/blog/{blog}/{slug}', [BlogController::class, 'show'])->name('blog.show');
 
         Route::get('/gallery', [GalleryController::class, 'index'])->name('gallery');
 

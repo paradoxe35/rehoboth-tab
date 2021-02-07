@@ -1,4 +1,4 @@
-import { InertiaLink } from '@inertiajs/inertia-react'
+import { InertiaLink, usePage } from '@inertiajs/inertia-react'
 import React from 'react'
 import styled from 'styled-components'
 import {
@@ -11,31 +11,12 @@ import {
 } from './components/LatestSectionCard'
 import H5TitleLink from '/@/components/H5TitleLink'
 import TextMuted from '/@/components/TextMuted'
-
-
-const datas = [
-    {
-        title: "Crouch goes Home to Jesus",
-        date: "February 6, 2017",
-        description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in"
-    },
-    {
-        title: "10 Bible Verses for 2017",
-        date: "February 10, 2017",
-        description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in"
-    },
-    {
-        title: "Crouch goes Home to Jesus",
-        date: "February 20, 2017",
-        description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in"
-    }
-].slice(0, 3)
+import { letterLimit } from '/@/functions/functions'
 
 
 const CardItemLabel = ({ col = 3, index = null }) => {
 
-    return <LatestSectionItemLabel col={col} index={index}>
-
+    return <LatestSectionItemLabel className="align-self-center" col={col} index={index}>
         <LatestSectionH3Styled className="text-muted">
             Derniers
         </LatestSectionH3Styled>
@@ -70,55 +51,68 @@ const CardItemContainer = styled(LatestSectioCardItemStyled)`
     }
 `
 
+const LatestSectionParentBlogStyled = styled(LatestSectionParentStyled)`
+    min-height: 226px !important;
+`
 
-const CardItemData = ({ col = 3, data, showOnlySm = false, showOnlyMd = false, canShowInMd = false, index = null }) => {
-    return <LatestSectionItemData
+
+const LatestSectionItemBlogData = styled(LatestSectionItemData)`
+    margin-top: 35.5px;
+    margin-bottom: 35.5px;
+`
+
+
+const CardItemData = ({ col = 3, blog, showOnlySm = false, showOnlyMd = false, canShowInMd = false, index = null }) => {
+    return <LatestSectionItemBlogData
         col={col}
         index={index}
         showOnlySm={showOnlySm}
         showOnlyMd={showOnlyMd}
         canShowInMd={canShowInMd}>
 
-        <CardItemContainer border={true} cardClass="p-0 bg-transparent mt-2" bodyClass="p-3">
+        <CardItemContainer border={true} cardClass="p-0 bg-transparent mt-2 h-100" bodyClass="p-3">
             <SpanDateStyled>
-                {data.date}
+                {blog.date}
             </SpanDateStyled>
 
             <TextMuted>
-                <H5TitleLink href="#" className="my-2 h5">
-                    {data.title}
+                <H5TitleLink href={blog.route} className="my-2 h5">
+                    {letterLimit(blog.title, 55)}
                 </H5TitleLink>
             </TextMuted>
 
             <SpanDescriptionStyled className="desc text-muted">
-                {data.description}
+                {letterLimit(blog.content, 245)}
             </SpanDescriptionStyled>
 
         </CardItemContainer>
-
-    </LatestSectionItemData >
+    </LatestSectionItemBlogData>
 }
 
 
 const LatestBlog = () => {
+    // @ts-ignore
+    const { blogs } = usePage().props
+
     return <div className="container-fluid">
-        <LatestSectionParentStyled data-aos="fade-up" className="row justify-content-center align-items-center pb-3">
+        <LatestSectionParentBlogStyled data-aos="fade-up" className="row justify-content-center pb-3">
             {
-                [null, ...datas]
-                    .map((data, i) => {
-                        const col = datas.length > 0 && datas.length < 3 ? 4 : 3
+                [null, ...blogs]
+                    .map((blog, i) => {
+                        const col = blogs.length > 0 && blogs.length < 3 ? 4 : 3
                         return i === 0 ?
-                            <CardItemLabel col={col} index={i + 1} /> :
+                            <CardItemLabel key={i} col={col} index={i + 1} /> :
                             <CardItemData
+                                key={blog.id}
                                 index={i + 1}
                                 canShowInMd={i == 1}
                                 showOnlyMd={i == 2}
                                 showOnlySm={i == 3}
                                 col={col}
-                                data={data} />
+                                blog={blog} />
                     })
             }
-        </LatestSectionParentStyled>
+        </LatestSectionParentBlogStyled>
     </div>
 }
 

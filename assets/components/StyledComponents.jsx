@@ -15,3 +15,17 @@ export const ItemRowStyled = styled.div`
         border-bottom: solid 1px var(--bs-primary);
     }
 `
+
+
+export const FixedDarkenContainerStyled = styled.div`
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,.8);
+    z-index: 2000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+`

@@ -90,8 +90,6 @@ export const ItemFolio = styled.div`
     &:hover .item-folio__thumb a::after {
         opacity: 1;
         visibility: visible;
-        -webkit-transform: scale(1);
-        -ms-transform: scale(1);
         transform: scale(1);
     }
 
@@ -129,7 +127,9 @@ const ContentMasonryWrapper = ({ images = [], children }) => {
             {images.map(image => (
                 <ItemFolio key={image.id}>
                     <ItemFolioThumb>
-                        <ImageThumbnail image={image} />
+                        <a data-no-swup href={image.public_path} target="_blank">
+                            <ImageThumbnail image={image} />
+                        </a>
                     </ItemFolioThumb>
                     {children(image)}
                 </ItemFolio>

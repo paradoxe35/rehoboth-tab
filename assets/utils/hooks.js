@@ -123,3 +123,41 @@ export const useScrollBottom = (handler) => {
         return () => window.removeEventListener('scroll', scroll)
     }, [])
 }
+
+
+export const usePhotoSwipe = () => {
+    const [index, setIndex] = useState(null);
+    const [open, setOpen] = useState(false);
+    const loadPswpRef = useRef(false);
+    const imagesRef = useRef(null)
+
+    useEffect(() => {
+        if (!open && index !== null) {
+            loadPswpRef.current = true
+            setOpen(true)
+        };
+    }, [index]);
+
+    const handleClickImage = useCallback((uid) => setIndex(uid), [setIndex])
+
+    const mapImagesUid = useCallback((images) => {
+        if (imagesRef.current !== images && Array.isArray(images)) {
+            images.forEach((_, i) => {
+                if (typeof images[i] === 'object' && images[i] !== null) {
+                    images[i].uid = i
+                }
+            })
+            imagesRef.current = images
+        }
+    }, [])
+
+    return {
+        pswpIndex: index,
+        setPswpIndex: setIndex,
+        pswpOpen: open,
+        setPswpOpen: setOpen,
+        loadPswp: loadPswpRef.current,
+        handleClickImage,
+        mapImagesUid
+    }
+}

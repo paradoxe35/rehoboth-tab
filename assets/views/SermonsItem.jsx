@@ -9,7 +9,7 @@ import styled from 'styled-components'
 import Card from '/@/components/Card'
 import { Iframe, ObjectElement } from '../components/Iframe';
 import { createPortal } from 'react-dom'
-import { ItemRowStyled } from '../components/StyledComponents';
+import { FixedDarkenContainerStyled, ItemRowStyled } from '../components/StyledComponents';
 
 
 const ImgContainerStyled = styled.div`
@@ -57,17 +57,8 @@ const MediaLinksStyled = styled.span`
         }
     }
 `
-const MediaPopupContainer = styled.div`
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0,0,0,.8);
-    z-index: 2000;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+
+const MediaPopupContainer = styled(FixedDarkenContainerStyled)`
     padding: 70px 80px 20px 80px;
     animation: youtubePopup .5s both;
     @keyframes youtubePopup {

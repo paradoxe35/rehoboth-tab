@@ -1,14 +1,11 @@
 import "/@/utils/devtool"
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import React, { lazy, Suspense, useCallback, useEffect, useRef, useState } from 'react'
 import { render, unmountComponentAtNode } from 'react-dom'
 import Button from "/@/components/admin/Button"
 import { ApiRequest } from "/@/api/api"
 import { Flipper } from 'react-flip-toolkit'
 import anime from "animejs"
-import { useListDataPaginator } from "/@/utils/hooks"
-
-import { PhotoSwipe } from 'react-pswp';
-import 'react-pswp/dist/index.css';
+import { useListDataPaginator, usePhotoSwipe } from "/@/utils/hooks"
 
 import LoaderFlipped from "/@/components/LoaderFlipped"
 import ImageFlipped from "/@/components/ImageFlipped"
@@ -19,6 +16,7 @@ import { Notifier } from "/@/utils/notifier"
 import { ContentMasonrySimpleWrapper, ItemFolio, ItemFolioText, ItemFolioThumb } from "/@/components/ContentMasonryWrapper"
 import { confirmed } from "/@/functions/functions"
 import FilePondComponent from "/@/components/FilePond"
+import FullScreenLoader from "/@/components/FullScreenLoader"
 
 const trueArr = new Array(5).fill(true)
 
@@ -303,6 +301,9 @@ const Content = ({ images = [], onClick = undefined, removeImage }) => {
     </ContentMasonrySimpleWrapper>
 }
 
+
+const PhotoSwipe = lazy(() => import('/@/components/PhotoSwipe'))
+
 const Main = () => {
     const {
         setGroup,
@@ -313,25 +314,7 @@ const Main = () => {
         removeImage
     } = useImagesState()
 
-    const [index, setIndex] = useState(null);
-    const [open, setOpen] = useState(false);
-
-
-    const pswpContainer = useMemo(() => images.map((img, i) => ({
-        uid: i,
-        src: img.public_path,
-        msrc: img.public_path,
-        w: img.width,
-        h: img.height,
-        title: img?.gallery?.title || img.caption,
-        description: img?.gallery?.description,
-    })), [images])
-
-    const handleClickImage = useCallback((uid) => setIndex(uid), [setIndex])
-
-    useEffect(() => {
-        if (!open && index !== null) setOpen(true);
-    }, [index]);
+    const { setPswpIndex, setPswpOpen, pswpOpen, pswpIndex, loadPswp, handleClickImage } = usePhotoSwipe()
 
     return <>
         <div className="row">
@@ -352,17 +335,17 @@ const Main = () => {
 
         <LoadMoreButton getPaginatorChange={getPaginatorChange} listData={listData} />
 
-        <PhotoSwipe
-            container={pswpContainer}
-            onIndexChange={setIndex}
-            onOpenChange={setOpen}
-            index={index}
-            open={open}
-            theme={{
-                foreground: '#fff',
-                background: '#1A202C',
-            }}
-        />
+        <Suspense fallback={<FullScreenLoader />}>
+            {
+                loadPswp && <PhotoSwipe
+                    images={images}
+                    setIndex={setPswpIndex}
+                    index={pswpIndex}
+                    setOpen={setPswpOpen}
+                    open={pswpOpen}
+                />
+            }
+        </Suspense>
     </>
 }
 

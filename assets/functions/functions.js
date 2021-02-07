@@ -202,6 +202,7 @@ export const respondToVisibility = (element, callback) => {
 
 
 export function letterLimit(text = '', limit = 24) {
+    if (!text) return;
     const length = text.length
     if (length <= limit) {
         return text

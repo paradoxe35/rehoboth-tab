@@ -40,10 +40,10 @@ export const LatestSectionItemData = ({ col, showOnlySm, showOnlyMd, canShowInMd
     </div>
 }
 
-export const LatestSectionItemLabel = ({ col, children, index = null }) => {
+export const LatestSectionItemLabel = ({ col, children, index = null, className = '' }) => {
     return <div data-aos="fade-right"
         data-aos-duration={`${index ? index * 400 : 400}`}
-        className={`col-lg-${col} d-flex justify-content-center align-items-center`}>
+        className={`col-lg-${col} d-flex justify-content-center align-items-center ${className}`}>
         <div className="text-center my-4">
             {children}
         </div>

@@ -3,13 +3,14 @@
 namespace App\Models\Blog;
 
 use App\Events\Models\BlogDeleted;
+use App\FormattableDate;
 use App\Models\Morphs\Image;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Blog extends Model
 {
-    use HasFactory;
+    use HasFactory, FormattableDate;
 
 
     /**
@@ -21,11 +22,52 @@ class Blog extends Model
         'deleted' => BlogDeleted::class,
     ];
 
+    /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array
+     */
+    protected $appends = [
+        'date'
+    ];
+
 
     /**
      * @var array
      */
     protected $fillable = ['title', 'slug', 'json', 'description', 'author', 'blog_category_id'];
+
+
+    public function contentLimit(int $limit = 260)
+    {
+        $contentBlock = json_decode($this->json);
+        $description = $this->description .  ($this->description[-1] === "." ? '' : '.');
+
+        foreach ($contentBlock->blocks as $block) {
+            if (strlen($description) >= $limit) break;
+
+            if ($block->type === 'paragraph') {
+                $description .= " " . strip_tags($block->data->text);
+            }
+        }
+
+        return substr($description, 0, $limit);
+    }
+
+
+    public function guestRoute()
+    {
+        return route(
+            'guest.blog.show',
+            ['blog' => $this->id, 'slug' => $this->slug],
+            false
+        );
+    }
+
+    public function getDateAttribute()
+    {
+        return $this->formatDate($this->created_at);
+    }
 
 
     public function category()
