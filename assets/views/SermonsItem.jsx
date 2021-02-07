@@ -7,7 +7,7 @@ import ImageThumbnail from '/@/components/ImageThumbnail'
 import FetchProfile from './FetchProfile'
 import styled from 'styled-components'
 import Card from '/@/components/Card'
-import { Iframe } from '../components/Iframe';
+import { Iframe, ObjectElement } from '../components/Iframe';
 import { createPortal } from 'react-dom'
 
 
@@ -80,7 +80,7 @@ const MediaPopupContainer = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 80px 80px 20px 80px;
+    padding: 70px 80px 20px 80px;
     animation: youtubePopup .5s both;
     @keyframes youtubePopup {
         from {
@@ -92,21 +92,25 @@ const MediaPopupContainer = styled.div`
     }
 `
 
-const IframePopup = styled(Iframe)`
-    width: 100%;
-    height: 100%;
-    animation: youtubePopupIframe .5s .3s both;
-    @keyframes youtubePopupIframe {
-        from {
-            opacity: 0;
-            transform: translateY(-100px)
+
+const EmbedElement = (component) => styled(component)`
+        width: 100%;
+        height: 80%;
+        animation: youtubePopupIframe .5s .3s both;
+        @keyframes youtubePopupIframe {
+            from {
+                opacity: 0;
+                transform: translateY(-100px)
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0)
+            }
         }
-        to {
-            opacity: 1;
-            transform: translateY(0)
-        }
-    }
 `
+
+const IframePopup = EmbedElement(Iframe)
+const ObjectPopup = EmbedElement(ObjectElement)
 
 const CloseMediaPopup = styled.div`
     position: absolute;
@@ -116,35 +120,126 @@ const CloseMediaPopup = styled.div`
     font-size: 25px;
     transition: color .3s;
     cursor: pointer;
+    button {
+        width: 5px;
+        height: 5px;
+    }
 `
 
-const VideoMedia = ({ video }) => {
+const Audio = styled.audio`
+    & {
+        height: 40px;
+    }
+`
+
+
+const FigureThumbnail = styled.figure`
+    width: 100%;
+    height: 100%;
+    position: relative;
+    margin: 0;
+    padding: 0;
+    &:after {
+        padding-top: 56.25%;
+        min-height: auto;
+        content: "";
+        width: 100%;
+        display: block;
+    }
+`
+
+
+const MediaContainer = ({ children }) => {
     return <div className="w-100 h-100">
         <div className="row justify-content-center h-100">
             <div className="col-lg-6 col-lg-8 h-100 col-12">
-                <IframePopup
-                    frameBorder="0"
-                    allowFullScreen
-                    width={560}
-                    height={315}
-                    src={`https://www.youtube.com/embed/${getIdYtLink(video.path)}`} />
+                {children}
             </div>
         </div>
     </div>
 }
 
+const ControlButtons = ({ setIndex, total, index }) => {
+    return <nav className="d-flex justify-content-center mt-2">
+        <ul className="pagination">
+            <li className="page-item">
+                <a className={`page-link bg-transparent text-lg text-light border-0 ${index <= 0 ? 'disabled' : ''}`}
+                    href="javascript:;"
+                    aria-disabled={index <= 0}
+                    onClick={() => setIndex(p => p <= 0 ? p : (p - 1))}
+                    aria-label="Précédent">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+        </ul>
 
-const AudiosMedia = ({ audios }) => {
-    return <>
+        <div className="mx-3 text-center">
+            <div style={{ padding: "0.65rem" }}>
+                <span className="text-muted">{index + 1} / {total}</span>
+            </div>
+        </div>
 
-    </>
+        <ul className="pagination">
+            <li className="page-item">
+                <a className={`page-link bg-transparent text-lg text-light border-0 ${(index + 1) >= total ? 'disabled' : ''}`}
+                    href="javascript:;"
+                    aria-disabled={(index + 1) >= total}
+                    onClick={() => setIndex(p => (p + 1) >= total ? p : p + 1)}
+                    aria-label="Suivant">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+}
+
+const VideoMedia = ({ video, sermon }) => {
+    return <MediaContainer>
+        <h5 className="text-light mb-3 text-center">{sermon.subject}</h5>
+        <FigureThumbnail>
+            <IframePopup
+                frameBorder="0"
+                allowFullScreen
+                width={560}
+                height={315}
+                src={`https://www.youtube.com/embed/${getIdYtLink(video.path)}`} />
+        </FigureThumbnail>
+
+    </MediaContainer>
 }
 
 
-const DocumentsMedia = ({ documents }) => {
-    return <>
 
-    </>
+const AudiosMedia = ({ audios, sermon }) => {
+    const [index, setIndex] = useState(0)
+    const audio = audios[index]
+    return <MediaContainer>
+        <div className="d-flex justify-content-center flex-column align-items-center h-75">
+            <h5 className="text-light mb-2 text-center">{sermon.subject} - {index + 1}</h5>
+            <Audio preload="none" controls playsInline controlsList="nodownload" key={audio.id}>
+                <source src={audio.public_path} type="audio/mpeg" />
+            </Audio>
+            {audios.length > 1 && <ControlButtons setIndex={setIndex} total={audios.length} index={index} />}
+        </div>
+    </MediaContainer>
+}
+
+
+const DocumentsMedia = ({ documents, sermon }) => {
+    const [index, setIndex] = useState(0)
+    const document = documents[index]
+
+    return <MediaContainer>
+        <h5 className="text-light mb-3 text-center">{sermon.subject}</h5>
+        {documents.length > 1 && <ControlButtons setIndex={setIndex} total={documents.length} index={index} />}
+        <FigureThumbnail>
+            <ObjectPopup
+                key={document.id}
+                type="application/pdf"
+                data={document.public_path} />
+        </FigureThumbnail>
+
+    </MediaContainer>
 }
 
 
@@ -183,19 +278,19 @@ const Media = ({ media, sermon }) => {
         <a href="javascript:;">
             {!!media.video && <FiVideo onClick={() => setSection('video')} />}
             <MediaToggle setSection={setSection} toggle={section === 'video'}>
-                <VideoMedia video={media.video} />
+                <VideoMedia sermon={sermon} video={media.video} />
             </MediaToggle>
         </a>
         <a href="javascript:;">
             {!!media.audios.length && <FiVolume2 onClick={() => setSection('audios')} />}
             <MediaToggle setSection={setSection} toggle={section === 'audios'}>
-                <AudiosMedia audios={media.audios} />
+                <AudiosMedia sermon={sermon} audios={media.audios} />
             </MediaToggle>
         </a>
         <a href="javascript:;">
             {!!media.documents.length && <FiFileText onClick={() => setSection('documents')} />}
             <MediaToggle setSection={setSection} toggle={section === 'documents'}>
-                <DocumentsMedia documents={media.documents} />
+                <DocumentsMedia sermon={sermon} documents={media.documents} />
             </MediaToggle>
         </a>
     </MediaLinksStyled>
@@ -211,7 +306,7 @@ const SermonsItem = ({ sermon }) => {
                 <ImgContainerStyled>
                     <Card bodyClass="p-2" border={true} cardClass="p-0">
                         {
-                            sermon.image ? <ImageThumbnail image={sermon.image} title={sermon.subject} /> :
+                            sermon.image ? <ImageThumbnail height="100%" image={sermon.image} title={sermon.subject} /> :
                                 <img src={bibleImage} className="img-fluid" alt={sermon.subject} />
                         }
                     </Card>

@@ -8,7 +8,7 @@ const Link = styled.a`
     display: none;
     right: 15px;
     bottom: 15px;
-    z-index: 99999;
+    z-index: 1000;
     cursor: pointer;
 `
 
