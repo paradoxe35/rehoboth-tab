@@ -32,9 +32,9 @@ const datas = [
 ].slice(0, 3)
 
 
-const CardItemLabel = ({ col = 3 }) => {
+const CardItemLabel = ({ col = 3, index = null }) => {
 
-    return <LatestSectionItemLabel col={col}>
+    return <LatestSectionItemLabel col={col} index={index}>
 
         <LatestSectionH3Styled className="text-muted">
             Derniers
@@ -71,9 +71,10 @@ const CardItemContainer = styled(LatestSectioCardItemStyled)`
 `
 
 
-const CardItemData = ({ col = 3, data, showOnlySm = false, showOnlyMd = false, canShowInMd = false }) => {
+const CardItemData = ({ col = 3, data, showOnlySm = false, showOnlyMd = false, canShowInMd = false, index = null }) => {
     return <LatestSectionItemData
         col={col}
+        index={index}
         showOnlySm={showOnlySm}
         showOnlyMd={showOnlyMd}
         canShowInMd={canShowInMd}>
@@ -107,8 +108,9 @@ const LatestBlog = () => {
                     .map((data, i) => {
                         const col = datas.length > 0 && datas.length < 3 ? 4 : 3
                         return i === 0 ?
-                            <CardItemLabel col={col} /> :
+                            <CardItemLabel col={col} index={i + 1} /> :
                             <CardItemData
+                                index={i + 1}
                                 canShowInMd={i == 1}
                                 showOnlyMd={i == 2}
                                 showOnlySm={i == 3}

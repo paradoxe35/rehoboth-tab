@@ -208,3 +208,15 @@ export function letterLimit(text = '', limit = 24) {
     }
     return text.slice(0, limit) + '...'
 }
+
+export const getBrowserWidth = function () {
+    if (window.innerWidth < 768) {
+        return 'xs';
+    } else if (window.innerWidth < 991) {
+        return 'sm';
+    } else if (window.innerWidth < 1199) {
+        return 'md';
+    } else {
+        return 'lg';
+    }
+}

@@ -8,7 +8,7 @@ import ContentMasonryWrapper from '/@/components/ContentMasonryWrapper'
 
 
 const ContainerStyled = styled(NoContainerPadding)`
-    background-color: var(--bs-light)dfd;
+    background-color: var(--bs-light);
 `
 
 const SpanAutoStyled = styled.span`

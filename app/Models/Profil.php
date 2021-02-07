@@ -4,12 +4,19 @@ namespace App\Models;
 
 use App\Events\Models\ProfileDeleted;
 use App\Models\Morphs\Image;
+use App\Searchable\FullTextSearchable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Profil extends Model
 {
-    use HasFactory;
+    use HasFactory, FullTextSearchable;
+
+
+    /**
+     * The columns of the full text index
+     */
+    protected $searchable = ['name'];
 
     /**
      * The event map for the model.

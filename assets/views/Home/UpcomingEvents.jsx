@@ -56,9 +56,9 @@ const CountdownRowStyled = styled.div`
 `
 
 
-const CardItemLabel = ({ col = 3 }) => {
+const CardItemLabel = ({ col = 3, index = null }) => {
 
-    return <LatestSectionItemLabel col={col}>
+    return <LatestSectionItemLabel col={col} index={index}>
         <LatestSectionSpanStyled>
             <InertiaLink
                 preserveScroll
@@ -79,9 +79,10 @@ const CardH5TitleLink = styled(H5TitleLink)`
 `
 
 
-const CardItemData = ({ col = 3, event, showOnlySm = false, showOnlyMd = false, canShowInMd = false }) => {
+const CardItemData = ({ col = 3, event, showOnlySm = false, showOnlyMd = false, canShowInMd = false, index = null }) => {
     return <LatestSectionItemData
         col={col}
+        index={index}
         showOnlySm={showOnlySm}
         showOnlyMd={showOnlyMd}
         canShowInMd={canShowInMd}>
@@ -185,15 +186,16 @@ const UpcomingEvent = () => {
     return <div className="container-fluid">
         {!!events.length && <FirstEventCountdown events={events} />}
         {events.length > 1 && (
-            <LatestSectionParentStyled data-aos="fade-up" className="row justify-content-center align-items-center pb-3">
+            <LatestSectionParentStyled className="row justify-content-center align-items-center pb-3">
                 {
                     [null, ...events]
                         .map((event, i) => {
                             const col = events.length > 1 && events.length < 3 ? 4 : 3
                             return i === 0 ?
-                                <CardItemLabel key={i} col={col} /> :
+                                <CardItemLabel key={i} index={i + 1} col={col} /> :
                                 <CardItemData
                                     key={event.id}
+                                    index={i + 1}
                                     canShowInMd={i == 1}
                                     showOnlyMd={i == 2}
                                     showOnlySm={i == 3}

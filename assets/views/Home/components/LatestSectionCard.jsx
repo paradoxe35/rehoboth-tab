@@ -31,14 +31,19 @@ export const LatestSectionSpanStyled = styled.span`
 
 
 
-export const LatestSectionItemData = ({ col, showOnlySm, showOnlyMd, canShowInMd, children, className = '' }) => {
-    return <div data-aos="fade-left" className={`col-lg-${col} ${showOnlyMd || canShowInMd ? 'col-md-6' : ''} ${className} ${(!showOnlySm && !showOnlyMd) || 'd-none'} ${showOnlySm ? 'd-lg-block' : ''} ${showOnlyMd ? 'd-md-block' : ''}`}>
+export const LatestSectionItemData = ({ col, showOnlySm, showOnlyMd, canShowInMd, children, className = '', index = null }) => {
+    return <div
+        data-aos="fade-left"
+        data-aos-duration={`${index ? index * 400 : 400}`}
+        className={`col-lg-${col} ${showOnlyMd || canShowInMd ? 'col-md-6' : ''} ${className} ${(!showOnlySm && !showOnlyMd) || 'd-none'} ${showOnlySm ? 'd-lg-block' : ''} ${showOnlyMd ? 'd-md-block' : ''}`}>
         {children}
     </div>
 }
 
-export const LatestSectionItemLabel = ({ col, children }) => {
-    return <div data-aos="fade-right" className={`col-lg-${col} d-flex justify-content-center align-items-center`}>
+export const LatestSectionItemLabel = ({ col, children, index = null }) => {
+    return <div data-aos="fade-right"
+        data-aos-duration={`${index ? index * 400 : 400}`}
+        className={`col-lg-${col} d-flex justify-content-center align-items-center`}>
         <div className="text-center my-4">
             {children}
         </div>

@@ -36,7 +36,7 @@ class SettingsController extends Controller
     public function storeProfile(Request $request)
     {
         $request->validate([
-            'name' => ['required', 'string', 'unique:profils'],
+            'name' => ['required', 'string', 'unique:profils', 'min:3'],
             'phone' => ['nullable', 'regex:/^[0-9\-\(\)\/\+\s]*$/', 'unique:profils'],
             'email' => ['nullable', 'email'],
             'description' => ['required', 'string', 'min:10'],

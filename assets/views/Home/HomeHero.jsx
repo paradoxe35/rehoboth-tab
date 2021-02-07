@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import SwiperCore, { Navigation, Pagination, Parallax, Autoplay, A11y } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -41,7 +41,7 @@ const SwiperButtonNext = styled(SwiperButton)`
 const DivContentScroll = styled.div`
     position: absolute;
     right: 5.5rem;
-    bottom: 4.4rem;
+    bottom: 5.4rem;
     margin: 0;
     padding: 0;
     z-index: 1;
@@ -77,8 +77,17 @@ const DivContentScroll = styled.div`
 
 
 const HomeContentScroll = () => {
+    const [target, setTarget] = useState(null)
+
+    useEffect(() => {
+        const el = document.querySelector('#hero-bottom')
+        if (el) setTarget(el)
+    }, [])
+
     return <DivContentScroll>
-        <a href="#hero-bottom" className="scroll-link smoothscroll">
+        <a href={target?.scrollIntoView ? 'javascript:;' : '#hero-bottom'}
+            onClick={() => target?.scrollIntoView({ behavior: "smooth" })}
+            className="scroll-link smoothscroll">
             <span>Défiler vers le bas</span>
         </a>
     </DivContentScroll>
@@ -128,7 +137,7 @@ const HomeHero = () => {
             <SwiperSlideContent
                 subtitle={"Il y a une place"}
                 title={"Pour tout le monde"}
-                action={{ text: "Lire plus", href: "#" }}
+                action={{ text: "Lire plus", href: route('guest.contact').toString() }}
                 subtitleColor="text-primary"
                 description={"Peu importe d'où vous venez ou qui vous êtes, le puits de la parole est ouvert à tous."}
             />
@@ -138,7 +147,7 @@ const HomeHero = () => {
             <SwiperSlideContent
                 subtitle={"Mettez votre foi"}
                 title={"En action"}
-                action={{ text: "Lire plus", href: "#" }}
+                action={{ text: "Lire plus", href: route('guest.contact').toString() }}
                 colClass="offset-lg-6"
                 subtitleColor="text-primary"
                 description={"Mettez votre foi en action aujourd'hui et laissez vos actions être alimentées par votre foi."}
@@ -149,7 +158,7 @@ const HomeHero = () => {
             <SwiperSlideContent
                 subtitle={"Abandon total"}
                 title={"À Dieu"}
-                action={{ text: "Lire plus", href: "#" }}
+                action={{ text: "Lire plus", href: route('guest.contact').toString() }}
                 subtitleColor="text-primary"
                 description={"La première étape pour surmonter tout type de situation qui tient dans l'esclavage."}
             />

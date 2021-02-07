@@ -1,42 +1,9 @@
+import { usePage } from '@inertiajs/inertia-react'
 import React from 'react'
 import styled from 'styled-components'
 import CenterTitle from '/@/components/CenterTitle'
-
-
-const datas = [
-    {
-        dayWeek: "Mercredi",
-        from: "15-30m",
-        to: "17-30m"
-    },
-    {
-        dayWeek: "Samedi",
-        from: "15-30m",
-        to: "17-30m"
-    },
-    {
-        dayWeek: "Dimanche",
-        from: "15-30m",
-        to: "17-30m"
-    },
-    {
-        dayWeek: "Mardi",
-        from: "15-30m",
-        to: "17-30m"
-    }
-]
-
-const ItemRowStyled = styled.div`
-    visibility: visible;
-    opacity: 500;
-    padding-bottom: 15px;
-    margin-bottom: 15px;
-    border-bottom: solid 1px #eee;
-    transition: border .7s;
-    &:hover{
-        border-bottom: solid 1px var(--bs-primary);
-    }
-`
+import { ItemRowStyled } from '/@/components/StyledComponents'
+import { capitalize } from '/@/functions/functions'
 
 const TimeDaytyled = styled.div`
     border-radius: 6px;
@@ -48,22 +15,28 @@ const TimeDaytyled = styled.div`
     background-color: #9e8a6f;
 `
 
-const DayWeek = ({ data }) => {
-    return <ItemRowStyled data-aos="fade-up">
-        <div className="d-flex justify-content-between mb-3">
-            <TimeDaytyled className=" p-3 text-center">
-                <div>{data.from}</div>
-                <div className="text-center">{"->"}</div>
-                <div>{data.to}</div>
-            </TimeDaytyled>
-            <span className="text-muted">
-                {data.dayWeek}
-            </span>
-        </div>
-    </ItemRowStyled>
+const formatTime = (t = '') => t.split(':').slice(0, 2).join(':')
+
+const DayWeek = ({ programme }) => {
+    return <div data-aos="fade-up">
+        <ItemRowStyled title={programme.description}>
+            <div className="d-flex justify-content-between mb-3" >
+                <TimeDaytyled className=" p-3 text-center">
+                    <div>{formatTime(programme.start_time)}</div>
+                    <div className="text-center">{"->"}</div>
+                    <div>{formatTime(programme.end_time)}</div>
+                </TimeDaytyled>
+                <span className="text-muted">
+                    {capitalize(programme.day)}
+                </span>
+            </div>
+        </ItemRowStyled>
+    </div>
 }
 
 const OurPrograms = () => {
+    // @ts-ignore
+    const { programmes } = usePage().props
 
     return <div className="container py-3">
         <CenterTitle className="h4 my-5" data-aos="fade-up">
@@ -72,7 +45,7 @@ const OurPrograms = () => {
 
         <div className="row justify-content-center">
             <div className="col-lg-8">
-                {datas.map((d) => <DayWeek data={d} />)}
+                {programmes.map((d, i) => <DayWeek key={i} programme={d} />)}
             </div>
         </div>
     </div>

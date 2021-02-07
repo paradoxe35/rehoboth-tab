@@ -14,7 +14,10 @@ const DivContainer = styled.div`
 
 const ImageWrapper = styled.div`
     position: absolute; 
-    inset: 0px;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
     transition: opacity 500ms ease 0s;
 `
 
@@ -26,7 +29,10 @@ const DivThumbnail = styled.div`
     /* @ts-ignore */
     ({ load }) => load ? `
             opacity: 0;
-            inset: 0px;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
         `: `
             opacity: 1;
             left: 0;
@@ -96,7 +102,7 @@ const ImageThumbnail = ({ image, title = null, height = "auto", className = null
         <DivThumbnail load={load} style={{ backgroundImage: `url(${image.thumbnail})` }} />
         <ImageWrapper style={{ opacity: load ? "1" : "0" }}>
             <div
-                style={{ visibility: "hidden", opacity: "0", width: "0px", height: "0px", margin: "0", padding: "0" }}
+                style={{ visibility: "hidden", opacity: "0", width: "0", height: "0px", margin: "0", padding: "0" }}
                 ref={ref}
                 data-src={image.public_path} />
         </ImageWrapper>

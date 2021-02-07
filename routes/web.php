@@ -4,6 +4,7 @@ use App\Http\Controllers\BlogController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\GalleryController;
+use App\Http\Controllers\Guest\ProfileController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\SermonController;
 use App\Http\Controllers\WebPush\WebPushController;
@@ -37,6 +38,9 @@ Route::name('guest.')
         Route::get('/gallery', [GalleryController::class, 'index'])->name('gallery');
 
         Route::get('/contact', [ContactController::class, 'index'])->name('contact');
+
+
+        Route::get('/profile/{name}', ProfileController::class)->name('app.profiles');
 
         Route::prefix('web-push')
             ->name('web-push')

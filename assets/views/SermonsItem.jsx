@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { InertiaLink } from '@inertiajs/inertia-react'
-import { FiVolume2, FiVideo, FiFileText } from "react-icons/fi";
-import { getIdYtLink, letterLimit } from '/@/functions/functions'
+import { FiVolume2, FiVideo, FiFileText, FiFile } from "react-icons/fi";
+import { getBrowserWidth, getIdYtLink, letterLimit } from '/@/functions/functions'
 import bibleImage from '/@/images/sermon/bible.jpeg'
 import ImageThumbnail from '/@/components/ImageThumbnail'
 import FetchProfile from './FetchProfile'
@@ -9,23 +9,11 @@ import styled from 'styled-components'
 import Card from '/@/components/Card'
 import { Iframe, ObjectElement } from '../components/Iframe';
 import { createPortal } from 'react-dom'
+import { ItemRowStyled } from '../components/StyledComponents';
 
 
 const ImgContainerStyled = styled.div`
     width: 180px;
-`
-
-const ItemRowStyled = styled.div`
-    visibility: visible;
-    opacity: 500;
-    padding-bottom: 15px;
-    margin-bottom: 15px;
-    border-bottom: solid 1px #eee;
-    transition: border .7s;
-
-    &:hover{
-        border-bottom: solid 1px var(--bs-primary);
-    }
 `
 
 const ItemHeaderContainerStyled = styled.div`
@@ -95,7 +83,7 @@ const MediaPopupContainer = styled.div`
 
 const EmbedElement = (component) => styled(component)`
         width: 100%;
-        height: 80%;
+        height: 70%;
         animation: youtubePopupIframe .5s .3s both;
         @keyframes youtubePopupIframe {
             from {
@@ -213,6 +201,10 @@ const VideoMedia = ({ video, sermon }) => {
 const AudiosMedia = ({ audios, sermon }) => {
     const [index, setIndex] = useState(0)
     const audio = audios[index]
+
+    const filename = `${sermon.subject}-${index + 1}`;
+    const exts = audio.path.split('.')
+
     return <MediaContainer>
         <div className="d-flex justify-content-center flex-column align-items-center h-75">
             <h5 className="text-light mb-2 text-center">{sermon.subject} - {index + 1}</h5>
@@ -220,6 +212,9 @@ const AudiosMedia = ({ audios, sermon }) => {
                 <source src={audio.public_path} type="audio/mpeg" />
             </Audio>
             {audios.length > 1 && <ControlButtons setIndex={setIndex} total={audios.length} index={index} />}
+            <a key={audio.path} href={audio.public_path}
+                download={filename.split(' ').join('-') + '.' + exts[exts.length - 1]}
+                className="text-light text-decoration-underline mt-2">Telecharger</a>
         </div>
     </MediaContainer>
 }
@@ -229,16 +224,33 @@ const DocumentsMedia = ({ documents, sermon }) => {
     const [index, setIndex] = useState(0)
     const document = documents[index]
 
-    return <MediaContainer>
-        <h5 className="text-light mb-3 text-center">{sermon.subject}</h5>
-        {documents.length > 1 && <ControlButtons setIndex={setIndex} total={documents.length} index={index} />}
-        <FigureThumbnail>
-            <ObjectPopup
-                key={document.id}
-                type="application/pdf"
-                data={document.public_path} />
-        </FigureThumbnail>
+    const filename = `${sermon.subject}-${index + 1}.pdf`
+    const isMobile = ['sm', 'xs'].includes(getBrowserWidth())
 
+    return <MediaContainer>
+        <div className={isMobile ? `d-flex justify-content-center flex-column align-items-center h-75` : 'h-100'}>
+            <h5 className="text-light mb-3 text-center">{sermon.subject} - {index + 1}</h5>
+            {documents.length > 1 && <ControlButtons setIndex={setIndex} total={documents.length} index={index} />}
+            {
+                isMobile ? (
+                    <div className="text-center">
+                        <a href="javascript:;">{filename}</a>
+                        <div className="mt-2">
+                            <a key={document.id} href={document.public_path}
+                                download={filename.split(' ').join('-')}
+                                className="text-light text-decoration-underline">Telecharger</a>
+                        </div>
+                    </div>
+                ) : (
+                        <FigureThumbnail>
+                            <ObjectPopup
+                                key={document.id}
+                                type="application/pdf"
+                                data={document.public_path} />
+                        </FigureThumbnail>
+                    )
+            }
+        </div>
     </MediaContainer>
 }
 
@@ -300,37 +312,39 @@ const Media = ({ media, sermon }) => {
 const SermonsItem = ({ sermon }) => {
     const { media } = sermon
 
-    return <ItemRowStyled className="row align-items-center justify-content-between" data-aos="fade-up">
-        <ItemHeaderContainerStyled className="col-lg-8 mb-3 mb-lg-0">
-            <div className="d-flex align-items-center">
-                <ImgContainerStyled>
-                    <Card bodyClass="p-2" border={true} cardClass="p-0">
-                        {
-                            sermon.image ? <ImageThumbnail height="100%" image={sermon.image} title={sermon.subject} /> :
-                                <img src={bibleImage} className="img-fluid" alt={sermon.subject} />
-                        }
-                    </Card>
-                </ImgContainerStyled>
-                <div className="mx-2"></div>
-                <div className="mid-col">
-                    <H3TitleStyled>
-                        <InertiaLink href={sermon.route} title={sermon.subject}>
-                            {letterLimit(sermon.subject, 30)}
-                        </InertiaLink>
-                    </H3TitleStyled>
-                    <DivDetailsStyled className="text-muted">
-                        <span>
-                            {"Par"} <FetchProfile name={sermon.preacher} />, {sermon.date}
-                        </span>
-                    </DivDetailsStyled>
+    return <div data-aos="fade-up">
+        <ItemRowStyled className="row align-items-center justify-content-between" >
+            <ItemHeaderContainerStyled className="col-lg-8 mb-3 mb-lg-0">
+                <div className="d-flex align-items-center">
+                    <ImgContainerStyled>
+                        <Card bodyClass="p-2" border={true} cardClass="p-0">
+                            {
+                                sermon.image ? <ImageThumbnail height="100%" image={sermon.image} title={sermon.subject} /> :
+                                    <img src={bibleImage} className="img-fluid" alt={sermon.subject} />
+                            }
+                        </Card>
+                    </ImgContainerStyled>
+                    <div className="mx-2"></div>
+                    <div className="mid-col">
+                        <H3TitleStyled>
+                            <InertiaLink href={sermon.route} title={sermon.subject}>
+                                {letterLimit(sermon.subject, 30)}
+                            </InertiaLink>
+                        </H3TitleStyled>
+                        <DivDetailsStyled className="text-muted">
+                            <span>
+                                {"Par"} <FetchProfile name={sermon.preacher} />, {sermon.date}
+                            </span>
+                        </DivDetailsStyled>
+                    </div>
                 </div>
-            </div>
-        </ItemHeaderContainerStyled>
+            </ItemHeaderContainerStyled>
 
-        <div className="col-lg-4 text-center">
-            <Media media={media} sermon={sermon} />
-        </div>
-    </ItemRowStyled>
+            <div className="col-lg-4 text-center">
+                <Media media={media} sermon={sermon} />
+            </div>
+        </ItemRowStyled>
+    </div>
 }
 
 

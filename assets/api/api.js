@@ -1,6 +1,7 @@
-import axios from 'axios'
+import axios, { Api } from './axios'
 import { Notifier } from '/@/utils/notifier'
 import { HtmlAlert } from '/@/utils/dom'
+
 
 export const setI18nLanguage = (lang) => {
     axios.defaults.headers.common['CLIENT-LANG'] = lang
@@ -53,102 +54,4 @@ export const ApiRequest = async (method = 'get', url, datas = {}, mustNotifierEr
     }
 }
 
-const params = {
-    timeout: 300 * 1000,
-    headers: {
-        'X-Requested-With': 'XMLHttpRequest'
-    }
-}
 
-export const Axios = axios.create(params);
-export const AxiosAdmin = axios.create(params);
-
-export default class Api {
-
-    static get Axs() {
-        return Axios
-    }
-
-    static async get(url, config = {}) {
-        try {
-            const res = this.Axs.get(url, config)
-            return res
-        } catch (error) {
-            throw new Error(error)
-        }
-    }
-
-    /**
-     * 
-     * @param {*} url 
-     * @param {*} datas 
-     * @param {import('axios').AxiosRequestConfig} config 
-     */
-    static async post(url, datas = {}, config = {}) {
-        try {
-            const res = this.Axs.post(url, datas, config)
-            return res
-        } catch (error) {
-            throw new Error(error)
-        }
-    }
-
-    static async delete(url, config = {}) {
-        try {
-            const res = this.Axs.delete(url, config)
-            return res
-        } catch (error) {
-            throw new Error(error)
-        }
-    }
-
-    static toObject(datas) {
-        let $datas = {};
-        if (datas instanceof FormData) {
-            datas.forEach((value, key) => ($datas[key] = value))
-        } else {
-            $datas = { ...datas }
-        }
-        return $datas;
-    }
-
-    static async put(url, datas = {}, config = {}) {
-        const $datas = this.toObject(datas)
-        try {
-            const res = this.Axs.put(url, $datas, config)
-            return res
-        } catch (error) {
-            throw new Error(error)
-        }
-    }
-
-    static async patch(url, datas = {}, config = {}) {
-        const $datas = this.toObject(datas)
-        try {
-            const res = this.Axs.patch(url, $datas, config)
-            return res
-        } catch (error) {
-            throw new Error(error)
-        }
-    }
-
-    static escapeHtml(text) {
-        const map = {
-            '&': '&amp;',
-            '<': '&lt;',
-            '>': '&gt;',
-            '"': '&quot;',
-            "'": '&#039;'
-        }
-        return text.replace(/[&<>"']/g, (m) => {
-            return map[m]
-        })
-    }
-
-}
-
-export class ApiAdmin extends Api {
-    static get Axs() {
-        return AxiosAdmin
-    }
-}
