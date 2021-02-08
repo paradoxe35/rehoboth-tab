@@ -1,7 +1,7 @@
 import { Inertia } from "@inertiajs/inertia";
 import { usePage } from "@inertiajs/inertia-react";
 import React from "react";
-import { LaravelPagination } from "/@/components/admin/Pagination";
+import { LaravelPagination } from "/@/components/Pagination";
 import Hero from "/@/layouts/Hero/Hero";
 import { useListDataPaginator } from "/@/utils/hooks";
 import SermonsItem from "/@/views/SermonsItem";

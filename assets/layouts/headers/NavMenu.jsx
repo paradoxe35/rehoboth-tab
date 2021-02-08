@@ -9,7 +9,7 @@ import { Inertia } from '@inertiajs/inertia';
 
 const LinkRoute = ({ routeName, text }) => {
     // @ts-ignore
-    return <li className={route().current(routeName) ? 'active' : ''}>
+    return <li className={route().current().toString().includes(routeName) ? 'active' : ''}>
         <InertiaLink className="link" href={route(routeName).toString()}>
             {text}
         </InertiaLink>

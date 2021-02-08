@@ -19,7 +19,6 @@ const Div = styled.div`
 `
 
 const DivContainer = styled.div`
-    height: 35.53vh;
     min-height: 257px;
     position: relative;
     background-position: 50% 50%;
@@ -36,9 +35,12 @@ const DivContainer = styled.div`
         z-index: 9;
     }
 `
+const RowDiv = styled.div`
+    padding-top: 110.5px;
+    padding-bottom: 103px;
+`
 
-
-const Hero = ({ title = '', imageSrc = null, children, headTitle = null }) => {
+const Hero = ({ title = '', imageSrc = null, children, headTitle = null, heroClass = 'mb-4' }) => {
 
     const divRef = useRef(null)
     // @ts-ignore
@@ -64,15 +66,15 @@ const Hero = ({ title = '', imageSrc = null, children, headTitle = null }) => {
                 <title>{(title || headTitle) ? (headTitle || title) + ' - ' : ''}{appName}</title>
             </Helmet>
             {/*  @ts-ignore */}
-            <DivContainer className="mb-4" style={{ backgroundImage: `url(${imageSrc || Image})` }} ref={divRef}>
-                <Div className="h-100 px-lg-6 px-lg-7 container">
-                    <div className="h-100  align-items-center justify-content-center text-center row">
+            <DivContainer className={heroClass} style={{ backgroundImage: `url(${imageSrc || Image})` }} ref={divRef}>
+                <Div className="px-lg-6 px-lg-7 container">
+                    <RowDiv className="h-100 justify-content-center text-center row">
                         <div className="col-lg-6">
-                            <h1 className="h3 font-weight-bold mb-3" style={{ lineHeight: 1 }}>
+                            <h1 className="h3 font-weight-bold m-0" style={{ lineHeight: 1 }}>
                                 {title}
                             </h1>
                         </div>
-                    </div>
+                    </RowDiv>
                 </Div>
             </DivContainer>
             {children}

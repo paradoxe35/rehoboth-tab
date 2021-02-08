@@ -10,6 +10,7 @@ import {
     LatestSectionSpanStyled
 } from './components/LatestSectionCard'
 import H5TitleLink from '/@/components/H5TitleLink'
+import { SpanDateStyled } from '/@/components/StyledComponents'
 import TextMuted from '/@/components/TextMuted'
 import { letterLimit } from '/@/functions/functions'
 
@@ -31,14 +32,6 @@ const CardItemLabel = ({ col = 3, index = null }) => {
         </LatestSectionSpanStyled>
     </LatestSectionItemLabel>
 }
-
-const SpanDateStyled = styled.span`
-    background: var(--bs-primary);
-    padding: 2px 10px 2px 10px;
-    color: var(--bs-light);
-    font-size: 12px;
-    border-radius: 3px;
-`
 
 const SpanDescriptionStyled = styled.span`
     font-size: 12px;

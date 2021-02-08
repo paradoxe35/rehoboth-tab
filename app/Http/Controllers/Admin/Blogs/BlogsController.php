@@ -55,7 +55,7 @@ class BlogsController extends Controller
             'title' => ['required', 'string', 'min:5', 'max:255', 'unique:blogs'],
             'author' => ['required', 'string', 'max:255'],
             'description' => ['required', 'string', 'min:5', 'max:255'],
-            'category' => ['nullable', 'numeric', 'min:1'],
+            'category' => ['required', 'numeric', 'min:1'],
             'image' => File::IMAGE_RULES,
             'json' => ['required', 'json']
         ]);

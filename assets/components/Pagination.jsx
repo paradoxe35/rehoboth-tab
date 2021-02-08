@@ -6,7 +6,7 @@ const Paginator = styled.div`
     .page-item {
         margin: 0 7px;
         .page-link {
-            border-radius: 50%;
+            border-radius: 9px;
         }
     }
 `

@@ -27,9 +27,15 @@ class BlogsCategoriesController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => ['required', 'string', 'min:2', 'max:255', 'unique:blog_categories'],
+            'name' => ['required', 'string', 'min:2', 'max:40', 'unique:blog_categories'],
             'icon' => ['nullable', 'string'],
         ]);
+
+        abort_if(
+            $this->index()->count() >= 15,
+            422,
+            trans("Vous ne pouvez pas enregistrer plus de 15 Catégories")
+        );
 
         BlogCategory::query()->create([
             'name' => $request->name,

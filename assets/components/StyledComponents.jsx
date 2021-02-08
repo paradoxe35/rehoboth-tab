@@ -29,3 +29,11 @@ export const FixedDarkenContainerStyled = styled.div`
     align-items: center;
     justify-content: center;
 `
+
+export const SpanDateStyled = styled.span`
+    background: var(--bs-primary);
+    padding: 2px 10px 2px 10px;
+    color: var(--bs-light);
+    font-size: 12px;
+    border-radius: 3px;
+`

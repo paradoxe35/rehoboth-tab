@@ -1,10 +1,10 @@
-import { usePage } from '@inertiajs/inertia-react'
+import { InertiaLink, usePage } from '@inertiajs/inertia-react'
 import React from 'react'
 import styled from 'styled-components'
 import ImageThumbnail from '/@/components/ImageThumbnail'
 import { letterLimit, monthDayYear, timeWithNoSeconds } from '/@/functions/functions'
 import H5TitleLink from '/@/components/H5TitleLink';
-import { LaravelPagination } from '/@/components/admin/Pagination'
+import { LaravelPagination } from '/@/components/Pagination'
 import { useListDataPaginator } from '/@/utils/hooks'
 import { Inertia } from '@inertiajs/inertia'
 
@@ -48,7 +48,9 @@ const EventItem = ({ event }) => {
         <div className="row">
             <div className="col-7 m-0 p-0">
                 <div className="h-100">
-                    <ImageThumbnail height="100%" image={event.image} />
+                    <InertiaLink href={event.route}>
+                        <ImageThumbnail height="100%" image={event.image} />
+                    </InertiaLink>
                 </div>
             </div>
             <div className="col-5 m-0 p-0">
@@ -82,13 +84,19 @@ const EventsIndex = () => {
         Inertia.get(route('guest.events', { page }).toString())
     }
 
+
+    let datas = (events?.data || [])
+    if (datas.length > 0 && ((datas.length % 2) !== 0)) datas.push(null)
+
     return <div className="container-fluid">
         <div className="container my-5">
-            <div className="row">
-                {(events?.data || []).map(event => {
-                    return <ItemContainer className="col-lg-5 mb-5 mx-lg-5">
-                        <EventItem event={event} />
-                    </ItemContainer>
+            <div className="row justify-content-center">
+                {datas.map(event => {
+                    return event === null ?
+                        <div className="col-lg-5 mx-lg-4 mx-xl-4" /> :
+                        <ItemContainer className="col-lg-5 mb-5 mx-lg-4 mx-xl-4">
+                            <EventItem event={event} />
+                        </ItemContainer>
                 })}
             </div>
             <div className="d-flex justify-content-center">
