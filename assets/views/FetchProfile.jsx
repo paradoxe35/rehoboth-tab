@@ -57,8 +57,8 @@ const FetchProfile = ({ name }) => {
             .catch(() => setProfile(undefined))
     }, [isPopoverOpen])
 
-    const content = ({ position, childRect, popoverRect }) => (
-        <ArrowContainer
+    const content = ({ position, childRect, popoverRect }) => {
+        return <ArrowContainer
             position={position}
             childRect={childRect}
             popoverRect={popoverRect}
@@ -86,12 +86,12 @@ const FetchProfile = ({ name }) => {
                 </div>
             </Container>
         </ArrowContainer>
-    )
+    }
 
     return <Popover
         isOpen={isPopoverOpen}
         positions={['top', 'right', 'left', 'bottom']}
-        containerStyle={{ zIndex: "10" }}
+        containerStyle={{ zIndex: "100" }}
         padding={10}
         onClickOutside={() => setIsPopoverOpen(false)}
         content={content}>

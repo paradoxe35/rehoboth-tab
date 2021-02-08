@@ -7,7 +7,6 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>{{ $app_name }}</title>
     @livewireStyles
-    <link rel="stylesheet" href="https://deo8mru8cr8lj.cloudfront.net/be670015-0e71-4dca-8785-c28ecea8d203/css/app.css">
     <style type="text/css">
         html,
         body {
@@ -16,7 +15,6 @@
             width: 100%;
             overflow: hidden;
         }
-
         .button {
             padding: 0.25rem 0.5rem;
             font-size: 0.675rem;
@@ -36,13 +34,12 @@
             transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
         }
     </style>
-    <script defer src="https://deo8mru8cr8lj.cloudfront.net/be670015-0e71-4dca-8785-c28ecea8d203/js/app.js">
-    </script>
+    
+    
 </head>
 
 <body>
-    @livewire($component, array_merge($attribute, ['params' => $attribute]))
-
+    @livewireScripts
 
     @if (app()->environment() === "local")
 
@@ -52,8 +49,9 @@
         <script src="{{ mix('manifest.js', 'assets') }}"></script>
         <script src="{{ mix('livewire-frame.js', 'assets') }}"></script>
     @endif
-    
-    @livewireScripts
+
+    @livewire($component, array_merge($attribute, ['params' => $attribute]))
+
 </body>
 
 </html>

@@ -13,7 +13,6 @@ import 'aos/dist/aos.css'
 
 
 
-
 const Home = () => {
     useEffect(() => {
         aos.init({ once: true })

@@ -1,6 +1,9 @@
 //@ts-nocheck
+import './livewire-datatable/app'
+import './livewire-datatable/app.css'
 import 'iframe-resizer/js/iframeResizer.contentWindow'
 import { openModalEvent, routeFromChildEvent } from '../utils/vars'
+
 
 window.routeToParent = (url) => {
     window.parent.dispatchEvent(new CustomEvent(routeFromChildEvent, { detail: url }))
