@@ -38,6 +38,7 @@ Route::name('guest.')
         Route::get('/blog/{blog}/{slug}', [BlogController::class, 'show'])->name('blog.show');
 
         Route::get('/gallery', [GalleryController::class, 'index'])->name('gallery');
+        Route::get('/gallery/items', [GalleryController::class, 'items'])->name('gallery.items');
 
         Route::get('/contact', [ContactController::class, 'index'])->name('contact');
 

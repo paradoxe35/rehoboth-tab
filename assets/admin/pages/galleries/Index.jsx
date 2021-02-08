@@ -1,24 +1,21 @@
 import "/@/utils/devtool"
-import React, { lazy, Suspense, useCallback, useEffect, useRef, useState } from 'react'
+import React, { lazy, Suspense, useEffect, useRef, useState } from 'react'
 import { render, unmountComponentAtNode } from 'react-dom'
 import Button from "/@/components/admin/Button"
 import { ApiRequest } from "/@/api/api"
-import { Flipper } from 'react-flip-toolkit'
-import anime from "animejs"
-import { useListDataPaginator, usePhotoSwipe } from "/@/utils/hooks"
+import { usePhotoSwipe } from "/@/utils/hooks"
 
-import LoaderFlipped from "/@/components/LoaderFlipped"
 import ImageFlipped from "/@/components/ImageFlipped"
 import BsModal from "/@/components/admin/Modal"
 import { FormControl } from "../events/create/FormControl"
 import { FlatpickrDate } from "../events/create/Flatpickr"
 import { Notifier } from "/@/utils/notifier"
-import { ContentMasonrySimpleWrapper, ItemFolio, ItemFolioText, ItemFolioThumb } from "/@/components/ContentMasonryWrapper"
+import { ItemFolio, ItemFolioText, ItemFolioThumb } from "/@/components/ContentMasonryWrapper"
 import { confirmed } from "/@/functions/functions"
 import FilePondComponent from "/@/components/FilePond"
 import FullScreenLoader from "/@/components/FullScreenLoader"
-
-const trueArr = new Array(5).fill(true)
+import { LoadMoreGalleryButton, useImagesGalleryState } from "/@/components/gallery/Gallery"
+import { FlipperGalleryContent, onFlippedDelayedAppear, onFlippedExit } from "/@/components/gallery/GalleryFlipper"
 
 const Tabs = ({ setGroup }) => {
     return <ul className="nav nav-pills" role="tablist">
@@ -138,123 +135,14 @@ const AddImages = React.memo(({ prependImages }) => {
     </>
 })
 
-const LoadMoreButton = ({ listData, getPaginatorChange }) => {
 
-    const handleClick = () => {
-        const { links, meta } = listData
-        links?.next && getPaginatorChange({ page: meta.current_page + 1 })
-    }
-
-    return <>
-        {listData?.links?.next && (
-            <button
-                className="btn btn-primary text-center text-xs text-white btn-sm"
-                onClick={handleClick}
-                type="button">
-                <span className="loading">• • •</span>
-                <span className="visually-hidden">Charge plus</span>
-            </button>
-        )}
-    </>
-}
-
-const useImagesState = () => {
-    const [images, setImages] = useState([])
-    const [group, setGroup] = useState("all")
-
-    const {
-        listData,
-        setListData,
-        onPageChange: getPaginatorChange,
-    } = useListDataPaginator(null, onLoadNextItems)
-
-    const imagesRef = useRef(trueArr)
-    const groupRef = useRef(group)
-
-    groupRef.current = group
-
-    useEffect(() => {
-        ApiRequest('get', route('admin.galleries.images').toString())
-            .then(({ data: pdata }) => {
-                setListData(pdata)
-                setImages(pdata.data)
-                imagesRef.current = pdata.data
-            })
-    }, [])
-
-
-    const prependImages = useCallback((imgs) => {
-        imagesRef.current.push(...imgs)
-        setImages(im => [
-            ...(groupRef.current === "all" ? imgs : imgs.filter(i => i.imageable == group)),
-            ...im,
-        ])
-    }, [imagesRef, setImages, group])
-
-    const removeImage = useCallback((img) => {
-        imagesRef.current = imagesRef.current.filter(i => i.id != img.id)
-        setImages(im => im.filter(i => i.id != img.id))
-    }, [imagesRef, setImages])
-
-    function onLoadNextItems(page) {
-        setImages(im => [...im, ...trueArr])
-
-        ApiRequest('get', route('admin.galleries.images', { page }).toString())
-            .then(({ data: pdata }) => {
-                imagesRef.current.push(...pdata.data)
-                setListData(pdata)
-            })
-    }
-
-    useEffect(() => {
-        switch (group) {
-            case 'all':
-                setImages(imagesRef.current)
-                break;
-            default:
-                setImages(imagesRef.current.filter(i => i.imageable == group))
-                break;
-        }
-    }, [group, listData])
-
-    return { images, setGroup, prependImages, listData, getPaginatorChange, removeImage }
-}
-
-const onDelayedAppear = (el, index) => {
-    anime({
-        targets: el,
-        opacity: [0, 1],
-        scale: [0.9, 1],
-        translateY: [-15, 0],
-        easing: "easeOutSine",
-        delay: index * 40,
-        duration: 400
-    })
-}
-
-const onExit = (el, index, removeElement) => {
-    anime({
-        targets: el,
-        opacity: 0,
-        scale: 0.9,
-        easing: "easeOutSine",
-        duration: 400,
-        delay: index * 40,
-        complete: removeElement
-    })
-}
-
-const pathId = /(\/|\\|\.)/g
-
-const ImageFlippedContent = ({ img, onClick, i, removeImage }) => {
-    const key = img.path.replace(pathId, '-')
-    img.uid = i
+const ImageFlippedContent = ({ img, onClick, index, removeImage }) => {
 
     const image = <ImageFlipped
         onClick={onClick}
-        onDelayedAppear={onDelayedAppear}
-        onExit={onExit}
-        setKey={key}
+        onDelayedAppear={onFlippedDelayedAppear}
+        onExit={onFlippedExit}
+        indexUid={index}
         img={img} />
 
     const onDeletePhoto = (item) => {
@@ -283,24 +171,6 @@ const ImageFlippedContent = ({ img, onClick, i, removeImage }) => {
     ) : image
 }
 
-const Content = ({ images = [], onClick = undefined, removeImage }) => {
-    return <ContentMasonrySimpleWrapper>
-        {images.map((img, i) => {
-            if (typeof img === 'boolean') {
-                return <LoaderFlipped
-                    key={i}
-                    onDelayedAppear={onDelayedAppear}
-                    onExit={onExit}
-                    setKey={i} />
-            } else {
-                return <ImageFlippedContent key={img.id} removeImage={removeImage} img={img} onClick={onClick} i={i} />
-            }
-        })}
-
-        {!images.length && <div className="py-5" />}
-    </ContentMasonrySimpleWrapper>
-}
-
 
 const PhotoSwipe = lazy(() => import('/@/components/PhotoSwipe'))
 
@@ -312,7 +182,7 @@ const Main = () => {
         listData,
         getPaginatorChange,
         removeImage
-    } = useImagesState()
+    } = useImagesGalleryState('admin.galleries.images')
 
     const { setPswpIndex, setPswpOpen, pswpOpen, pswpIndex, loadPswp, handleClickImage } = usePhotoSwipe()
 
@@ -327,13 +197,20 @@ const Main = () => {
         </div>
 
         <div className="my-3">
-            {/* @ts-ignore */}
-            <Flipper spring="stiff" flipKey={images}>
-                <Content removeImage={removeImage} onClick={handleClickImage} images={images} />
-            </Flipper>
+            <FlipperGalleryContent images={images}>
+                {
+                    ({ img, index }) =>
+                        <ImageFlippedContent
+                            key={img.id}
+                            removeImage={removeImage}
+                            img={img}
+                            onClick={handleClickImage}
+                            index={index} />
+                }
+            </FlipperGalleryContent>
         </div>
 
-        <LoadMoreButton getPaginatorChange={getPaginatorChange} listData={listData} />
+        <LoadMoreGalleryButton getPaginatorChange={getPaginatorChange} listData={listData} />
 
         <Suspense fallback={<FullScreenLoader />}>
             {

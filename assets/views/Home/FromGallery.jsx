@@ -4,11 +4,10 @@ import styled from 'styled-components'
 import NoContainerPadding from '/@/components/NoContainerPadding'
 import SubtitleLead from '/@/components/SubtitleLead'
 import Card from '/@/components/Card'
-import { ContentMasonrySimpleWrapper, ItemFolio, ItemFolioText, ItemFolioThumb } from '/@/components/ContentMasonryWrapper'
-import ImageThumbnail from '/@/components/ImageThumbnail'
-import { letterLimit } from '/@/functions/functions'
+import { ContentMasonrySimpleWrapper } from '/@/components/ContentMasonryWrapper'
 import FullScreenLoader from '/@/components/FullScreenLoader'
 import { usePhotoSwipe } from '/@/utils/hooks'
+import ImageGalleryItem from '../ImageGalleryItem'
 
 
 const ContainerStyled = styled(NoContainerPadding)`
@@ -54,23 +53,10 @@ const GalleryContent = ({ images, setPswpIndex }) => {
                         <Card border={false} bodyClass="p-0" className="bg-transparent">
                             <ContentMasonrySimpleWrapper>
                                 {images.map((img, i) => {
-                                    return <ItemFolio key={img.id}>
-                                        <ItemFolioThumb>
-                                            <a href={img.public_path} onClick={e => {
-                                                e.preventDefault()
-                                                setPswpIndex(i)
-                                            }}>
-                                                <ImageThumbnail image={img} title={img.title} />
-                                            </a>
-                                        </ItemFolioThumb>
-                                        <ItemFolioText title={(
-                                            <span title={img.title} className="text-xs">
-                                                {letterLimit(img.title, 15)}
-                                            </span>
-                                        )} cat={(
-                                            <span title={img.description}>{letterLimit(img.description, 15)}</span>
-                                        )} />
-                                    </ItemFolio>
+                                    return <ImageGalleryItem
+                                        img={img}
+                                        onClick={() => setPswpIndex(i)}
+                                    />
                                 })}
                             </ContentMasonrySimpleWrapper>
                         </Card>

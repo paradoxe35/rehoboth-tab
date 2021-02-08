@@ -11,7 +11,11 @@ const Div = styled.div`
     will-change: transform;
 `
 
-const ImageFlipped = ({ setKey, img, onClick = null, onDelayedAppear, onExit }) => {
+const pathId = /(\/|\\|\.)/g
+
+const ImageFlipped = ({ img, onClick = null, onDelayedAppear, onExit, indexUid = null }) => {
+    const key = img.path.replace(pathId, '-')
+    if (indexUid !== null) img.uid = indexUid;
 
     const handleClick = (e) => {
         e.preventDefault()
@@ -23,7 +27,7 @@ const ImageFlipped = ({ setKey, img, onClick = null, onDelayedAppear, onExit }) 
             stagger
             onAppear={onDelayedAppear}
             onExit={onExit}
-            flipId={`imagekey-${setKey}`}>
+            flipId={`imagekey-${key}`}>
             <Div>
                 <ImageThumbnail image={img} title={img?.gallery?.title} />
             </Div>
