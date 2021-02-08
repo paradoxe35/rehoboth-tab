@@ -221,3 +221,12 @@ export const getBrowserWidth = function () {
         return 'lg';
     }
 }
+
+
+export const timeWithNoSeconds = (t = '') => t.split(':').slice(0, 2).join(':')
+
+
+export const monthDayYear = (d = '') => {
+    const date = d.split(' ')
+    return { month: date[0], day: date[1].slice(0, date[1].length - 1), year: date[2] }
+}

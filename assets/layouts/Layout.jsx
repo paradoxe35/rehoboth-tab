@@ -24,6 +24,7 @@ const Layout = ({ children, title = '' }) => {
     const { appName } = usePage().props
 
     return <>
+        {/*  @ts-ignore */}
         <Helmet>
             <title>{title ? title + ' - ' : ''} {appName}</title>
         </Helmet>

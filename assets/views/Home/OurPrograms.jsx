@@ -3,7 +3,7 @@ import React from 'react'
 import styled from 'styled-components'
 import CenterTitle from '/@/components/CenterTitle'
 import { ItemRowStyled } from '/@/components/StyledComponents'
-import { capitalize } from '/@/functions/functions'
+import { capitalize, timeWithNoSeconds } from '/@/functions/functions'
 
 const TimeDaytyled = styled.div`
     border-radius: 6px;
@@ -15,16 +15,14 @@ const TimeDaytyled = styled.div`
     background-color: #9e8a6f;
 `
 
-const formatTime = (t = '') => t.split(':').slice(0, 2).join(':')
-
 const DayWeek = ({ programme }) => {
     return <div data-aos="fade-up">
         <ItemRowStyled title={programme.description}>
             <div className="d-flex justify-content-between mb-3" >
                 <TimeDaytyled className=" p-3 text-center">
-                    <div>{formatTime(programme.start_time)}</div>
+                    <div>{timeWithNoSeconds(programme.start_time)}</div>
                     <div className="text-center">{"->"}</div>
-                    <div>{formatTime(programme.end_time)}</div>
+                    <div>{timeWithNoSeconds(programme.end_time)}</div>
                 </TimeDaytyled>
                 <span className="text-muted">
                     {capitalize(programme.day)}

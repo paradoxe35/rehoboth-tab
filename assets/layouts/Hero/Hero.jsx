@@ -8,12 +8,13 @@ import { usePage } from '@inertiajs/inertia-react'
 const Div = styled.div`
     z-index: 20;
     h1.h3 {
-        color: #ddd;
+        color: #b6b6b6;
         border-top: solid 1px rgba(255,255,255,.2);
         border-bottom: solid 1px rgba(255,255,255,.2);
         display: block;
         z-index: 20;
         padding: 10px;
+        position: relative;
     }
 `
 
@@ -55,11 +56,14 @@ const Hero = ({ title = '', imageSrc = null, children, headTitle = null }) => {
         }
     }, [divRef.current])
 
+    //  @ts-ignore
     return <BodyClassName className="nav--muted">
         <>
+            {/*  @ts-ignore */}
             <Helmet>
                 <title>{(title || headTitle) ? (headTitle || title) + ' - ' : ''}{appName}</title>
             </Helmet>
+            {/*  @ts-ignore */}
             <DivContainer className="mb-4" style={{ backgroundImage: `url(${imageSrc || Image})` }} ref={divRef}>
                 <Div className="h-100 px-lg-6 px-lg-7 container">
                     <div className="h-100  align-items-center justify-content-center text-center row">

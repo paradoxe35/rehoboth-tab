@@ -5,6 +5,7 @@ use App\Http\Controllers\ContactController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\Guest\ProfileController;
+use App\Http\Controllers\Guest\SubscriberController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\SermonController;
 use App\Http\Controllers\WebPush\WebPushController;
@@ -42,6 +43,8 @@ Route::name('guest.')
 
 
         Route::get('/profile/{name}', ProfileController::class)->name('app.profiles');
+
+        Route::post('/subscribe', SubscriberController::class)->name('subscribe');
 
         Route::prefix('web-push')
             ->name('web-push')
