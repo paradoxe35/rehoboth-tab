@@ -91,6 +91,7 @@ const FetchProfile = ({ name }) => {
     return <Popover
         isOpen={isPopoverOpen}
         positions={['top', 'right', 'left', 'bottom']}
+        containerStyle={{ zIndex: "10" }}
         padding={10}
         onClickOutside={() => setIsPopoverOpen(false)}
         content={content}>

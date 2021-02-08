@@ -41,10 +41,6 @@ const DateTimeDiv = styled.div`
     }
 `
 
-const PaginatorContainer = styled.div`
-
-`
-
 const EventItem = ({ event }) => {
     const date = monthDayYear(event.start_date)
 
@@ -86,17 +82,19 @@ const EventsIndex = () => {
         Inertia.get(route('guest.events', { page }).toString())
     }
 
-    return <div className="container  my-5">
-        <div className="row">
-            {(events?.data || []).map(event => {
-                return <ItemContainer className="col-lg-5 mb-5 mx-lg-5">
-                    <EventItem event={event} />
-                </ItemContainer>
-            })}
+    return <div className="container-fluid">
+        <div className="container my-5">
+            <div className="row">
+                {(events?.data || []).map(event => {
+                    return <ItemContainer className="col-lg-5 mb-5 mx-lg-5">
+                        <EventItem event={event} />
+                    </ItemContainer>
+                })}
+            </div>
+            <div className="d-flex justify-content-center">
+                <LaravelPagination listData={listData} getDataPaginator={onPageChange} />
+            </div>
         </div>
-        <PaginatorContainer className="d-flex justify-content-center">
-            <LaravelPagination listData={listData} getDataPaginator={onPageChange} />
-        </PaginatorContainer>
     </div>
 }
 

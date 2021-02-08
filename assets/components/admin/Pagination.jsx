@@ -1,14 +1,24 @@
 import React from 'react'
 import { Pagination } from 'react-laravel-paginex'
+import styled from 'styled-components'
+
+const Paginator = styled.div`
+    .page-item {
+        margin: 0 7px;
+        .page-link {
+            border-radius: 50%;
+        }
+    }
+`
 
 export const LaravelPagination = ({ listData, getDataPaginator }) => {
-    return <>
+    return <Paginator>
         {listData.meta && listData.meta.total >
             listData.meta.per_page && <Pagination
                 buttonIcons={false}
-                // prevButtonIcon='ni ni-bold-left'
-                // nextButtonIcon='ni ni-bold-right'
+                prevButtonText="&laquo;"
+                nextButtonText="&raquo;"
                 changePage={getDataPaginator}
                 data={listData} />}
-    </>
+    </Paginator>
 }

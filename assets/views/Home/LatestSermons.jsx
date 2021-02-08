@@ -8,8 +8,7 @@ import CenterTitle from '/@/components/CenterTitle'
 const LatestSermons = () => {
     // @ts-ignore
     const { sermons } = usePage().props
-    return <>
-        <div className="container py-3">
+    return <div className="container py-3">
             <div className="row justify-content-center">
                 <div className="col-lg-10">
                     <CenterTitle className="h3 my-5">
@@ -19,7 +18,6 @@ const LatestSermons = () => {
                 </div>
             </div>
         </div>
-    </>
 }
 
 

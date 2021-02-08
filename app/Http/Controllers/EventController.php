@@ -13,7 +13,7 @@ class EventController extends Controller
 
         $events = new EventListCollection(
             $eventRp->getAvailable()
-                ->paginate(2)
+                ->paginate(6)
         );
 
         return inertia('Events/Events', [
