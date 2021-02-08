@@ -71,7 +71,7 @@ const Blog = () => {
     }
 
     const onChangeCategory = function ({ target: { value } }) {
-        Inertia.get(route('guest.blog', { category: value }).toString())
+        Inertia.get(route('guest.blog', value ? { category: value } : {}).toString())
     }
 
     return <Hero title={"Blog"} heroClass={null}>

@@ -9,7 +9,7 @@ import Application from './layouts/Application'
 import registerServiceWorker from './worker/registerServiceWorker'
 
 InertiaProgress.init({
-  color: 'var(--bs-primary)',
+  color: 'var(--bs-secondary)',
 })
 
 const el = document.getElementById('app')
