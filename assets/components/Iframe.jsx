@@ -23,7 +23,7 @@ const Loader = ({ children, className = null }) => {
 const hidden = { visibility: "hidden", opacity: "0" }
 
 /**
-* @param { React.DetailedHTMLProps<React.IframeHTMLAttributes<HTMLIFrameElement>, HTMLIFrameElement> & {loaderClass: string} } props 
+* @param { React.DetailedHTMLProps<React.IframeHTMLAttributes<HTMLIFrameElement>, HTMLIFrameElement> & {loaderClass?: string} } props 
 */
 export const Iframe = (props) => {
     const loaderClass = props.loaderClass

@@ -76,7 +76,7 @@ class SettingsController extends Controller
         $data = $request->validate([
             'email' => ['nullable', 'email'],
             'phone' => ['nullable', 'regex:/^[0-9\-\(\)\/\+\s]*$/'],
-            'description' => ['nullable', 'string', 'min:10'],
+            'description' => ['nullable', 'string', 'min:10', 'max:300'],
             'lat' => ['nullable', 'regex:/^(-?\d+(\.\d+)?)$/'],
             'lng' => ['nullable', 'regex:/^(-?\d+(\.\d+)?)$/'],
 

@@ -41,6 +41,7 @@ Route::name('guest.')
         Route::get('/gallery/items', [GalleryController::class, 'items'])->name('gallery.items');
 
         Route::get('/contact', [ContactController::class, 'index'])->name('contact');
+        Route::post('/contact', [ContactController::class, 'storeMessage']);
 
 
         Route::get('/profile/{name}', ProfileController::class)->name('app.profiles');

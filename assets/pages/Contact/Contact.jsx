@@ -1,9 +1,12 @@
 import { usePage } from "@inertiajs/inertia-react";
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
+import { ApiRequestAxios } from "/@/api/axios";
+import { customerCountryApi } from "/@/api/services";
 import Button from "/@/components/admin/Button";
+import FormTextControl from "/@/components/FormTextControl";
 import { Iframe } from "/@/components/Iframe";
-import { capitalize, timeWithNoSeconds } from "/@/functions/functions";
+import { capitalize, letterLimit, timeWithNoSeconds } from "/@/functions/functions";
 import { SocialLinks } from "/@/layouts/headers/NavHeader";
 import SocialIcons from "/@/layouts/headers/SocialIcons";
 import Hero from "/@/layouts/Hero/Hero";
@@ -44,10 +47,6 @@ const ContactWrapper = styled.div`
     padding: 20px 60px 40px 60px;
 `
 
-const FormLabel = styled.label`
-    letter-spacing: 1px;
-`
-
 const FormLead = styled.h3`
     font-size: 1rem;
     text-transform: uppercase;
@@ -55,39 +54,66 @@ const FormLead = styled.h3`
 `
 
 
+const SuccesDiv = styled.div`
+    background: rgba(255, 234, 163, 0.336);
+    border-radius: 10px;
+`
+
+
+const SuccessMessage = ({ text }) => {
+    return <SuccesDiv className="p-3 text-success text-sm">
+        {text}
+    </SuccesDiv>
+}
+
 const FormContact = () => {
+    const [errors, setErrors] = useState({})
+    const [success, setSuccess] = useState(null)
+    const [loading, setLoading] = useState(null)
+    const clientGeo = useRef({ country_name: null, country_code: null })
+
+    useEffect(() => {
+        customerCountryApi()
+            .then(({ data: { country_code, country_name } }) => {
+                clientGeo.current = { country_code, country_name }
+            })
+    }, [])
+
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        setLoading(true)
+
+        const form = new FormData(e.target)
+        let clientGeoData = clientGeo.current
+        clientGeoData.country_name && form.set('country_name', clientGeoData.country_name)
+        clientGeoData.country_code && form.set('country_code', clientGeoData.country_code)
+
+        ApiRequestAxios(route('guest.contact'), 'post', form)
+            .then(({ data: { message } }) => setSuccess(message))
+            .catch((error) => {
+                if (error?.errors) {
+                    setErrors(error.errors || {})
+                }
+            })
+            .finally(() => setLoading(false))
+    }
+
     return <ContactWrapper>
         <FormLead className="mb-4">
             Envoie-nous un message
         </FormLead>
-        <form autoComplete="off">
-            <div className="mb-3">
-                <FormLabel htmlFor="name-i" className="form-label text-xs text-muted">
-                    Votre Nom
-                </FormLabel>
-                <input type="text" required className="form-control border-radius-0" id="name-i" />
-            </div>
-            <div className="mb-3">
-                <FormLabel htmlFor="email-i" className="form-label text-xs text-muted">
-                    Votre Email
-                </FormLabel>
-                <input type="email" required className="form-control border-radius-0" id="email-i" />
-            </div>
-            <div className="mb-3">
-                <FormLabel htmlFor="subject-i" className="form-label text-xs text-muted">
-                    Sujet
-                </FormLabel>
-                <input type="email" required className="form-control border-radius-0" id="subject-i" />
-            </div>
-            <div className="mb-3">
-                <FormLabel htmlFor="textarea-i" className="form-label text-xs text-muted">
-                    Message
-                </FormLabel>
-                <textarea required className="form-control border-radius-0" id="textarea-i" rows={5}></textarea>
-            </div>
-
-            <Button text="Envoyer" className="btn-sm" type="submit" />
-        </form>
+        {!!success && <SuccessMessage text={success} />}
+        {
+            !success && (
+                <form autoComplete="off" onSubmit={handleSubmit} noValidate>
+                    <FormTextControl errors={errors} label="Votre Nom" name="name" />
+                    <FormTextControl errors={errors} label="Votre Email" name="email" type="email" />
+                    <FormTextControl errors={errors} label="Sujet" name="subject" />
+                    <FormTextControl errors={errors} label="Message" name="message" textarea={true} />
+                    <Button text="Envoyer" loading={loading} className="btn-sm" type="submit" />
+                </form>
+            )
+        }
     </ContactWrapper>
 }
 
@@ -120,8 +146,8 @@ const Address = () => {
                 <>
                     <hr />
                     <h5>Coordonnées</h5>
-                    <div className="my-1 text-muted text-xs">Phone: {details?.phone}</div>
-                    <div className="my-1 text-muted text-xs">Email: {details?.email}</div>
+                    {details?.phone && <div className="my-1 text-muted text-xs">Phone: {details?.phone}</div>}
+                    {details?.email && <div className="my-1 text-muted text-xs">Email: {details?.email}</div>}
                 </>
             )
         }
@@ -133,7 +159,7 @@ const Address = () => {
                     <h5>Heure de l'église</h5>
                     <div className="text-muted">
                         {programmes.map(prog => {
-                            return <div className="my-1 text-xs">
+                            return <div className="my-1 text-xs" title={prog.description}>
                                 {capitalize(prog.day)}{" "}
                                 {timeWithNoSeconds(prog.start_time)} -&gt; {timeWithNoSeconds(prog.end_time)}
                             </div>
@@ -154,6 +180,18 @@ const Address = () => {
                                 {address?.address} {address?.venue}{address?.venue && address?.address ? ',' : ''} {address?.city} {address?.state} {address?.country}
                             </div>
                         </div>
+                    </div>
+                </>
+            )
+        }
+
+        {
+            details?.description && (
+                <>
+                    <hr />
+                    <h5>À propos de l'église</h5>
+                    <div className="text-muted text-xs">
+                        <span title={details.description}>{letterLimit(details.description, 255)}</span>
                     </div>
                 </>
             )
