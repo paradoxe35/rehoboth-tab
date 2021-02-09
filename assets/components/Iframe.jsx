@@ -3,22 +3,19 @@ import { useEffect, useRef, useState } from "react"
 import Spinner from "./Spinner"
 
 
-const Loader = ({ children }) => {
+const Loader = ({ children, className = null }) => {
     const ref = useRef(null)
     const [loader, setLoader] = useState(true)
 
     useEffect(() => {
         if (ref.current) {
             ref.current.onload = () => setLoader(false)
+            ref.current.onError = () => setLoader(false)
         }
     }, [ref.current])
 
     return <>
-        {loader && (
-            <div className="my-5">
-                <Spinner />
-            </div>
-        )}
+        {loader &&   <Spinner className={`my-5 ${className}`} />}
         {children(ref, loader)}
     </>
 }
@@ -26,12 +23,17 @@ const Loader = ({ children }) => {
 const hidden = { visibility: "hidden", opacity: "0" }
 
 /**
-* @param {React.DetailedHTMLProps<React.IframeHTMLAttributes<HTMLIFrameElement>, HTMLIFrameElement>} props 
+* @param { React.DetailedHTMLProps<React.IframeHTMLAttributes<HTMLIFrameElement>, HTMLIFrameElement> & {loaderClass: string} } props 
 */
-export const Iframe = (props) => <Loader>
-    {/* @ts-ignore */}
-    {(ref, loader) => <iframe hidden={loader} {...props} ref={ref} />}
-</Loader>
+export const Iframe = (props) => {
+    const loaderClass = props.loaderClass
+    delete props.loaderClass
+
+    return <Loader className={loaderClass}>
+        {/* @ts-ignore */}
+        {(ref, loader) => <iframe hidden={loader} {...props} ref={ref} />}
+    </Loader>
+}
 
 
 /**

@@ -9,8 +9,8 @@ const Div = styled.div`
     z-index: 20;
     h1.h3 {
         color: #b6b6b6;
-        border-top: solid 1px rgba(255,255,255,.2);
-        border-bottom: solid 1px rgba(255,255,255,.2);
+        border-top: solid 1px rgba(255,255,255,.1);
+        border-bottom: solid 1px rgba(255,255,255,.1);
         display: block;
         z-index: 20;
         padding: 10px;
@@ -21,7 +21,7 @@ const Div = styled.div`
 const DivContainer = styled.div`
     min-height: 257px;
     position: relative;
-    background-position: 50% 50%;
+    background-position: 50% 40%;
     background-repeat: no-repeat;
     background-size: cover;
     &:before {
@@ -50,11 +50,16 @@ const Hero = ({ title = '', imageSrc = null, children, headTitle = null, heroCla
         /** @type { HTMLElement } */
         const el = divRef.current
 
+        const resize = function () {
+            const width = document.body.clientWidth
+            el.style.width = width + "px"
+        }
+
         if (el) {
-            window.addEventListener("resize", function () {
-                const width = document.body.clientWidth
-                el.style.width = width + "px"
-            })
+            window.addEventListener("resize", resize)
+            return () => {
+                window.removeEventListener("resize", resize)
+            }
         }
     }, [divRef.current])
 

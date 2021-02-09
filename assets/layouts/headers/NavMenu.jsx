@@ -4,6 +4,7 @@ import { FiFacebook, FiTwitter, FiInstagram } from "react-icons/fi";
 import LogoApp from './LogoApp';
 import { NavHeader, SocialLinks, ToggleButton } from './NavHeader';
 import { Inertia } from '@inertiajs/inertia';
+import SocialIcons from './SocialIcons';
 
 
 
@@ -16,19 +17,9 @@ const LinkRoute = ({ routeName, text }) => {
     </li>
 }
 
-const SocialIcons = ({ className = null, children = null }) => {
+const SocialIconsWrapper = ({ className = null, children = null }) => {
     return <SocialLinks>
-        <div className={className}>
-            <a href="#" className="twitter">
-                <FiFacebook />
-            </a>
-            <a href="#" className="facebook">
-                <FiTwitter />
-            </a>
-            <a href="#" className="instagram">
-                <FiInstagram />
-            </a>
-        </div>
+        <SocialIcons className={className} />
         {children}
     </SocialLinks>
 }
@@ -75,12 +66,12 @@ const NavBar = () => {
                     <LinkRoute routeName="guest.contact" text={"Contact"} />
 
                     <li className="mx-0 px-0">
-                        <SocialIcons className="d-block d-md-none mx-3" />
+                        <SocialIconsWrapper className="d-block d-md-none mx-3" />
                     </li>
                 </ul>
             </NavHeader>
 
-            <SocialIcons className="text-center d-none d-md-inline-block">
+            <SocialIconsWrapper className="text-center d-none d-md-inline-block">
                 <span className="d-none d-md-inline-block d-lg-none mx-2"></span>
                 <ToggleButton
                     className="btn d-lg-none"
@@ -92,7 +83,7 @@ const NavBar = () => {
                         <span className="toggle-line"></span>
                     </span>
                 </ToggleButton>
-            </SocialIcons>
+            </SocialIconsWrapper>
         </div>
     </>
 }

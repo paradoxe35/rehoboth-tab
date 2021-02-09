@@ -230,3 +230,9 @@ export const monthDayYear = (d = '') => {
     const date = d.split(' ')
     return { month: date[0], day: date[1].slice(0, date[1].length - 1), year: date[2] }
 }
+
+export const parallax = function (img) {
+    const speed = 3;
+    let pos = `calc(-${window.pageYOffset / speed}px + 40%)`;
+    img.style.backgroundPosition = `50% ${pos}`;
+}

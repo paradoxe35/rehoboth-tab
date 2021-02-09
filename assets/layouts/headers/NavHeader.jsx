@@ -139,7 +139,7 @@ export const SocialLinks = styled.div`
     padding-left: 20px;
     a {
         color: var(--bs-primary);
-        padding-left: 6px;
+        margin-left: 6px;
         display: inline-block;
         line-height: 1px;
         transition: 0.3s;

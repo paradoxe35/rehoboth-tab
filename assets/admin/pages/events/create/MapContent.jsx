@@ -7,7 +7,7 @@ import { Iframe } from '/@/components/Iframe'
 import Label from '/@/components/Label'
 import { triggerOnChangeEvent } from '/@/functions/functions'
 import { useInputElementRefs } from '/@/utils/hooks'
-import { GOOGLE_API_KEY } from '/@/utils/vars'
+import { embedGoogleMap } from '/@/utils/vars'
 
 
 
@@ -85,7 +85,7 @@ const MapContent = ({ placejsOnChange, sectionKey, $address, label = "Renseigner
                     frameBorder="1"
                     style={{ border: "1px solid grey" }}
                     scrolling="no"
-                    src={`https://www.google.com/maps/embed/v1/place?key=${GOOGLE_API_KEY}&q=${lat}, ${lng}&zoom=18&language=fr`} />
+                    src={embedGoogleMap(lat, lng)} />
             )}
         </BsModal>
     </>
