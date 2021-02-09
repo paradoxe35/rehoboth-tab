@@ -45,6 +45,7 @@
 
 <body>
     @inertia
+    @include('entry-load')
 </body>
 
 </html>

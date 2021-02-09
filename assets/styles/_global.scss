@@ -32,6 +32,19 @@ a {
     }
 }
 
+.entry-loader {
+    font-size: 1.3rem;
+    margin: 0;
+    padding: 0;
+    line-height: 1;
+    font-weight: 500;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    img {
+        max-height: 40px;
+    }
+}
+
 .nav--muted {
     .app--header {
         box-shadow: none;
