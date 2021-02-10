@@ -133,7 +133,7 @@ const SocialIconsStyled = styled(SocialIcons)`
 
 const Address = () => {
     // @ts-ignore
-    const { church_details: details, programmes } = usePage().props
+    const { church_details: details, programmes: { data: programmes } } = usePage().props
 
     const address = details?.address
 

@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 
 class ContactController extends Controller
 {
-    public function index(Request $request)
+    public function index()
     {
         $programmes = new ProgrammeCollection(
             Programme::query()->limit(7)->get()
@@ -21,8 +21,8 @@ class ContactController extends Controller
         $churchDetails = $model ? new ChurchDetails($model) : null;
 
         return inertia('Contact/Contact', [
-            'programmes' => fn () => $programmes->toArray($request),
-            'church_details' => fn () => $churchDetails->toArray($request)
+            'programmes' => $programmes,
+            'church_details' => $churchDetails
         ]);
     }
 

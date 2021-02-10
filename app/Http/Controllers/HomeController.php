@@ -17,7 +17,7 @@ use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
-    public function index(EventRepository $eventRp, Request $request)
+    public function index(EventRepository $eventRp)
     {
         $events = new EventsResource(
             $eventRp->getAvailable()->limit(3)->get()
@@ -44,11 +44,11 @@ class HomeController extends Controller
         );
 
         return inertia('Home/Home', [
-            'events' => fn () => $events->toArray($request),
-            'sermons' => fn () => $sermons->toArray($request),
-            'programmes' => fn () => $programmes->toArray($request),
-            'images' => fn () => $images->toArray($request),
-            'blogs' => fn () => $blogs->toArray($request),
+            'events' => $events,
+            'sermons' => $sermons,
+            'programmes' => $programmes,
+            'images' => $images,
+            'blogs' => $blogs,
         ]);
     }
 }

@@ -35,8 +35,8 @@ class BlogController extends Controller
         $blogs = new BlogListCollection($blogsData);
 
         return inertia('Blog/Blog', [
-            'categories' => fn () => $categories->toArray($request),
-            'blogs' => fn () => $blogs,
+            'categories' => $categories,
+            'blogs' => $blogs,
             'category' => $category
         ]);
     }

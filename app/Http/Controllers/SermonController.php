@@ -17,7 +17,7 @@ class SermonController extends Controller
         );
 
         return inertia('Sermons/Sermons', [
-            'sermons' => fn () => $sermons
+            'sermons' => $sermons
         ]);
     }
 }

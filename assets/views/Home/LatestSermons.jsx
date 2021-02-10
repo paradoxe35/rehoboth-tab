@@ -7,7 +7,7 @@ import CenterTitle from '/@/components/CenterTitle'
 
 const LatestSermons = () => {
     // @ts-ignore
-    const { sermons } = usePage().props
+    const { sermons: { data: sermons } } = usePage().props
     return <div className="container py-3">
             <div className="row justify-content-center">
                 <div className="col-lg-10">

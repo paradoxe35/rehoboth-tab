@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\Image\ImageCollection;
+use App\Http\Resources\Guest\ImageGallery\ImageGalleryListCollection;
 use App\Models\Blog\Blog;
 use App\Models\Event\Event;
 use App\Models\Gallery;
@@ -21,14 +21,14 @@ class GalleryController extends Controller
             ->latest()
             ->paginate(10);
 
-        return new ImageCollection($images);
+        return new ImageGalleryListCollection($images);
     }
 
 
     public function index()
     {
         return inertia('Gallery/Gallery', [
-            'images' => fn () => $this->images()
+            'images' => $this->images()
         ]);
     }
 

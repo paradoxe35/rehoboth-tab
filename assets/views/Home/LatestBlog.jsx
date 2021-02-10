@@ -84,7 +84,7 @@ const CardItemData = ({ col = 3, blog, showOnlySm = false, showOnlyMd = false, c
 
 const LatestBlog = () => {
     // @ts-ignore
-    const { blogs } = usePage().props
+    const { blogs: { data: blogs } } = usePage().props
 
     return <div className="container-fluid">
         <LatestSectionParentBlogStyled data-aos="fade-up" className="row justify-content-center pb-3">

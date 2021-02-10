@@ -71,7 +71,7 @@ const PhotoSwipe = lazy(() => import('/@/components/PhotoSwipe'))
 
 const FromGallery = () => {
     // @ts-ignore
-    const { images } = usePage().props
+    const { images: { data: images } } = usePage().props
 
     const { setPswpIndex, setPswpOpen, pswpOpen, pswpIndex, loadPswp } = usePhotoSwipe()
 

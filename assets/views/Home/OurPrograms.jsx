@@ -34,7 +34,7 @@ const DayWeek = ({ programme }) => {
 
 const OurPrograms = () => {
     // @ts-ignore
-    const { programmes } = usePage().props
+    const { programmes: { data: programmes } } = usePage().props
 
     return <div className="container py-3">
         <CenterTitle className="h4 my-5" data-aos="fade-up">

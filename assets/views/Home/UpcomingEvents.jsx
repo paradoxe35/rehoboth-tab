@@ -180,7 +180,7 @@ const FirstEventCountdown = ({ events = [] }) => {
 
 const UpcomingEvent = () => {
     // @ts-ignore
-    const { events } = usePage().props
+    const { events: { data: events } } = usePage().props
 
     return <div className="container-fluid">
         {!!events.length && <FirstEventCountdown events={events} />}

@@ -17,7 +17,7 @@ class EventController extends Controller
         );
 
         return inertia('Events/Events', [
-            'events' => fn () => $events
+            'events' => $events
         ]);
     }
 }
