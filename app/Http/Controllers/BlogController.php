@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\Guest\Blog\BlogListCollection;
+use App\Http\Resources\Guest\Blog\BlogShow;
 use App\Http\Resources\Guest\BlogCategory\BlogCategoryCollection;
 use App\Models\Blog\Blog;
 use App\Models\Blog\BlogCategory;
@@ -38,6 +39,17 @@ class BlogController extends Controller
             'categories' => $categories,
             'blogs' => $blogs,
             'category' => $category
+        ]);
+    }
+
+    public function show(Blog $blog)
+    {
+        /** @var mixed */
+        $comment =  view('components.telegram.comments', ['pageId' => $blog->id]);
+
+        return inertia('Blog/BlogShow', [
+            'blog' => new BlogShow($blog),
+            'comment' => $comment->toHtml()
         ]);
     }
 }

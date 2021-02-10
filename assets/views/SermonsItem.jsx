@@ -274,34 +274,61 @@ const MediaToggle = ({ toggle, setSection, children }) => {
     </>
 }
 
-const Media = ({ media, sermon }) => {
-    const [section, setSection] = useState(null)
 
-    return <MediaLinksStyled>
-        <a href="javascript:;">
-            {!!media.video && <FiVideo onClick={() => setSection('video')} />}
-            <MediaToggle setSection={setSection} toggle={section === 'video'}>
-                <VideoMedia sermon={sermon} video={media.video} />
-            </MediaToggle>
-        </a>
-        <a href="javascript:;">
-            {!!media.audios.length && <FiVolume2 onClick={() => setSection('audios')} />}
-            <MediaToggle setSection={setSection} toggle={section === 'audios'}>
-                <AudiosMedia sermon={sermon} audios={media.audios} />
-            </MediaToggle>
-        </a>
-        <a href="javascript:;">
-            {!!media.documents.length && <FiFileText onClick={() => setSection('documents')} />}
-            <MediaToggle setSection={setSection} toggle={section === 'documents'}>
-                <DocumentsMedia sermon={sermon} documents={media.documents} />
-            </MediaToggle>
-        </a>
-    </MediaLinksStyled>
+export const MediaController = ({ sermon, audioText = '', videoText = '', documentText = '' }) => {
+    const [section, setSection] = useState(null)
+    const { media } = sermon
+
+    return <>
+        {!!media.video && (
+            <a href="javascript:;" onClick={() => setSection('video')}>
+                <FiVideo />
+                {videoText}
+            </a>
+        )}
+        <MediaToggle setSection={setSection} toggle={section === 'video'}>
+            <VideoMedia sermon={sermon} video={media.video} />
+        </MediaToggle>
+
+        {!!media.audios.length && (
+            <a href="javascript:;" onClick={() => setSection('audios')}>
+                <FiVolume2 />
+                {audioText}
+            </a>
+        )}
+        <MediaToggle setSection={setSection} toggle={section === 'audios'}>
+            <AudiosMedia sermon={sermon} audios={media.audios} />
+        </MediaToggle>
+
+
+        {!!media.documents.length && (
+            <a href="javascript:;" onClick={() => setSection('documents')}>
+                <FiFileText />
+                {documentText}
+            </a>
+        )}
+        <MediaToggle setSection={setSection} toggle={section === 'documents'}>
+            <DocumentsMedia sermon={sermon} documents={media.documents} />
+        </MediaToggle>
+    </>
 }
 
 
+export const SermonCover = ({ sermon, height = "100%" }) => {
+    return sermon.image ? <ImageThumbnail height={height} image={sermon.image} title={sermon.subject} /> :
+        <img src={bibleImage} className="img-fluid" alt={sermon.subject} />
+}
+
+
+export const SermonDetails = ({ sermon, className = null }) => {
+    return <DivDetailsStyled className={`text-muted ${className}`}>
+        <span>
+            {"Par"} <FetchProfile name={sermon.preacher} />, {sermon.date}
+        </span>
+    </DivDetailsStyled>
+}
+
 const SermonsItem = ({ sermon }) => {
-    const { media } = sermon
 
     return <div data-aos="fade-up">
         <ItemRowStyled className="row align-items-center justify-content-between" >
@@ -309,10 +336,7 @@ const SermonsItem = ({ sermon }) => {
                 <div className="d-flex align-items-center">
                     <ImgContainerStyled>
                         <Card bodyClass="p-2" border={true} cardClass="p-0">
-                            {
-                                sermon.image ? <ImageThumbnail height="100%" image={sermon.image} title={sermon.subject} /> :
-                                    <img src={bibleImage} className="img-fluid" alt={sermon.subject} />
-                            }
+                            <SermonCover sermon={sermon} />
                         </Card>
                     </ImgContainerStyled>
                     <div className="mx-2"></div>
@@ -322,17 +346,15 @@ const SermonsItem = ({ sermon }) => {
                                 {letterLimit(sermon.subject, 30)}
                             </InertiaLink>
                         </H3TitleStyled>
-                        <DivDetailsStyled className="text-muted">
-                            <span>
-                                {"Par"} <FetchProfile name={sermon.preacher} />, {sermon.date}
-                            </span>
-                        </DivDetailsStyled>
+                        <SermonDetails sermon={sermon} />
                     </div>
                 </div>
             </ItemHeaderContainerStyled>
 
             <div className="col-lg-4 text-center">
-                <Media media={media} sermon={sermon} />
+                <MediaLinksStyled>
+                    <MediaController sermon={sermon} />
+                </MediaLinksStyled>
             </div>
         </ItemRowStyled>
     </div>
