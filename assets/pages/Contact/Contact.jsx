@@ -133,7 +133,7 @@ const SocialIconsStyled = styled(SocialIcons)`
 
 const Address = () => {
     // @ts-ignore
-    const { church_details: details, programmes: { data: programmes } } = usePage().props
+    const { church_details: { data: details }, programmes: { data: programmes } } = usePage().props
 
     const address = details?.address
 
@@ -201,7 +201,7 @@ const Address = () => {
 
 const Contact = () => {
     // @ts-ignore
-    const { church_details: details } = usePage().props
+    const { church_details: { data: details } } = usePage().props
 
     return <Hero title={"Contact"} heroClass={null}>
         {

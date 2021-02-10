@@ -56,7 +56,7 @@ const BlogItem = ({ blog }) => {
 
 const Blog = () => {
     // @ts-ignore
-    const { categories, blogs, category } = usePage().props
+    const { categories: { data: categories }, blogs, category } = usePage().props
     const categoryRef = useRef(category)
 
     categoryRef.current = category
