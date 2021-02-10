@@ -44,7 +44,7 @@ const Map = styled(Iframe)`
 const ContactWrapper = styled.div`
     border-radius: 10px;
     background: rgba(154, 136, 75, 0.137);
-    padding: 20px 60px 40px 60px;
+    /* padding: 20px 60px 40px 60px; */
 `
 
 const FormLead = styled.h3`
@@ -98,7 +98,7 @@ const FormContact = () => {
             .finally(() => setLoading(false))
     }
 
-    return <ContactWrapper>
+    return <ContactWrapper className="px-3 pt-3 px-md-5 pb-4">
         <FormLead className="mb-4">
             Envoie-nous un message
         </FormLead>
