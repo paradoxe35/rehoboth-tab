@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\Guest\ChurchDetails;
 
+use App\Http\Resources\Guest\Address\Address;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class ChurchDetails extends JsonResource
@@ -18,16 +19,7 @@ class ChurchDetails extends JsonResource
             'email' => $this->email,
             'phone' => $this->phone,
             'description' => $this->description,
-            'address' => $this->address ? [
-                'venue' => $this->address->venue,
-                'address' => $this->address->address,
-                'city' => $this->address->city,
-                'state' => $this->address->state,
-                'country' => $this->address->country,
-                'longitude' => $this->address->longitude,
-                'latitude' => $this->address->latitude,
-                'map' => $this->address->latitude && $this->address->longitude
-            ] : null
+            'address' => $this->address ? new Address($this->address) : null
         ];
     }
 }

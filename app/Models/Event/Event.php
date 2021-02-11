@@ -68,11 +68,6 @@ class Event extends Model
     ];
 
 
-    public function getStartFdateAttribute()
-    {
-        return $this->formatDate($this->start_date);
-    }
-
     public function guestRoute()
     {
         return route(
@@ -80,6 +75,11 @@ class Event extends Model
             ['event' => $this->id, 'slug' => Str::slug($this->name)],
             false
         );
+    }
+
+    public function getStartFdateAttribute()
+    {
+        return $this->formatDate($this->start_date);
     }
 
 

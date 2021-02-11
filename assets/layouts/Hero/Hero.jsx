@@ -8,7 +8,7 @@ import { usePage } from '@inertiajs/inertia-react'
 const Div = styled.div`
     z-index: 20;
     h1.h3 {
-        color: #b6b6b6;
+        color: #dbdbdb;
         border-top: solid 1px rgba(255,255,255,.1);
         border-bottom: solid 1px rgba(255,255,255,.1);
         display: block;
@@ -26,7 +26,7 @@ const DivContainer = styled.div`
     background-size: cover;
     &:before {
         content: "";
-        background: var(--bs-bg-color-hero);
+        background: ${props => props.color || 'var(--bs-bg-color-hero)'} ;
         position: absolute;
         bottom: 0;
         top: 0;
@@ -40,7 +40,7 @@ const RowDiv = styled.div`
     padding-bottom: 103px;
 `
 
-const Hero = ({ title = '', imageSrc = null, children, headTitle = null, heroClass = 'mb-4' }) => {
+const Hero = ({ title = '', imageSrc = null, children, headTitle = null, heroClass = 'mb-4', bgColor = undefined }) => {
 
     const divRef = useRef(null)
     // @ts-ignore
@@ -71,7 +71,7 @@ const Hero = ({ title = '', imageSrc = null, children, headTitle = null, heroCla
                 <title>{(title || headTitle) ? (headTitle || title) + ' - ' : ''}{appName}</title>
             </Helmet>
             {/*  @ts-ignore */}
-            <DivContainer className={heroClass} style={{ backgroundImage: `url(${imageSrc || Image})` }} ref={divRef}>
+            <DivContainer color={bgColor} className={heroClass} style={{ backgroundImage: `url(${imageSrc || Image})` }} ref={divRef}>
                 <Div className="px-lg-6 px-lg-7 container">
                     <RowDiv className="h-100 justify-content-center text-center row">
                         <div className="col-lg-6">

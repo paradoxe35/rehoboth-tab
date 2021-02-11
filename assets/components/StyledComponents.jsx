@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import NoContainerPadding from "./NoContainerPadding";
 
 export const BgLightStyled = styled.div`
     background-color: var(--bs-light);
@@ -36,4 +37,14 @@ export const SpanDateStyled = styled.span`
     color: var(--bs-light);
     font-size: 12px;
     border-radius: 3px;
+`
+
+export const CountdownParentStyled = styled(NoContainerPadding)`
+    background-color: rgba(255, 253, 253, 0.856);
+    height: auto;
+`
+
+export const CountdownRowStyled = styled.div`
+    height: auto;
+    min-height: 196px;
 `

@@ -15,7 +15,7 @@ const BlogShow = ({ blog: { data: blog }, comment }) => {
         }
     }, [])
 
-    return <Hero title={`Blog - ${blog.title}`} imageSrc={blog.image.public_path}>
+    return <Hero  bgColor={'rgba(5, 13, 24, 0.616)'} title={`Blog - ${blog.title}`} imageSrc={blog.image.public_path}>
         <div className="container">
             <div className="row justify-content-center">
                 <div className="col-lg-8 col-md-10 py-4 mb-5">
