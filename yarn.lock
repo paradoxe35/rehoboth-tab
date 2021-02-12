@@ -12513,6 +12513,11 @@ shallowequal@^1.1.0:
   resolved "https://registry.yarnpkg.com/shallowequal/-/shallowequal-1.1.0.tgz#188d521de95b9087404fd4dcb68b13df0ae4e7f8"
   integrity sha512-y0m1JoUZSlPAjXVtPPW70aZWfIL/dSP7AFkRnniLCrK/8MDKog3TySTBmckD+RObVxH0v4Tox67+F14PdED2oQ==
 
+share-api-polyfill@^1.0.20:
+  version "1.0.20"
+  resolved "https://registry.yarnpkg.com/share-api-polyfill/-/share-api-polyfill-1.0.20.tgz#227e5907dac34a032570660b1c46a5c8f2664775"
+  integrity sha512-yEPJmckdBz38E+cu966MVRAeRwVIbEtnhG6Ox4d0+Q0P5BVQtulzzA7LaFmDFNKGFp8LDhsuESnPZmWxE0hWPw==
+
 shebang-command@^1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/shebang-command/-/shebang-command-1.2.0.tgz#44aac65b695b03398968c39f363fee5deafdf1ea"

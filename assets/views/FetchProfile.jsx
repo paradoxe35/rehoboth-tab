@@ -23,7 +23,6 @@ const Container = styled.div`
     line-height: 1.5;
     background-color: var(--bs-light);
     background-clip: padding-box;
-    border: 1px solid rgba(0,0,0,.2);
     overflow: hidden;
     border-radius: .3rem;
     .popover-header {
@@ -91,7 +90,7 @@ const FetchProfile = ({ name }) => {
     return <Popover
         isOpen={isPopoverOpen}
         positions={['top', 'right', 'left', 'bottom']}
-        containerStyle={{ zIndex: "100" }}
+        containerStyle={{ zIndex: "1030" }}
         padding={10}
         onClickOutside={() => setIsPopoverOpen(false)}
         content={content}>

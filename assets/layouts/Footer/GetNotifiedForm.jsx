@@ -71,7 +71,7 @@ const GetNotifiedForm = () => {
     }
 
     return <SubscribeFormStyled>
-        <FormGroup noValidate={true} className="row g-3" onSubmit={handleSubmit}>
+        <FormGroup noValidate={true} autoComplete="off" className="row g-3" onSubmit={handleSubmit}>
             <InputParentText className="col">
                 <InputText
                     type="email"

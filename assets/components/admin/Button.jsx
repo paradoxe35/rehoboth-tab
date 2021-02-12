@@ -2,7 +2,7 @@ import React from 'react'
 
 const Button = ({
     color = 'primary',
-    text = '',
+    text = null,
     className = '',
     type = 'button',
     loading = false,

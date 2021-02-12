@@ -1,6 +1,6 @@
 import React from 'react'
 import Hero from '/@/layouts/Hero/Hero'
-// import ContentDetailsEvent from '/@/views/EventsShow/ContentDetailsEvent';
+import ContentDetailsEvent from '/@/views/EventsShow/ContentDetailsEvent';
 import CountDownEvent from '/@/views/EventsShow/CountDownEvent';
 import MetaDetailsEvent from '/@/views/EventsShow/MetaDetailsEvent';
 
@@ -14,7 +14,7 @@ const EventsShow = ({ event: { data: event } }) => {
         <div className="container">
             <div className="row justify-content-center my-3">
                 <div className="pr-lg-2 col-lg-7 mb-3">
-                    {/* <ContentDetailsEvent event={event} /> */}
+                    <ContentDetailsEvent event={event} />
                 </div>
                 <div className="pl-lg-2 col-lg-4 mb-3">
                     <MetaDetailsEvent event={event} />

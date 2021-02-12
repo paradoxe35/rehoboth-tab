@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react'
+import FetchProfile from '../FetchProfile';
 import AddressText from '/@/components/AddressText';
 import Card from '/@/components/Card'
 import ScrollIntoViewLink from '/@/components/ScrollIntoViewLink';
@@ -23,25 +24,28 @@ const AddToCalendar = ({ event, startdatetime, enddatetime }) => {
     </div>
 }
 
-const MetaDetailsEvent = ({ event }) => {
-    console.log(event);
+const datetime = (date, time) => `${date} ${timeWithNoSeconds(time)}`
 
-    const startdatetime = `${event.start_date} ${timeWithNoSeconds(event.start_time)}`
-    const enddatetime = `${event.end_date} ${timeWithNoSeconds(event.end_time)}`
+const MetaDetailsEvent = ({ event }) => {
+
+    const startdatetime = datetime(event.start_date, event.start_time)
+    const enddatetime = datetime(event.end_date, event.end_time)
+
+    const schedules = event.schedules
+    const organizers = event.organizers
 
     return <div className="sticky-top sticky-sidebar" style={{ top: "35px" }}>
         <Card>
             <h6>Date et l'heure</h6>
             <div className="text-muted text-xs">
-                <p className="mb-1">
-                    {startdatetime} – <br />
-                    {enddatetime}
+                <p className="mb-2">
+                    {startdatetime} – {enddatetime}
                 </p>
-                <AddToCalendar event={event} startdatetime={startdatetime} enddatetime={enddatetime} />
+                <AddToCalendar event={event} startdatetime={event.start_datetime} enddatetime={event.end_datetime} />
             </div>
 
             <h6 className="mt-4">Emplacement</h6>
-            <p className="text-muted mb-1 text-xs">
+            <p className="text-muted mb-2 text-xs">
                 <AddressText br={true} address={event.address} />
                 {event.address.map && (
                     <ScrollIntoViewLink elTarget="#view-map">
@@ -52,7 +56,34 @@ const MetaDetailsEvent = ({ event }) => {
         </Card>
 
         <Card cardClass="mt-3">
-            
+            {!!schedules.length && (
+                <>
+                    <h6>Programmes</h6>
+                    <div className="text-muted text-xs">
+                        {schedules.map(sh => {
+                            return <>
+                                <span><b>{sh.title}</b></span>
+                                <p className="mb-2">
+                                    {datetime(sh.start_date, sh.start_time)} –  {datetime(sh.end_date, sh.end_time)}
+                                </p>
+                            </>
+                        })}
+                    </div>
+                </>
+            )}
+
+            {!!organizers.length && (
+                <>
+                    <h6 className={!schedules.length ? '' : 'mt-4'}>Organisateurs</h6>
+                    <div className="text-xs">
+                        {organizers.map(o => {
+                            return <p>
+                                <FetchProfile name={o.name} />
+                            </p>
+                        })}
+                    </div>
+                </>
+            )}
         </Card>
     </div>
 }
