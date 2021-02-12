@@ -3,6 +3,11 @@
 
 @section('settings-breadcrumb')
 @include('admin.breadcrumb', ['items' => [
+     [
+        'name' => 'Acceuil',
+        'active' => false,
+        'link' => route('admin.home')
+    ],
     [
         'name' => 'Paramètres',
         'active' => true
