@@ -3,6 +3,7 @@ import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import { ApiRequestAxios } from "/@/api/axios";
 import { customerCountryApi } from "/@/api/services";
+import AddressText from "/@/components/AddressText";
 import Button from "/@/components/admin/Button";
 import FormTextControl from "/@/components/FormTextControl";
 import { Iframe } from "/@/components/Iframe";
@@ -177,7 +178,7 @@ const Address = () => {
                     <div className="row justify-content-center">
                         <div className="col-lg-7">
                             <div className="text-muted text-xs">
-                                {address?.address} {address?.venue}{address?.venue && address?.address ? ',' : ''} {address?.city} {address?.state} {address?.country}
+                                <AddressText address={address} />
                             </div>
                         </div>
                     </div>

@@ -18,6 +18,7 @@ export const loadScript = (url, callback = null) => {
 
     const script = document.createElement('script');
     script.setAttribute('src', url);
+    script.async = true
 
     script.onload = () => {
         inLoading[url].loaded = true;

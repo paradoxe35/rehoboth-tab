@@ -8,6 +8,7 @@ import styled from 'styled-components'
 import Home2 from '/@/images/home/home1.jpg';
 import Home1 from '/@/images/home/home2.jpg';
 import Home3 from '/@/images/home/home3.jpg';
+import ScrollIntoViewLink from '/@/components/ScrollIntoViewLink';
 
 SwiperCore.use([Navigation, Pagination, Parallax, Autoplay, A11y]);
 
@@ -77,19 +78,10 @@ const DivContentScroll = styled.div`
 
 
 const HomeContentScroll = () => {
-    const [target, setTarget] = useState(null)
-
-    useEffect(() => {
-        const el = document.querySelector('#hero-bottom')
-        if (el) setTarget(el)
-    }, [])
-
     return <DivContentScroll>
-        <a href={target?.scrollIntoView ? 'javascript:;' : '#hero-bottom'}
-            onClick={() => target?.scrollIntoView({ behavior: "smooth" })}
-            className="scroll-link smoothscroll">
+        <ScrollIntoViewLink elTarget="#hero-bottom">
             <span>Défiler vers le bas</span>
-        </a>
+        </ScrollIntoViewLink>
     </DivContentScroll>
 }
 
