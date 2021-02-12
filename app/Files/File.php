@@ -80,7 +80,7 @@ class File
         $uploaded = $file->storePublicly($path . "/{$model->id}");
         [$width, $height] = getimagesize($file->getPathname());
 
-        $thumbnail = self::blurLazyImageBase64($uploaded);
+        $thumbnail = self::blurLazyImageBase64($file->getPathname());
 
         $fillable = [
             'thumbnail' => $thumbnail,
@@ -107,9 +107,7 @@ class File
     {
         $image = new ImageCompression;
 
-        $absolutePathImage = Storage::path($filePath);
-
-        return $image->blurLazyImage($absolutePathImage, null, 6, true);
+        return $image->blurLazyImage($filePath, null, 6, true);
     }
 
 
@@ -142,7 +140,7 @@ class File
         $uploaded = $file->storePublicly($path . "/{$model->id}");
         [$width, $height] = getimagesize($fileTmp);
 
-        $thumbnail = self::blurLazyImageBase64($uploaded);
+        $thumbnail = self::blurLazyImageBase64($fileTmp);
 
         $fillable = [
             'thumbnail' => $thumbnail,
