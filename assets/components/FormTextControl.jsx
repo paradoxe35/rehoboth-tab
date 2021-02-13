@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import styled from 'styled-components'
+import { useErrorInput } from '../utils/hooks'
 
 
 const FormLabel = styled.label`
@@ -7,15 +8,7 @@ const FormLabel = styled.label`
 `
 
 const FormTextControl = ({ label, type = 'text', name, textarea = false, errors = {} }) => {
-    const [error, setError] = useState(null)
-
-    useEffect(() => {
-        if (name in errors) {
-            setError(errors[name])
-        }
-    }, [errors])
-
-    const onKeyUp = () => setError(null)
+    const { error, onKeyUp } = useErrorInput(name, errors)
 
     return <div className="mb-3">
         <FormLabel htmlFor={`${name}-1`} className="form-label text-xs text-muted">

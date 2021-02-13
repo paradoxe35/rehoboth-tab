@@ -25,6 +25,11 @@ class EventShow extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'route' => $this->guestRoute(),
+            'organizer' => [
+                'name' => $this->organizer_name,
+                'email' => $this->organizer_email,
+                'phone' => $this->organizer_phone
+            ],
             'start_date' => $this->start_fdate,
             'end_date' => $this->end_fdate,
             'start_time' => $this->start_time,

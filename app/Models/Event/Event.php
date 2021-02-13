@@ -52,7 +52,10 @@ class Event extends Model
         'end_date',
         'end_time',
         'enable_registration',
-        'registration_deadline'
+        'registration_deadline',
+        'organizer_name',
+        'organizer_email',
+        'organizer_phone'
     ];
 
     /**

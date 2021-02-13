@@ -8,6 +8,7 @@ use App\Http\Resources\Event\EventRegistrationCollection;
 use App\Models\AppOrganizer;
 use App\Models\AppTag;
 use App\Models\Event\Event;
+use App\Rules\ValidPhone;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -59,6 +60,10 @@ class EventsController extends Controller
             'country' => ['required', 'string'],
             'state' => ['required', 'string'],
             'description' => ['nullable', 'string'],
+
+            'organizer_name' => ['nullable', 'string', 'max:255'],
+            'organizer_email' => ['nullable', 'email', 'max:255'],
+            'organizer_phone' => ['nullable', new ValidPhone, 'max:255'],
         ]);
 
         $start = strtotime("{$data['start_date']} {$data['start_time']}");
@@ -135,6 +140,9 @@ class EventsController extends Controller
             'start_time' => $details['start_time'],
             'end_date' => $details['end_date'],
             'end_time' => $details['end_time'],
+            'organizer_name' => $details['organizer_name'] ?? null,
+            'organizer_email' => $details['organizer_email'] ?? null,
+            'organizer_phone' => $details['organizer_phone'] ?? null,
             'enable_registration' => boolval($details['registration']),
             'registration_deadline' => $details['registration_deadline'] ?? null
         ];

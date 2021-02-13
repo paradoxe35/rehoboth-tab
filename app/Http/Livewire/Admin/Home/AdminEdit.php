@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Admin\Home;
 
+use App\Rules\ValidPhone;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
 use Livewire\Component;
@@ -37,7 +38,7 @@ class AdminEdit extends Component
         $data = $this->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users')->ignore($auth->id)],
-            'phone' => ['required', 'regex:/^[0-9\-\(\)\/\+\s]*$/', Rule::unique('users')->ignore($auth->id)],
+            'phone' => ['required', new ValidPhone, Rule::unique('users')->ignore($auth->id)],
         ]);
 
         $auth->fill($data)->save();
@@ -46,7 +47,8 @@ class AdminEdit extends Component
     }
 
 
-    public function updateUserPassword() {
+    public function updateUserPassword()
+    {
         $auth = $this->auth();
 
         $data = $this->validate([

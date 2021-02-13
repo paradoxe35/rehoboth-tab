@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\ChurchDetail;
 use App\Models\Profil;
 use App\Models\Programme;
+use App\Rules\ValidPhone;
 use Illuminate\Http\Request;
 
 class SettingsController extends Controller
@@ -37,7 +38,7 @@ class SettingsController extends Controller
     {
         $request->validate([
             'name' => ['required', 'string', 'unique:profils', 'min:3'],
-            'phone' => ['nullable', 'regex:/^[0-9\-\(\)\/\+\s]*$/', 'unique:profils'],
+            'phone' => ['nullable', new ValidPhone, 'unique:profils'],
             'email' => ['nullable', 'email'],
             'description' => ['required', 'string', 'min:10'],
             'image' => File::IMAGE_RULES
@@ -75,7 +76,7 @@ class SettingsController extends Controller
     {
         $data = $request->validate([
             'email' => ['nullable', 'email'],
-            'phone' => ['nullable', 'regex:/^[0-9\-\(\)\/\+\s]*$/'],
+            'phone' => ['nullable', new ValidPhone],
             'description' => ['nullable', 'string', 'min:10', 'max:300'],
             'lat' => ['nullable', 'regex:/^(-?\d+(\.\d+)?)$/'],
             'lng' => ['nullable', 'regex:/^(-?\d+(\.\d+)?)$/'],

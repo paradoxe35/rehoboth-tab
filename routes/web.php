@@ -30,6 +30,7 @@ Route::name('guest.')
 
         Route::get('/events', [EventController::class, 'index'])->name('events');
         Route::get('/events/{event}/{slug}', [EventController::class, 'show'])->name('events.show');
+        Route::post('/events/{event}/registrations', [EventController::class, 'registrations'])->name('events.registrations');
 
         Route::get('/sermons', [SermonController::class, 'index'])->name('sermons');
         Route::get('/sermons/{sermon}/{slug}', [SermonController::class, 'show'])->name('sermons.show');

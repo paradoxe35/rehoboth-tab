@@ -161,3 +161,28 @@ export const usePhotoSwipe = () => {
         mapImagesUid
     }
 }
+
+
+export const useErrorInput = (name, errors) => {
+    const [error, setError] = useState(null)
+
+    useEffect(() => {
+        if (name in errors) {
+            setError(errors[name])
+        }
+    }, [errors])
+
+    const onKeyUp = () => setError(null)
+
+    return { error, onKeyUp }
+}
+
+
+export const useFormValidator = () => {
+    const [errors, setErrors] = useState({})
+    const [success, setSuccess] = useState(null)
+    const [loading, setLoading] = useState(null)
+
+
+    return { errors, setErrors, success, setSuccess, loading, setLoading }
+}

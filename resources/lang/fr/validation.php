@@ -39,6 +39,7 @@ return [
     'dimensions'           => "La taille de l'image :attribute n'est pas conforme.",
     'distinct'             => 'Le champ :attribute a une valeur en double.',
     'email'                => 'Le champ :attribute doit être une adresse email valide.',
+    'valid_phone'          => 'Le champ :attribute doit être un numéro de téléphone valide.',
     'ends_with'            => 'Le champ :attribute doit se terminer par une des valeurs suivantes : :values',
     'exists'               => 'Le champ :attribute sélectionné est invalide.',
     'file'                 => 'Le champ :attribute doit être un fichier.',

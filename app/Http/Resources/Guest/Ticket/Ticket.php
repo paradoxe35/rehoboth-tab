@@ -15,6 +15,7 @@ class Ticket extends JsonResource
     public function toArray($request)
     {
         return [
+            'id' => $this->id,
             'type' => $this->type,
             'remaining' => boolval($this->remaining),
             'options' => new TicketOptionCollection($this->options)

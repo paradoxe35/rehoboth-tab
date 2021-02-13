@@ -104,6 +104,31 @@ const EventDetailsMain = () => {
                 ref={ref}
                 label="Heure de fin" />
         </div>
+        <div className="col-12"><hr /></div>
+        <div className="col-lg-6">
+            <FormControl
+                defaultValue={$event.organizer_name}
+                name="organizer_name"
+                ref={ref}
+                label="Nom de l'organisateur" />
+        </div>
+        <div className="col-lg-6">
+            <FormControl
+                type="email"
+                defaultValue={$event.organizer_email}
+                name="organizer_email"
+                ref={ref}
+                label="Email de l'organisateur" />
+        </div>
+        <div className="col-12">
+            <FormControl
+                type="tel"
+                defaultValue={$event.organizer_phone}
+                name="organizer_phone"
+                ref={ref}
+                label="Téléphone de l'organisateur" />
+        </div>
+        <div className="col-12"><hr /></div>
     </>
 }
 
