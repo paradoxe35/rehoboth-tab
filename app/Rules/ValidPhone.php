@@ -25,7 +25,7 @@ class ValidPhone implements Rule
      */
     public function passes($attribute, $value)
     {
-        return !!preg_match('/^(-?\d+(\.\d+)?)$/', $value);
+        return !!preg_match('/^[0-9\-\(\)\/\+\s]*$/', $value);
     }
 
     /**

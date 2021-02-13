@@ -4,7 +4,7 @@ import React, { forwardRef, useMemo } from "react"
 /**
  * @type { JSX.Element | any }
  */
-export const FormControl = forwardRef(/** @param {*} param0  */
+export const FormControl = React.memo(forwardRef(/** @param {*} param0  */
     ({
         label = '',
         type = "text",
@@ -30,13 +30,13 @@ export const FormControl = forwardRef(/** @param {*} param0  */
                 className="form-control text-xs"
                 id={`input-${id}`} />
         </div>
-    })
+    }))
 
 /**
  * @type { any }
  */
 // @ts-ignore
-export const Checkbox = forwardRef(({ defaultChecked = undefined, label = '', checked = undefined, onChange = undefined, name = undefined }, ref) => {
+export const Checkbox = React.memo(forwardRef(({ defaultChecked = undefined, label = '', checked = undefined, onChange = undefined, name = undefined }, ref) => {
     const id = useMemo(() => Math.random(), [])
 
     return <div className="form-check my-3">
@@ -53,4 +53,4 @@ export const Checkbox = forwardRef(({ defaultChecked = undefined, label = '', ch
             {label}
         </label>
     </div>
-})
+}))

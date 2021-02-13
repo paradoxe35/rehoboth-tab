@@ -227,7 +227,7 @@ const Content = ({ event }) => {
                         </div>
                     )}
                     {(event.organizer.email || event.organizer.phone) && (
-                        <div className="text-sm text-muted">
+                        <div className="text-xs text-muted">
                             <p className="mb-3 composition-source-text">Organisateur: </p>
                             <div className="mx-3">
                                 {event.organizer.name && <p className="mb-2 composition-source-text">Nom: {event.organizer.name}</p>}

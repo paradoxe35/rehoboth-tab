@@ -7,9 +7,8 @@ import Button from '/@/components/admin/Button'
 // @ts-ignore
 const $event = window.$event
 
-const Tab = () => {
+const Submit = () => {
     const [loading, setLoading] = useState(false)
-
     const handleSaveForm = async () => {
         const { formData } = forkedEventFormData()
 
@@ -20,12 +19,17 @@ const Tab = () => {
         )
     }
 
+    return <Button
+        loading={loading}
+        onClick={handleSaveForm}
+        className="btn-sm text-sm"
+        text="Mettre à jour" />
+}
+
+
+const Tab = () => {
     return <OtherInfoSection>
-        <Button
-            loading={loading}
-            onClick={handleSaveForm}
-            className="btn-sm text-sm"
-            text="Mettre à jour" />
+        <Submit />
         <></>
     </OtherInfoSection>
 }

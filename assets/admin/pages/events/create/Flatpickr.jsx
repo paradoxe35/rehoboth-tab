@@ -6,7 +6,7 @@ import { mergeRefs } from "/@/utils/hooks"
 /**
  * @type { any }
  */
-export const FlatpickrDate = forwardRef((props, ref) => {
+export const FlatpickrDate = React.memo(forwardRef((props, ref) => {
     const refEl = useRef(null)
 
     useEffect(() => {
@@ -16,12 +16,12 @@ export const FlatpickrDate = forwardRef((props, ref) => {
     }, [])
 
     return <FormControl {...props} ref={mergeRefs(refEl, ref)} />
-})
+}))
 
 /**
  * @type { any }
  */
-export const FlatpickrTime = forwardRef((props, ref) => {
+export const FlatpickrTime = React.memo(forwardRef((props, ref) => {
     const refEl = useRef(null)
 
     useEffect(() => {
@@ -36,4 +36,4 @@ export const FlatpickrTime = forwardRef((props, ref) => {
     }, [])
 
     return <FormControl {...props} ref={mergeRefs(refEl, ref)} />
-})
+}))
