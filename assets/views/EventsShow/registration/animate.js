@@ -32,7 +32,7 @@ page.toggle = (e) => {
 
 page.toggleStates = () => {
     document.body.classList.toggle('no-scroll');
-    select('.js-reg-nav').classList.toggle('site-reg-active');
+    select('.js-reg').classList.toggle('site-active');
 }
 
 
@@ -53,11 +53,11 @@ page.reveal = (e) => {
 
     regBackButton.show()
 
-    anime.remove('.js-reg-nav, .js-reg-animate');
+    anime.remove('.js-reg, .js-reg-animate');
 
     let containerDelay = 200;
 
-    animate('.js-reg-nav', {
+    animate('.js-reg', {
         opacity: [0, 1],
         delay: containerDelay,
         duration: 200,
@@ -100,7 +100,7 @@ page.hide = (e) => {
 
     regBackButton.hide()
 
-    animate('.js-reg-nav', {
+    animate('.js-reg', {
         opacity: [1, 0],
         duration: 200,
         easing: "easeInOutExpo"
