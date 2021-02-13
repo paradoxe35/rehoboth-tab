@@ -32,6 +32,13 @@ a {
     }
 }
 
+.no-scroll {
+    overflow: hidden;
+    position: fixed;
+    height: 100%;
+    width: 100%;
+}
+
 .entry-loader {
     font-size: 1.3rem;
     margin: 0;

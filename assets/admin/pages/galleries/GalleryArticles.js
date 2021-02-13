@@ -36,7 +36,7 @@ export default class extends GiaComponent {
     htmlImage(image) {
         return /*html*/`
             <div class="d-flex justify-content-between">
-                <div style="height: 100px;width:100px;">
+                <div style="height: auto;width:100px;">
                     <img src="${image.public_path}" class="img-fluid img-thumbnail" />
                 </div>
                 <span>

@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { lazy, Suspense, useEffect, useState } from 'react';
 import CountdownRender, { useCountdownDone } from '/@/views/CountdownRender';
 import { FiShare2 } from 'react-icons/fi'
 import styled from 'styled-components';
 import { CountdownParentStyled, CountdownRowStyled } from '/@/components/StyledComponents';
 import Button from '/@/components/admin/Button';
+import Spinner from '/@/components/Spinner';
 
 const ShareButton = styled.div`
     @media (max-width: 767px) {
@@ -77,6 +78,7 @@ const ShareAction = ({ event }) => {
         } />
 }
 
+const Register = lazy(() => import('./registration/RegistrationEvent'))
 
 const CountDownEvent = ({ event }) => {
     const { isReady, handleComplete } = useCountdownDone(event?.ready)
@@ -89,9 +91,11 @@ const CountDownEvent = ({ event }) => {
                         <div className="d-inline-block mt-3">
                             <ShareAction event={event} />
                             {event?.enable_registration && (
-                                <button type="button" className="btn btn-primary text-sm btn-sm text-white">
-                                    <span>S'inscrire</span>
-                                </button>
+                                <div className="d-inline-block">
+                                    <Suspense fallback={<Spinner sm='sm' />}>
+                                        <Register />
+                                    </Suspense>
+                                </div>
                             )}
                             <TicketStatus ticket={event.ticket} />
                         </div>
