@@ -2,15 +2,10 @@ import React, { useEffect, useRef } from 'react'
 import { createPortal } from 'react-dom'
 import SiteOverlayPage from '/@/components/site-overlay/SiteOverlay'
 import regPage from './animate'
+import RegistrationContent from './RegistrationContent'
 
 
-const RegistrationContent = () => {
-    return <div className="container">
-    </div>
-}
-
-
-const Registration = () => {
+const Registration = ({ event }) => {
     const ctx = useRef(null)
     useEffect(() => {
         if (ctx.current) {
@@ -19,20 +14,20 @@ const Registration = () => {
     }, [])
 
     return createPortal(
-        <SiteOverlayPage onClose={() => regPage.hide()} canvasRef={ctx} prefix="reg">
-            <RegistrationContent />
+        <SiteOverlayPage onClose={() => regPage.hide()} canvasRef={ctx} prefix="reg" backBtnOnParent={false}>
+            {backButton => <RegistrationContent event={event} backButton={backButton} />}
         </SiteOverlayPage>,
         document.body
     )
 }
 
 
-const Register = () => {
+const Register = ({ event }) => {
     return <>
         <button onClick={(e) => regPage.reveal(e)} className="btn btn-primary text-sm btn-sm text-white">
             <span>S'inscrire</span>
         </button>
-        <Registration />
+        <Registration event={event} />
     </>
 }
 

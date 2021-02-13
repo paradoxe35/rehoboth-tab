@@ -93,7 +93,7 @@ const CountDownEvent = ({ event }) => {
                             {event?.enable_registration && (
                                 <div className="d-inline-block">
                                     <Suspense fallback={<Spinner sm='sm' />}>
-                                        <Register />
+                                        <Register event={event} />
                                     </Suspense>
                                 </div>
                             )}

@@ -33,7 +33,7 @@ const BackButton = styled.a`
         width: 51px;
         height: 51px;
     }
-    @media (max-width: 940px) {
+    @media (max-width: 992px) {
         & {
             position: absolute;
         }
@@ -41,16 +41,17 @@ const BackButton = styled.a`
 `
 
 
-const SiteOverlayPage = ({ children = null, onClose = null, canvasRef = null, prefix = 'reg' }) => {
+const SiteOverlayPage = ({ children = null, onClose = null, canvasRef = null, prefix = 'reg', backBtnOnParent = true }) => {
+
+    const backButton = <BackButton href="javascript:;" onClick={onClose} className={`${prefix}-back-button`}>
+        <svg className="back-image" xmlns="http://www.w3.org/2000/svg" width="102.125" height="102.125" viewBox="0 0 102.125 102.125">
+            <path fill="#fff" d="M115.594,59.919a51.05,51.05,0,1,1-51.05,51.05A51.05,51.05,0,0,1,115.594,59.919ZM139,108.031H102.868l16.6-16.6-4.216-4.187L91.5,111l23.754,23.754,4.187-4.186-16.569-16.6H139v-5.938Z" transform="translate(-64.531 -59.906)"></path>
+        </svg>
+    </BackButton>
+
     return <SiteOverlay className={`js-${prefix}`}>
-        <BackButton href="javascript:;" onClick={onClose} className={`${prefix}-back-button`}>
-            <svg className="back-image" xmlns="http://www.w3.org/2000/svg" width="102.125" height="102.125" viewBox="0 0 102.125 102.125">
-                <path fill="#fff" d="M115.594,59.919a51.05,51.05,0,1,1-51.05,51.05A51.05,51.05,0,0,1,115.594,59.919ZM139,108.031H102.868l16.6-16.6-4.216-4.187L91.5,111l23.754,23.754,4.187-4.186-16.569-16.6H139v-5.938Z" transform="translate(-64.531 -59.906)"></path>
-            </svg>
-        </BackButton>
-
-        {children}
-
+        {backBtnOnParent ? backButton : null}
+        {backBtnOnParent ? children : children(backButton)}
         <SiteCanvas ref={canvasRef} />
     </SiteOverlay>
 }

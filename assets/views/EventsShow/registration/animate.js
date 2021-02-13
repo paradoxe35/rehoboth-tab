@@ -51,11 +51,32 @@ page.reveal = (e) => {
         fill: "#bcac76"
     });
 
-    regBackButton.show()
-
     anime.remove('.js-reg, .js-reg-animate');
 
     let containerDelay = 200;
+
+    const t = select(".composition-source-text")
+    t && (t.style.opacity = 0);
+    select(".composition-source").style.display = "block";
+    select(".composition-source-container").style.transform = "scaleX(0)";
+    select(".composition-source-container").style.display = "block";
+
+    // Animate in overlay elements
+    anime.timeline()
+        .add({
+            targets: ".composition-source-container",
+            scaleX: [0, 1],
+            duration: 900,
+            delay: 500,
+            easing: "easeOutExpo",
+        }).add({
+            targets: ".composition-source-text",
+            opacity: [0, 1],
+            translateY: [-50, 0],
+            delay: (el, i) => 50 * i,
+            easing: "easeOutExpo",
+            offset: "-=150"
+        })
 
     animate('.js-reg', {
         opacity: [0, 1],
@@ -81,10 +102,25 @@ page.reveal = (e) => {
         duration: 1100,
         easing: "easeOutExpo"
     }).then(() => dispatch('app:regPageDidReveal'));
+
+    regBackButton.show()
+
+
+    const textWrapper = document.querySelector('.ml3');
+    textWrapper.innerHTML = textWrapper.textContent.replace(/\S/g, "<span class='letter'>$&</span>");
+
+    anime.timeline({ loop: false })
+        .add({
+            targets: '.ml3 .letter',
+            opacity: [0, 1],
+            easing: "easeInOutQuad",
+            duration: 2250,
+            delay: (el, i) => 150 * (i + 1)
+        });
 }
 
 
-page.hide = (e) => {
+page.hide = (_) => {
     page.visible = false;
     page.toggleStates();
 
@@ -98,7 +134,18 @@ page.hide = (e) => {
         complete: () => dispatch("app:regPageDidHide")
     });
 
-    regBackButton.hide()
+
+    anime({
+        targets: ".composition-source-container",
+        translateX: "100%",
+        duration: 500,
+        easing: "easeInQuad",
+        complete: function () {
+            const comp = select(".composition-source");
+            comp.scrollTop = 0;
+            comp.style.display = "none";
+        }
+    });
 
     animate('.js-reg', {
         opacity: [1, 0],
@@ -113,6 +160,8 @@ page.hide = (e) => {
         duration: 200,
         easing: "easeInExpo"
     });
+
+    regBackButton.hide()
 }
 
 
