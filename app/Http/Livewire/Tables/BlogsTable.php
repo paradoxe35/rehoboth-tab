@@ -19,8 +19,7 @@ class BlogsTable extends LivewireDatatable
     public function columns()
     {
         return [
-            NumberColumn::name('id')
-                ->hide(),
+            NumberColumn::name('id'),
 
             Column::name('title')
                 ->truncate(20)

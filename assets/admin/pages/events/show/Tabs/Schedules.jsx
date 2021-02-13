@@ -3,11 +3,11 @@ import { forkedEventFormData, handleUpdateEventData } from '../../create/DatasFo
 import ScheduleSection from '../../create/Sections/ScheduleSection'
 import Button from '/@/components/admin/Button'
 
-// @ts-ignore
-const $event = window.$event
-
 
 const Submit = () => {
+    // @ts-ignore
+    let $event = window.$event;
+
     const [loading, setLoading] = useState(false)
 
     const handleSaveForm = async () => {

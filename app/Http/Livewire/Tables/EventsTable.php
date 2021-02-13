@@ -22,8 +22,7 @@ class EventsTable extends LivewireDatatable
     public function columns()
     {
         return [
-            NumberColumn::name('id')
-                ->hide(),
+            NumberColumn::name('id'),
 
             Column::name('name')
                 ->truncate()

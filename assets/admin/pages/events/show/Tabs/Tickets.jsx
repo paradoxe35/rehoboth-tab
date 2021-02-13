@@ -3,10 +3,11 @@ import { forkedEventFormData, handleUpdateEventData } from '../../create/DatasFo
 import TicketPriceSection from '../../create/Sections/TicketPriceSection';
 import Button from '/@/components/admin/Button';
 
-// @ts-ignore
-const $event = window.$event
 
 const Submit = () => {
+    // @ts-ignore
+    let $event = window.$event;
+
     const [loading, setLoading] = useState(false)
 
     const handleSaveForm = async () => {

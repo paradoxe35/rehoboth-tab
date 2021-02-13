@@ -1,13 +1,12 @@
 import React, { useState } from 'react'
-import { EVENT_DATA_FORM, forkedEventFormData, handleUpdateEventData } from '../../create/DatasForm'
+import { forkedEventFormData, handleUpdateEventData } from '../../create/DatasForm'
 import OtherInfoSection from '../../create/Sections/OtherInfoSection'
 import Button from '/@/components/admin/Button'
 
-
-// @ts-ignore
-const $event = window.$event
-
 const Submit = () => {
+    // @ts-ignore
+    let $event = window.$event;
+
     const [loading, setLoading] = useState(false)
     const handleSaveForm = async () => {
         const { formData } = forkedEventFormData()

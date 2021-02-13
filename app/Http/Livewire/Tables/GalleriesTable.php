@@ -19,8 +19,7 @@ class GalleriesTable extends LivewireDatatable
     public function columns()
     {
         return [
-            NumberColumn::name('id')
-                ->hide(),
+            NumberColumn::name('id'),
 
             DateColumn::name('created_at')
                 ->filterable()

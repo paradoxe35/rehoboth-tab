@@ -3,6 +3,8 @@
 namespace App\Http\Livewire\Tables\Events;
 
 use App\Models\Event\Event;
+use App\Models\Event\EventRegistration;
+use App\Models\Morphs\Ticket\TicketOption;
 use Mediconesystems\LivewireDatatables\Http\Livewire\LivewireDatatable;
 use Mediconesystems\LivewireDatatables\Column;
 use Mediconesystems\LivewireDatatables\DateColumn;
@@ -26,8 +28,7 @@ class RegistrationsTable extends LivewireDatatable
     public function columns()
     {
         return [
-            NumberColumn::name('id')
-                ->hide(),
+            NumberColumn::name('id'),
 
             Column::name('name')
                 ->truncate()
@@ -44,10 +45,11 @@ class RegistrationsTable extends LivewireDatatable
 
             Column::name('regid')
                 ->searchable()
-                ->label(trans("ID")),
+                ->label(trans("Identifiant d'autorisation")),
 
-            Column::callback(['ticket_option'], function ($ticket_option) {
-                return $ticket_option ? "{$ticket_option->name} \${$ticket_option->price}" : trans('Gratuit');
+            Column::callback(['ticket_option_id'], function ($ticket_option_id) {
+                $ticket = TicketOption::find($ticket_option_id);
+                return $ticket ? "{$ticket->name} \${$ticket->price}" : trans('Gratuit');
             })->label(trans("Ticket")),
 
             BooleanColumn::name('paid')->label(trans('Payé')),
@@ -56,9 +58,26 @@ class RegistrationsTable extends LivewireDatatable
                 ->filterable()
                 ->label(trans('Enregistré le')),
 
-            Column::callback(['id'], function ($id) {
-                return '';
-            })->label(trans("Action")),
+            Column::callback(['id', 'ticket_option_id', 'paid'], function ($id, $ticket_option_id, $paid) {
+                $ticket = TicketOption::find($ticket_option_id);
+                return $ticket ? view('livewire.admin.events.table.action-registrations', [
+                    'id' => $id,
+                    'paid' => $paid
+                ]) : '--';
+            })->alignCenter()->label(trans("Action")),
+
+            Column::delete()
+                ->alignCenter()
+                ->label(trans('Supprimer')),
         ];
+    }
+
+
+    public function paymentAction($id)
+    {
+        $reg = EventRegistration::find($id);
+        if (!$reg) return;
+        $reg->paid = !$reg->paid;
+        $reg->save();
     }
 }

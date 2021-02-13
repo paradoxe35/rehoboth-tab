@@ -15,6 +15,7 @@
             width: 100%;
             overflow: hidden;
         }
+
         .button {
             padding: 0.25rem 0.5rem;
             font-size: 0.675rem;
@@ -33,9 +34,13 @@
             border: 1px solid transparent;
             transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
         }
+        .button.info {
+            background-color: #31afc9;
+            border-color: #31afc9;
+        }
     </style>
-    
-    
+
+
 </head>
 
 <body>
@@ -43,11 +48,11 @@
 
     @if (app()->environment() === "local")
 
-        @include('vite-assets', ['entries' => 'DEV_SERVER_FRAME_ENTRIES'])
+    @include('vite-assets', ['entries' => 'DEV_SERVER_FRAME_ENTRIES'])
 
     @else
-        <script src="{{ mix('manifest.js', 'assets') }}"></script>
-        <script src="{{ mix('livewire-frame.js', 'assets') }}"></script>
+    <script src="{{ mix('manifest.js', 'assets') }}"></script>
+    <script src="{{ mix('livewire-frame.js', 'assets') }}"></script>
     @endif
 
     @livewire($component, array_merge($attribute, ['params' => $attribute]))

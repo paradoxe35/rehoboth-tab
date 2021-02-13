@@ -206,7 +206,7 @@ const DescriptionAndText = () => {
         if (ref.current) {
             quill.current = new Quill(ref.current, defaultOption);
             if ($event.text) {
-                quill.current.clipboard.dangerouslyPasteHTML($event.text)
+                quill.current.setContents(quill.current.clipboard.convert($event.text));
                 EVENT_DATA_FORM[SECTION_KEY].description = $event.text
             }
 

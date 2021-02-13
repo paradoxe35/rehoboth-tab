@@ -13,11 +13,10 @@ import { confirmed } from '/@/functions/functions'
 import { Notifier } from '/@/utils/notifier'
 
 
-// @ts-ignore
-const $event = window.$event
-
 const ITab = () => {
-
+    // @ts-ignore
+    let $event = window.$event;
+    
     // @ts-ignore
     const [photos, setPhotos] = useState(window.$event?.photos || [])
     // @ts-ignore

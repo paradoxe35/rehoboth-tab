@@ -20,7 +20,7 @@ class EventRegistration extends Model
     ];
 
 
-    public function ticketOption() {
+    public function options() {
         return $this->belongsTo(TicketOption::class);
     }
 

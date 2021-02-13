@@ -67,7 +67,7 @@ class EventController extends Controller
         return [
             'message' => trans($message, ['event' => $event->name]),
             'reg_id' => $regId,
-            'tickets' => new TicketOptionCollection($event->ticket->options)
+            'tickets' => (new TicketOptionCollection($event->ticket->options))->toArray($request)
         ];
     }
 }
