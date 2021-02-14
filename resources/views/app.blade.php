@@ -4,8 +4,9 @@
 <head>
     {!! Meta::toHtml() !!}
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <link rel="dns-prefetch" href="//fonts.gstatic.com">
+    @include('favicon')
 
+    <link rel="dns-prefetch" href="//fonts.gstatic.com">
     {{--  section:seometa --}}
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="{{ config('app.name') }}">
