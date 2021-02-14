@@ -20,7 +20,7 @@
     window.$event = @json($event)
 </script>
 
-<x-nav-tab :tabs='["Profil et edit", "Inscriptions"]'>
+<x-nav-tab :tabs='["Profil et edit", ["name" => "Inscriptions ($registrations)", "key" => "inscriptions"]]'>
     <x-slot name="profil_et_edit">
         <div g-component="EventShow">
             <x-spinner />

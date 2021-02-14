@@ -2,12 +2,15 @@
 
 namespace App\View\Components;
 
+use Illuminate\Support\Str;
 use Illuminate\View\Component;
 
 class NavTab extends Component
 {
 
     public $tabs;
+
+    public $tabsId;
 
     /**
      * Create a new component instance.
@@ -17,6 +20,7 @@ class NavTab extends Component
     public function __construct(array $tabs = [])
     {
         $this->tabs = $tabs;
+        $this->tabsId = Str::random();
     }
 
     /**

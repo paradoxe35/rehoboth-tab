@@ -39,6 +39,17 @@ class EventsController extends Controller
         return view('admin.pages.events.create');
     }
 
+    public function show(Event $event)
+    {
+        $event->load(['address', 'ticket', 'schedules', 'tags', 'organizers']);
+
+        $event->ticket->load('options');
+
+        $registrations = $event->registrations()->count();
+
+        return view('admin.pages.events.show', compact('event', 'registrations'));
+    }
+
 
     private function validateDetails(Request $request)
     {
@@ -344,16 +355,6 @@ class EventsController extends Controller
         }
 
         return $res;
-    }
-
-
-    public function show(Event $event)
-    {
-        $event->load(['address', 'ticket', 'schedules', 'tags', 'organizers']);
-
-        $event->ticket->load('options');
-
-        return view('admin.pages.events.show', compact('event'));
     }
 
 
