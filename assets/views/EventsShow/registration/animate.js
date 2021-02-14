@@ -57,6 +57,7 @@ page.reveal = (e) => {
 
     const t = select(".composition-source-text")
     t && (t.style.opacity = 0);
+    select(".composition-source").scrollTo({ top: 0 })
     select(".composition-source").style.display = "block";
     select(".composition-source-container").style.transform = "scaleX(0)";
     select(".composition-source-container").style.display = "block";

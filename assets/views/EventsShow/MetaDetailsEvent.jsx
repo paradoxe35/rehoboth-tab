@@ -19,6 +19,8 @@ const AddToCalendar = ({ event, startdatetime, enddatetime }) => {
         <span className="invisible end">{enddatetime}</span>
         <span className="invisible title">{event.name}</span>
         <span className="invisible status">CONFIRMED</span>
+        {event?.organizer?.name && <span className="invisible organizer">{event?.organizer?.name}</span>}
+        {event?.organizer?.email && <span className="invisible organizer_email">{event?.organizer?.email}</span>}
         <span className="invisible description">{event.description}</span>
         <span className="invisible location"><AddressText address={event.address} /></span>
     </div>

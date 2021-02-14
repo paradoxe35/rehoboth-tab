@@ -69,7 +69,7 @@ const ITab = () => {
                         <div className="col-lg-6 mb-3">
                             <h5>Image de couverture</h5>
 
-                            <ImageThumbnail image={image} />
+                            <ImageThumbnail key={image.id} image={image} />
                         </div>
                         <div className="col-lg-6 mb-3">
                             <h5>Photos</h5>

@@ -1,2 +1,4 @@
 // Must be the first import
-import "preact/debug"
+if (process.env.NODE_ENV === "development") {
+    require("preact/debug")
+}

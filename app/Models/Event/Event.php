@@ -35,6 +35,7 @@ class Event extends Model
     protected $casts = [
         'start_date' => 'date',
         'end_date' => 'date',
+        'registration_deadline' => 'date'
     ];
 
     /**
@@ -69,6 +70,18 @@ class Event extends Model
         'start_idate', 'end_idate',
         'start_datetime', 'end_datetime'
     ];
+
+
+    public function isAvailable()
+    {
+        return now()->isBefore($this->start_date) || $this->start_date->toDateString() == now()->toDateString();
+    }
+
+    public function canRegister()
+    {
+        return now()->isBefore($this->registration_deadline) ||
+            $this->registration_deadline->toDateString() == now()->toDateString();
+    }
 
 
     public function guestRoute()
