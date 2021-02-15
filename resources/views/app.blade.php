@@ -8,9 +8,9 @@
 
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     {{--  section:seometa --}}
-    <meta property="og:type" content="website">
+    {{-- <meta property="og:type" content="website">
     <meta property="og:site_name" content="{{ config('app.name') }}">
-    <meta property="og:language" content="{{ app()->getLocale() }}">
+    <meta property="og:language" content="{{ app()->getLocale() }}"> --}}
 
     {{-- @section('seometa')
     <meta property="og:type" content="website">
@@ -20,9 +20,9 @@
     <meta name="twitter:image" content="{{ asset('img/siku/siku.png') }}">
     @show --}}
 
-    <meta name="twitter:creator" content="{{ config('app.name') }}">
+    {{-- <meta name="twitter:creator" content="{{ config('app.name') }}">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:site" content="{{ '@'.config('app.name') }}">
+    <meta name="twitter:site" content="{{ '@'.config('app.name') }}"> --}}
 
     {{-- section:assets --}}
     @if (app()->environment() === "local")

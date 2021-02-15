@@ -7,6 +7,7 @@ use App\Http\Resources\Guest\Programme\ProgrammeCollection;
 use App\Models\ChurchDetail;
 use App\Models\Message;
 use App\Models\Programme;
+use Butschster\Head\Facades\PackageManager;
 use Illuminate\Http\Request;
 
 class ContactController extends Controller

@@ -7,10 +7,19 @@ use App\Models\Blog\Blog;
 use App\Models\Event\Event;
 use App\Models\Gallery;
 use App\Models\Sermon;
+use Butschster\Head\Contracts\MetaTags\MetaInterface;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
+    protected $meta;
+
+    public function __contruct(MetaInterface $meta)
+    {
+        $this->meta = $meta;
+    }
+
+
     public function index()
     {
         $blog = Blog::count();

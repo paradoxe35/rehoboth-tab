@@ -200,9 +200,11 @@ const Content = ({ event }) => {
         {!!tickets.length && !success && (
             <div className="p-4 bg-white composition-source-text">
                 <PricesOptions tickets={tickets} selected={selected} setSelected={setSelected} />
-                <div className="mt-3 text-muted text-sm composition-source-text">
-                    Billets disponibles ({selected.name}): {selected.reste}
-                </div>
+                {event.ticket?.remaining && (
+                    <div className="mt-3 text-muted text-sm composition-source-text">
+                        Billets disponibles ({selected.name}): {selected.reste}
+                    </div>
+                )}
             </div>
         )}
         {

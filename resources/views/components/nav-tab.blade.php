@@ -1,10 +1,10 @@
 <div g-component="BsTabs">
     <ul class="nav nav-pills my-4" id="pills-tab-{{ $tabsId }}" role="tablist" wire:ignore>
         @foreach ($tabs as $key => $tab)
-        <li class="nav-item" role="presentation">
+        <li class="nav-item" role="presentation" wire:ignore>
             <a class="nav-link {{ $key == 0 ? 'active' : 'mx-2' }} border-darken border" id="pills-{{ Str::snake(Str::ascii(is_array($tab) ? $tab['key']: $tab)) }}-tab"
                 data-bs-toggle="pill" href="#pills-{{ Str::snake(Str::ascii(is_array($tab) ? $tab['key']: $tab)) }}" role="tab"
-                aria-controls="pills-{{ Str::snake(Str::ascii(is_array($tab) ? $tab['key']: $tab)) }}" aria-selected="true">
+                aria-controls="pills-{{ Str::snake(Str::ascii(is_array($tab) ? $tab['key']: $tab)) }}" aria-selected="true" wire:ignore>
                 {{ __(is_array($tab) ? $tab['name'] : $tab) }}
             </a>
         </li>
