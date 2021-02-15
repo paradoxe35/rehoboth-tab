@@ -45,15 +45,16 @@ const PaidTicketOption = React.memo(({ index, onSelect, onDelete, checked, data 
                     placeholder="Stock" />
             </td>
             <td className="text-center align-middle">
-                <div className="custom-control custom-radio">
+                <div className="custom-control custom-radio text-center">
                     <input
                         className="custom-control-input"
+                        id={`multi-${index}`}
                         onChange={() => onSelect(index)}
                         checked={checked}
                         ref={ref}
                         type="radio"
                         name="default" />
-                    <label className="custom-control-label" />
+                    <label htmlFor={`multi-${index}`} className="custom-control-label d-block">{index}</label>
                 </div>
             </td>
             <td className="text-center align-middle">

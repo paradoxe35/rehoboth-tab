@@ -20,7 +20,7 @@ const ScheduleOption = React.memo(({ index, onDelete, data }) => {
 
     return <div className="border rounded position-relative bg-white p-3 mb-3">
         <div className="row">
-            <div className="col"></div>
+            <div className="col"><b>{index}</b></div>
             <div className="col-auto">
                 <button className="btn btn-link btn-sm" onClick={() => onDelete(index)}>
                     <DeleteIcon />
