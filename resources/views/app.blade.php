@@ -39,6 +39,7 @@
 
 <body>
     @inertia
+    <noscript>Veuillez activer JavaScript pour continuer à utiliser cette application.</noscript>
     @include('entry-load')
 </body>
 

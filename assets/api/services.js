@@ -14,6 +14,6 @@ export async function customerCountryApi() {
     try {
         return await Axios.get("https://ipapi.co/json")
     } catch (e) {
-        throw Error(e);
+        return Promise.reject(e);
     }
 }

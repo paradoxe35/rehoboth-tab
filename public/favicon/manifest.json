@@ -1,12 +1,12 @@
 {
+    "name": "Rehoboth",
+    "short_name": "Rehoboth",
     "theme_color": "#877f64",
     "background_color": "#ffeaa356",
     "display": "standalone",
+    "orientation": "any",
     "scope": "/",
-    "start_url": "/",
-    "description": "",
-    "name": "Rehoboth",
-    "short_name": "Rehoboth",
+    "start_url": "/?launch=pwa",
     "icons": [
         {
             "src": "/favicon/icon-192x192.png",

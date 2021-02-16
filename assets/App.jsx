@@ -7,7 +7,7 @@ import { render } from 'react-dom'
 import { InertiaProgress } from '@inertiajs/progress'
 import Layout from './layouts/Layout'
 import Application from './layouts/Application'
-import registerServiceWorker from './worker/registerServiceWorker'
+// import registerServiceWorker from './worker/registerServiceWorker'
 
 InertiaProgress.init({
   color: 'var(--bs-secondary)',
