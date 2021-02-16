@@ -39,7 +39,7 @@ class EventShow extends JsonResource
             'image' => (new Image($this->image)),
             'photos' => (new ImageCollection($this->photos)),
             'label' => $this->label,
-            'description' => substr(strip_tags($this->text), 0, 257),
+            'description' => $this->metaDescription(),
             'content' => $this->text,
             'enable_registration' => boolval($this->enable_registration) && $this->canRegister() && $this->isAvailable(),
             'address' => new Address($this->address),

@@ -2,18 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use App\AppMeta;
 use App\Http\Resources\Guest\ChurchDetails\ChurchDetails;
 use App\Http\Resources\Guest\Programme\ProgrammeCollection;
 use App\Models\ChurchDetail;
 use App\Models\Message;
 use App\Models\Programme;
-use Butschster\Head\Facades\PackageManager;
 use Illuminate\Http\Request;
+
 
 class ContactController extends Controller
 {
     public function index()
     {
+        AppMeta::metas("Contact", null, "Pour toute information, prière ou autre, veuillez utiliser les coordonnées ci-dessous pour nous contacter");
+
         $programmes = new ProgrammeCollection(
             Programme::query()->limit(7)->get()
         );

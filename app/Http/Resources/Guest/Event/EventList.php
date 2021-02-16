@@ -21,7 +21,7 @@ class EventList extends JsonResource
             'route' => $this->guestRoute(),
             'start_date' => $this->start_fdate,
             'start_time' => $this->start_time,
-            'description' => substr(strip_tags($this->text), 0, 257),
+            'description' => $this->metaDescription(),
             'image' => (new Image($this->image))
         ];
     }

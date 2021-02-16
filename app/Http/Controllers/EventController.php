@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\AppMeta;
 use App\Http\Resources\Guest\Event\EventListCollection;
 use App\Http\Resources\Guest\Event\EventShow;
 use App\Http\Resources\Guest\Ticket\TicketOptionCollection;
@@ -15,6 +16,7 @@ class EventController extends Controller
 {
     public function index(EventRepository $eventRp)
     {
+        AppMeta::metas('Événements', null, "Restez à jour avec les derniers événements, concerts, évangélisation et plus de " . config('app.name') . ".");
 
         $events = new EventListCollection(
             $eventRp->getAvailable()
@@ -29,6 +31,8 @@ class EventController extends Controller
 
     public function show(Event $event)
     {
+        AppMeta::metas($event->name . ' | Événement', $event->image->public_path, $event->metaDescription());
+
         return inertia('Events/EventsShow', [
             'event' => new EventShow($event)
         ]);

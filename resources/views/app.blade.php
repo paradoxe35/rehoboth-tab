@@ -2,27 +2,22 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <head>
-    {!! Meta::toHtml() !!}
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    
+    {!! Meta::toHtml() !!}
+
     @include('favicon')
+    
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="site-name" content="{{ $app_name }}" />
+    <meta name="lang" content="{{ app()->getLocale() }}" />
 
-    <link rel="dns-prefetch" href="//fonts.gstatic.com">
-    {{--  section:seometa --}}
-    {{-- <meta property="og:type" content="website">
-    <meta property="og:site_name" content="{{ config('app.name') }}">
-    <meta property="og:language" content="{{ app()->getLocale() }}"> --}}
-
-    {{-- @section('seometa')
+    <meta property="og:site_name" content="{{ $app_name }}">
+    <meta property="og:language" content="{{ app()->getLocale() }}">
     <meta property="og:type" content="website">
-    <meta property="og:title" content="@yield('title'){{ $app_name }}">
-    <meta property="og:description" content="{{ $app_description }}">
-    <meta property="og:image" content="{{ asset('img/siku/siku.png') }}">
-    <meta name="twitter:image" content="{{ asset('img/siku/siku.png') }}">
-    @show --}}
-
-    {{-- <meta name="twitter:creator" content="{{ config('app.name') }}">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:site" content="{{ '@'.config('app.name') }}"> --}}
+    <meta name="twitter:site" content="{{ "@".$app_name }}">
+    <link rel="dns-prefetch" href="//fonts.gstatic.com">
 
     {{-- section:assets --}}
     @if (app()->environment() === "local")

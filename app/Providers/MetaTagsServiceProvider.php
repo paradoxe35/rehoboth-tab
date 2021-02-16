@@ -7,24 +7,14 @@ use Butschster\Head\Facades\PackageManager;
 use Butschster\Head\MetaTags\Meta;
 use Butschster\Head\Contracts\MetaTags\MetaInterface;
 use Butschster\Head\Contracts\Packages\ManagerInterface;
-use Butschster\Head\Facades\Meta as FacadesMeta;
 use Butschster\Head\Providers\MetaTagsApplicationServiceProvider as ServiceProvider;
-use Butschster\Head\Packages\Entities\OpenGraphPackage;
-use Butschster\Head\Packages\Entities\TwitterCardPackage;
 
 
 class MetaTagsServiceProvider extends ServiceProvider
 {
     protected function packages()
     {
-        $og = new OpenGraphPackage('og');
-        $twitterCard = new TwitterCardPackage('twitterCard');
-
-        $og->setType('website');
-
-
-        FacadesMeta::registerPackage($og);
-        FacadesMeta::registerPackage($twitterCard);
+        //
     }
 
     // if you don't want to change anything in this method just remove it

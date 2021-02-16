@@ -72,6 +72,11 @@ class Event extends Model
     ];
 
 
+    public function metaDescription() {
+        return substr(strip_tags($this->text), 0, 257);
+    }
+
+
     public function isAvailable()
     {
         return now()->isBefore($this->start_date) || $this->start_date->toDateString() == now()->toDateString();

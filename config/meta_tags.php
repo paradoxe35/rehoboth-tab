@@ -17,7 +17,7 @@ return [
      * Meta description section
      */
     'description' => [
-        'default' => null,
+        'default' => "Nous croyons au message de la fin des temps et ce message a été amené par un prophète confirmé et oint de notre Dieu Jésus-Christ, le nom de notre prophète est William Marrion Branham. Rehoboth Tabernacle est un endroit pour vous et pour tout le monde, parce que nous croyons que le puits de la parole doit être accessible à tous.",
         'max_length' => 255,
     ],
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\AppMeta;
 use App\Http\Resources\Guest\Blog\BlogListCollection;
 use App\Http\Resources\Guest\Blog\BlogShow;
 use App\Http\Resources\Guest\BlogCategory\BlogCategoryCollection;
@@ -13,6 +14,8 @@ class BlogController extends Controller
 {
     public function index(Request $request)
     {
+        AppMeta::metas("Blog", null, config('app.name') . " Blog est le blog officiel de " . config('app.name') . ". Chaque jour vous apporte les dernières nouvelles");
+
         $blogsData = null;
         $all = true;
         $category = null;
@@ -44,6 +47,8 @@ class BlogController extends Controller
 
     public function show(Blog $blog)
     {
+        AppMeta::metas($blog->title . " | Blog ", $blog->image->public_path, $blog->contentLimit());
+
         /** @var mixed */
         $comment =  view('components.telegram.comments', ['pageId' => $blog->id]);
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\AppMeta;
 use App\Http\Resources\Guest\Blog\HomeBlogCollection;
 use App\Http\Resources\Guest\Event\EventCollection as EventsResource;
 use App\Http\Resources\Guest\ImageGallery\ImageGalleryCollection;
@@ -19,6 +20,9 @@ class HomeController extends Controller
 {
     public function index(EventRepository $eventRp)
     {
+
+        AppMeta::metas(null, null, 'default');
+
         $events = new EventsResource(
             $eventRp->getAvailable()->limit(3)->get()
         );

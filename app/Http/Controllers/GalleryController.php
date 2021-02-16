@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\AppMeta;
 use App\Http\Resources\Guest\ImageGallery\ImageGalleryListCollection;
 use App\Models\Blog\Blog;
 use App\Models\Event\Event;
 use App\Models\Gallery;
 use App\Models\Morphs\Image;
+use Butschster\Head\Facades\Meta;
 use Illuminate\Http\Request;
 
 class GalleryController extends Controller
@@ -27,6 +29,8 @@ class GalleryController extends Controller
 
     public function index()
     {
+        AppMeta::metas('Galerie', null, "" . config('app.name') . " Gallery est la galerie officielle de " . config('app.name') . ". Presque chaque jour, nous y mettons de nouvelles images");
+
         return inertia('Gallery/Gallery', [
             'images' => $this->images()
         ]);
