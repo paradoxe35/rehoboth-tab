@@ -49,7 +49,7 @@ mix.react('assets/App.jsx', 'main.js')
             ...(mix.inProduction() ? [
                 new InjectManifest({
                     swSrc: './assets/service-worker.js',
-                    swDest: 'sw.js',
+                    swDest: '../sw.js',
                     maximumFileSizeToCacheInBytes: 1000000 * 3,
                     mode: mix.inProduction() ? 'production' : 'development'
                 })

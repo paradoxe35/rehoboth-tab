@@ -1,43 +1,35 @@
-// import { Workbox } from 'workbox-window';
+import { Workbox } from 'workbox-window';
+import { isLocalhost } from '../functions/functions';
 
-const isLocalhost = Boolean(
-    window.location.hostname === 'localhost' ||
-    // [::1] is the IPv6 localhost address.
-    window.location.hostname === '[::1]' ||
-    // 127.0.0.1/8 is considered localhost for IPv4.
-    window.location.hostname.match(
-        /^127(?:\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}$/
-    )
-);
 
-export default function register() {
-    if (process.env.NODE_ENV === 'production' && 'serviceWorker' in navigator) {
-        window.addEventListener('load', () => {
-            const swUrl = `${process.env.MIX_ASSETS_URL}/sw.js`;
+const swUrl = `/sw.js`;
+const WB = new Workbox(swUrl)
 
-            if (isLocalhost) {
-                // This is running on localhost. Lets check if a service worker still exists or not.
-                checkValidServiceWorker(swUrl);
+export default function registerServiceWorker() {
 
-                // Add some additional logging to localhost, pointing developers to the
-                // service worker/PWA documentation.
-                navigator.serviceWorker.ready.then(() => {
-                    console.log(
-                        'This web app is being served cache-first by a service ' +
-                        'worker. To learn more, visit https://goo.gl/SC7cgQ'
-                    );
-                });
-            } else {
-                // Is not local host. Just register service worker
-                registerValidSW(swUrl);
-            }
-        });
-    }
+    window.addEventListener('load', () => {
+
+        if (isLocalhost()) {
+            // This is running on localhost. Lets check if a service worker still exists or not.
+            checkValidServiceWorker();
+
+            // Add some additional logging to localhost, pointing developers to the
+            // service worker/PWA documentation.
+            navigator.serviceWorker.ready.then(() => {
+                console.log(
+                    'This web app is being served cache-first by a service ' +
+                    'worker. To learn more, visit https://goo.gl/SC7cgQ'
+                );
+            });
+        } else {
+            // Is not local host. Just register service worker
+            registerValidSW();
+        }
+    });
 }
 
-function registerValidSW(swUrl) {
-    navigator.serviceWorker
-        .register(swUrl)
+function registerValidSW() {
+    WB.register()
         .then(registration => {
             registration.onupdatefound = () => {
                 const installingWorker = registration.installing;
@@ -64,7 +56,7 @@ function registerValidSW(swUrl) {
         });
 }
 
-function checkValidServiceWorker(swUrl) {
+function checkValidServiceWorker() {
     // Check if the service worker can be found. If it can't reload the page.
     fetch(swUrl)
         .then(response => {
@@ -81,7 +73,7 @@ function checkValidServiceWorker(swUrl) {
                 });
             } else {
                 // Service worker found. Proceed as normal.
-                registerValidSW(swUrl);
+                registerValidSW();
             }
         })
         .catch(() => {
@@ -91,7 +83,7 @@ function checkValidServiceWorker(swUrl) {
         });
 }
 
-export function unregister() {
+export function unRegisterServiceWorker() {
     if ('serviceWorker' in navigator) {
         navigator.serviceWorker.ready.then(registration => {
             registration.unregister();

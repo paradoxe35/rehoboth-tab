@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Events\Models\ProfileDeleted;
+use App\Events\Profile\ProfileDeleted;
 use App\Models\Morphs\Image;
 use App\Searchable\FullTextSearchable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;

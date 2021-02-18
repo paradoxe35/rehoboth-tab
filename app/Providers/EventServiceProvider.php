@@ -2,7 +2,6 @@
 
 namespace App\Providers;
 
-use App\Events\Models\SermonDeleted;
 use App\Listeners\Models\CleanSermonFiles;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;

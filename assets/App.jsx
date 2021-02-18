@@ -7,7 +7,8 @@ import { render } from 'react-dom'
 import { InertiaProgress } from '@inertiajs/progress'
 import Layout from './layouts/Layout'
 import Application from './layouts/Application'
-// import registerServiceWorker from './worker/registerServiceWorker'
+import registerServiceWorker from './worker/registerServiceWorker'
+import registerSwPushManager from './worker/registerSwPushManager'
 
 InertiaProgress.init({
   color: 'var(--bs-secondary)',
@@ -35,4 +36,8 @@ const Main = () => (
 )
 
 render(<Main />, el)
-// registerServiceWorker()
+
+if (process.env.NODE_ENV === 'production' && 'serviceWorker' in navigator) {
+  registerServiceWorker()
+  // registerSwPushManager()
+}

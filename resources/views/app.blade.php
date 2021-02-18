@@ -18,6 +18,7 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:site" content="{{ "@".$app_name }}">
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
+    <link rel="manifest" href="{{ asset('manifest.json') }}">
 
     {{-- section:assets --}}
     @if (app()->environment() === "local")
@@ -30,7 +31,7 @@
 
         <script src="{{ mix('manifest.js', 'assets') }}" defer></script>
         <script src="{{ mix('vendor.js', 'assets') }}" defer></script>
-        <script type="module" src="{{ mix('main.js', 'assets') }}" defer></script>
+        <script src="{{ mix('main.js', 'assets') }}" defer></script>
     @endif
 
     {{-- ziggy:tags --}}

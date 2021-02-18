@@ -52,8 +52,8 @@ Route::name('guest.')
         Route::prefix('web-push')
             ->name('web-push')
             ->group(function () {
-                Route::get('/vapid-public-key', [WebPushController::class, 'vapidPublicKey'])->name('vapid-public-key');
-                Route::get('/register', [WebPushController::class, 'register'])->name('register');
+                Route::get('/vapid-public-key', [WebPushController::class, 'vapidPublicKey'])->name('.vapid-public-key');
+                Route::post('/register', [WebPushController::class, 'register'])->name('.register');
             });
     });
 

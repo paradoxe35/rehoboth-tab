@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { precacheAndRoute } from 'workbox-precaching';
 import { CacheableResponsePlugin } from 'workbox-cacheable-response';
 import { StaleWhileRevalidate } from 'workbox-strategies';
@@ -5,10 +6,7 @@ import { ExpirationPlugin } from 'workbox-expiration';
 import { registerRoute } from 'workbox-routing';
 
 
-// @ts-ignore
 const assets = self.__WB_MANIFEST || []
-
-console.log(assets);
 
 precacheAndRoute(assets);
 
@@ -28,14 +26,20 @@ registerRoute(
     }),
 );
 
+self.addEventListener('push', function (event) {
 
-// self.addEventListener('install', (event) => {
-//     self.skipWaiting();
-// });
+    const payload = event.data;
 
-// self.addEventListener('activate', (event) => {
-//     event.waitUntil(self.clients.claim());
-//     self.registration.unregister().then(() => {
-//         console.log('NGSW Safety Worker - unregistered old service worker');
-//     });
-// });
+    if(!payload) return
+
+    /**
+     * @type { ServiceWorkerRegistration }
+     */
+    const registration = self.registration
+
+    event.waitUntil(
+        registration.showNotification('ServiceWorker Cookbook', {
+            body: payload,
+        })
+    );
+});

@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Events\Models\GalleryDeleted;
+use App\Events\Gallery\GalleryDeleted;
 use App\Models\Morphs\Image;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;

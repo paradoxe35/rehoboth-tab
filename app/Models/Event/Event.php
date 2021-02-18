@@ -2,7 +2,8 @@
 
 namespace App\Models\Event;
 
-use App\Events\Models\EventDeleted;
+use App\Events\Event\EventCreated;
+use App\Events\Event\EventDeleted;
 use App\FormattableDate;
 use App\Models\Morphs\Address;
 use App\Models\Morphs\Image;
@@ -25,6 +26,7 @@ class Event extends Model
      */
     protected $dispatchesEvents = [
         'deleted' => EventDeleted::class,
+        'created' => EventCreated::class
     ];
 
     /**

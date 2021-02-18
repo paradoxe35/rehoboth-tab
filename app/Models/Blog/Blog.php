@@ -2,7 +2,8 @@
 
 namespace App\Models\Blog;
 
-use App\Events\Models\BlogDeleted;
+use App\Events\Blog\BlogCreated;
+use App\Events\Blog\BlogDeleted;
 use App\FormattableDate;
 use App\Models\Morphs\Image;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -20,6 +21,7 @@ class Blog extends Model
      */
     protected $dispatchesEvents = [
         'deleted' => BlogDeleted::class,
+        'created' => BlogCreated::class
     ];
 
     /**

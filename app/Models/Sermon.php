@@ -2,7 +2,8 @@
 
 namespace App\Models;
 
-use App\Events\Models\SermonDeleted;
+use App\Events\Sermon\SermonCreated;
+use App\Events\Sermon\SermonDeleted;
 use App\FormattableDate;
 use App\Models\Morphs\File;
 use App\Models\Morphs\Image;
@@ -22,6 +23,7 @@ class Sermon extends Model
      */
     protected $dispatchesEvents = [
         'deleted' => SermonDeleted::class,
+        'created' => SermonCreated::class
     ];
 
     /**

@@ -16,11 +16,9 @@ class WebPushController extends Controller
 
     public function register(Request $request)
     {
-        $subscription = $request->subscription;
+        $subscription = (object) $request->subscription;
 
-        dd($subscription);
-
-        $client = WebPush::query()->where('token', $request->client);
+        $client = WebPush::query()->where('token', $request->client)->first();
         $uuid = $this->client();
 
         if (!$client) {
@@ -30,9 +28,9 @@ class WebPushController extends Controller
             ]);
         }
 
-        $client->deletePushSubscription($subscription);
+        $client->updatePushSubscription($subscription->endpoint, $this->vapidPublicKey());
 
-        return $uuid;
+        return ['uuid' => $uuid];
     }
 
     public function client()
