@@ -41,7 +41,7 @@ export default class extends GiaComponent {
 
 
     async initFilePond() {
-        const { default: FilePond, imageOptions, fileLabel } = (await import("/@/plugins/filepond"))
+        const { default: FilePond, imageOptions, fileLabel } = (await import(/* webpackChunkName: "filepond" */"/@/plugins/filepond"))
 
         this.pond = FilePond.create(this.ref.profileImage, {
             ...imageOptions,

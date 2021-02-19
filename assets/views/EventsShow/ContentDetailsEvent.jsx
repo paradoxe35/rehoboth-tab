@@ -14,7 +14,7 @@ const Tag = styled.a`
     margin-right: .25rem;
 `
 
-const PhotoSwipe = lazy(() => import('/@/components/PhotoSwipe'))
+const PhotoSwipe = lazy(() => import(/* webpackChunkName: "pswp" */'/@/components/PhotoSwipe'))
 
 
 const Photos = ({ event }) => {

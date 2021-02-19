@@ -202,7 +202,7 @@ export default class extends GiaComponent {
 
 
     async initFilePond() {
-        const { default: FilePond, imageOptions, fileLabel } = (await import("/@/plugins/filepond"))
+        const { default: FilePond, imageOptions, fileLabel } = (await import(/* webpackChunkName: "filepond" */"/@/plugins/filepond"))
 
         this.pond = FilePond.create(this.ref.coverImage, {
             ...imageOptions,
@@ -218,12 +218,12 @@ export default class extends GiaComponent {
     }
 
     async initSelect() {
-        const slim = (await import('/@/plugins/slim-select')).slim
+        const slim = (await import(/* webpackChunkName: "slim-select" */'/@/plugins/slim-select')).slim
         this.slim = slim(this.ref.categories)
     }
 
     async initEditor() {
-        const { EditorJS } = await import('/@/plugins/editor/editor')
+        const { EditorJS } = await import(/* webpackChunkName: "editorjs" */'/@/plugins/editor/editor')
 
         this.editor = EditorJS(
             { onChange: debounce(this.storeInLocal.bind(this), 2000) },

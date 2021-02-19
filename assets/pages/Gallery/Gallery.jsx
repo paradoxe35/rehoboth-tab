@@ -71,7 +71,7 @@ const ImageFlippedContent = ({ img, onClick, index }) => {
     return img.gallery ? <ImageGalleryItem img={img} component={image} /> : image
 }
 
-const PhotoSwipe = lazy(() => import('/@/components/PhotoSwipe'))
+const PhotoSwipe = lazy(() => import(/* webpackChunkName: "pswp" */'/@/components/PhotoSwipe'))
 
 const Gallery = () => {
     // @ts-ignore

@@ -1,5 +1,4 @@
 import { GiaComponent } from '/@/admin/gia';
-import { ApiRequest } from '/@/api/api';
 import { openModalEventFrame } from '/@/utils/dom';
 
 export default class extends GiaComponent {

@@ -15,7 +15,7 @@ export default class extends GiaComponent {
     }
 
     async require() {
-        this.filePond = (await import("/@/plugins/filepond"))
+        this.filePond = (await import(/* webpackChunkName: "filepond" */"/@/plugins/filepond"))
     }
 
     mount() {

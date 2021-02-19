@@ -6,7 +6,7 @@ export default class extends GiaComponent {
     }
 
     async require() {
-        this.react = (await import("./edit/Index"))
+        this.react = (await import(/* webpackChunkName: "admin-sermon-edit" */"./edit/Index"))
             .default(this.element)
     }
     mount() { }

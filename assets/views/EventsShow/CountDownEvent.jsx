@@ -78,7 +78,7 @@ const ShareAction = ({ event }) => {
         } />
 }
 
-const Register = lazy(() => import('./registration/RegistrationEvent'))
+const Register = lazy(() => import(/* webpackChunkName: "registration-event" */'./registration/RegistrationEvent'))
 
 const CountDownEvent = ({ event }) => {
     const { isReady, handleComplete } = useCountdownDone(event?.ready)

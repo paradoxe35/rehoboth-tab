@@ -51,7 +51,13 @@ mix.react('assets/App.jsx', 'main.js')
                     swSrc: './assets/service-worker.js',
                     swDest: '../sw.js',
                     maximumFileSizeToCacheInBytes: 1000000 * 3,
-                    mode: mix.inProduction() ? 'production' : 'development'
+                    mode: mix.inProduction() ? 'production' : 'development',
+                    excludeChunks: [
+                        '/admin', '/livewire-frame', 'slim-select', 'editorjs', 'filepond',
+                        "placesjs", "admin-event-create", "admin-event-show", "admin-gallery",
+                        "admin-sermon-edit", "admin-settings-church-details", "admin-settings-programmes",
+                        "pswp", "registration-event"
+                    ]
                 })
             ] : [])
         ],

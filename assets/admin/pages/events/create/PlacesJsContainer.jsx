@@ -13,7 +13,7 @@ const PlacesJsContainer = ({ onChange = undefined }) => {
     useEffect(() => {
         (async () => {
             if (ref.current) {
-                const PlacesJs = (await import("places.js")).default
+                const PlacesJs = (await import(/* webpackChunkName: "placesjs" */"places.js")).default
                 places.current = PlacesJs({
                     container: ref.current
                 });

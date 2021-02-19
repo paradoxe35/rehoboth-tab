@@ -172,7 +172,7 @@ const ImageFlippedContent = ({ img, onClick, index, removeImage }) => {
 }
 
 
-const PhotoSwipe = lazy(() => import('/@/components/PhotoSwipe'))
+const PhotoSwipe = lazy(() => import(/* webpackChunkName: "pswp" */'/@/components/PhotoSwipe'))
 
 const Main = () => {
     const {

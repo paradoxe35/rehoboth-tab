@@ -6,7 +6,7 @@ export default class extends GiaComponent {
     }
 
     async require() {
-        this.react = (await import("./Index"))
+        this.react = (await import(/* webpackChunkName: "admin-gallery" */"./Index"))
             .default(this.element)
     }
     mount() { }

@@ -67,7 +67,7 @@ const GalleryContent = ({ images, setPswpIndex }) => {
     </div>
 }
 
-const PhotoSwipe = lazy(() => import('/@/components/PhotoSwipe'))
+const PhotoSwipe = lazy(() => import(/* webpackChunkName: "pswp" */'/@/components/PhotoSwipe'))
 
 const FromGallery = () => {
     // @ts-ignore

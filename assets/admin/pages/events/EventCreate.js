@@ -8,7 +8,7 @@ export default class extends GiaComponent {
     }
 
     async require() {
-        this.react = (await import("./create/Index"))
+        this.react = (await import(/* webpackChunkName: "admin-event-create" */"./create/Index"))
             .default(this.element)
     }
     mount() { }
