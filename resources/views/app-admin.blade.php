@@ -8,6 +8,8 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
 
+    @include('favicon')
+
     @yield('head-meta')
     @yield('head-secondary')
 
