@@ -48,7 +48,7 @@ class SermonCreatedNotification extends Notification implements ShouldQueue
     public function toWebPush($notifiable, $notification)
     {
         $appname = config('app.name');
-        
+
         $notify = (new WebPushMessage)
             ->title("$appname - Sermon")
             ->icon(asset('favicon/cross.png'))

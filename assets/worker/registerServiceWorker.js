@@ -23,7 +23,7 @@ export default function registerServiceWorker() {
             });
         } else {
             // Is not local host. Just register service worker
-            registerValidSW();
+            window.location.protocol.includes('https') && registerValidSW();
         }
     });
 }
