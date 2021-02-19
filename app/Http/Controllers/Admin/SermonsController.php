@@ -5,8 +5,6 @@ namespace App\Http\Controllers\Admin;
 use App\Files\File;
 use App\Http\Controllers\Controller;
 use App\Models\Sermon;
-use App\Models\WebPush;
-use App\Notifications\Sermon\SermonCreatedNotification;
 use Illuminate\Http\Request;
 
 class SermonsController extends Controller
@@ -29,9 +27,6 @@ class SermonsController extends Controller
 
     public function edit(Sermon $sermon)
     {
-        $web = WebPush::query()->first();
-        $web->notify(new SermonCreatedNotification($sermon));
-
         return view('admin.pages.sermons.edit', compact('sermon'));
     }
 

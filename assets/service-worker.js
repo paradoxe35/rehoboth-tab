@@ -38,8 +38,6 @@ const WebPush = {
      * @param {NotificationEvent} event
     */
     notificationPush(event) {
-        console.log(event.data.json());
-
         if (!(self.Notification && self.Notification.permission === 'granted')) {
             return
         }
