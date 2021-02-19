@@ -3,7 +3,6 @@ import { isLocalhost } from '../functions/functions';
 
 
 const swUrl = `/sw.js`;
-const WB = new Workbox(swUrl)
 
 export default function registerServiceWorker() {
 
@@ -29,6 +28,8 @@ export default function registerServiceWorker() {
 }
 
 function registerValidSW() {
+    const WB = new Workbox(swUrl)
+
     WB.register()
         .then(registration => {
             registration.onupdatefound = () => {
