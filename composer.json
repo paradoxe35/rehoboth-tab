@@ -8,7 +8,9 @@
     ],
     "license": "MIT",
     "require": {
-        "php": "^7.3|^8.0",
+        "php": "^7.4|^8.0",
+        "ext-gd": "*",
+        "ext-gmp": "*",
         "butschster/meta-tags": "^1.14",
         "doctrine/dbal": "^3.0",
         "fideloper/proxy": "^4.4",
