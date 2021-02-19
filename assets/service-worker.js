@@ -29,6 +29,7 @@ registerRoute(
 const WebPush = {
     init() {
         self.addEventListener('push', this.notificationPush.bind(this))
+        self.addEventListener('notificationclick', this.notificationclick.bind(this))
     },
     /**
      * Handle notification push event.
@@ -47,6 +48,22 @@ const WebPush = {
                 this.sendNotification(event.data.json())
             )
         }
+    },
+    /**
+    * Handle notification push event.
+    *
+    * https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorkerGlobalScope/notificationclick_event
+    *
+    * @param {NotificationEvent} event
+    */
+    notificationclick(event) {
+        event.notification.close();
+        const url = event?.notification?.data?.url
+        if (!url) return
+
+        event.waitUntil(
+            clients.openWindow(url)
+        );
     },
     /**
      * Send notification to the user.

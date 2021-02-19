@@ -53,7 +53,7 @@ class SermonCreatedNotification extends Notification implements ShouldQueue
             ->title("$appname - Sermon")
             ->icon(asset('favicon/cross.png'))
             ->body($this->sermon->subject)
-            ->action('Media', $this->sermon->guestRoute(true))
+            ->data(['url' => $this->sermon->guestRoute(true)])
             ->vibrate([100, 50, 100])
             ->options(['TTL' => 5184000]);
 
