@@ -59,10 +59,10 @@ const WebPush = {
     notificationclick(event) {
         event.notification.close();
         const url = event?.notification?.data?.url
-        if (!url) return
+        if (!url || !clients.openWindow) return
 
         event.waitUntil(
-            clients.openWindow(url)
+            clients.openWindow(url + "?notification_id=" + event.notification.data.id)
         );
     },
     /**
