@@ -18,19 +18,30 @@ class WebPushController extends Controller
     {
         $subscription = (object) $request->subscription;
 
+        /**
+         * @var \App\Models\WebPush
+         */
         $client = WebPush::query()->where('token', $request->client)->first();
         $uuid = $this->client();
 
         if (!$client) {
+            /**
+             * @var \App\Models\WebPush
+             */
             $client = WebPush::create([
                 'ip' => $request->ip(),
                 'token' => $uuid
             ]);
         }
 
-        $client->updatePushSubscription($subscription->endpoint, $this->vapidPublicKey());
+        $client->updatePushSubscription(
+            $subscription->endpoint,
+            $subscription->publicKey,
+            $subscription->authToken,
+            $subscription->contentEncoding
+        );
 
-        return ['uuid' => $uuid];
+        return response()->json(['uuid' => $uuid], $client->wasRecentlyCreated ? 201 : 200);
     }
 
     public function client()

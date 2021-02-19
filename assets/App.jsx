@@ -39,5 +39,5 @@ render(<Main />, el)
 
 if (process.env.NODE_ENV === 'production' && 'serviceWorker' in navigator) {
   registerServiceWorker()
-  // registerSwPushManager()
+  registerSwPushManager()
 }

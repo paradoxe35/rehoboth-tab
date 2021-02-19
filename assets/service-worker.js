@@ -7,7 +7,7 @@ import { registerRoute } from 'workbox-routing';
 
 
 const assets = self.__WB_MANIFEST || []
-console.log(assets);
+
 precacheAndRoute(assets);
 
 registerRoute(
@@ -26,20 +26,45 @@ registerRoute(
     }),
 );
 
-self.addEventListener('push', function (event) {
-
-    const payload = event.data;
-
-    if(!payload) return
-
+const WebPush = {
+    init() {
+        self.addEventListener('push', this.notificationPush.bind(this))
+    },
     /**
-     * @type { ServiceWorkerRegistration }
-     */
-    const registration = self.registration
+     * Handle notification push event.
+     *
+     * https://developer.mozilla.org/en-US/docs/Web/Events/push
+     *
+     * @param {NotificationEvent} event
+    */
+    notificationPush(event) {
+        console.log(event.data.json());
 
-    event.waitUntil(
-        registration.showNotification('ServiceWorker Cookbook', {
-            body: payload,
-        })
-    );
-});
+        if (!(self.Notification && self.Notification.permission === 'granted')) {
+            return
+        }
+
+        if (event.data) {
+            event.waitUntil(
+                this.sendNotification(event.data.json())
+            )
+        }
+    },
+    /**
+     * Send notification to the user.
+     *
+     * https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorkerRegistration/showNotification
+     *
+     * @param {PushMessageData|Object} data
+     */
+    sendNotification(data) {
+        /**
+         * @type { ServiceWorkerRegistration }
+         */
+        const registration = self.registration
+
+        return registration.showNotification(data.title, data)
+    },
+}
+
+WebPush.init()

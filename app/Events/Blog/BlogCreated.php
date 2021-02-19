@@ -2,6 +2,7 @@
 
 namespace App\Events\Blog;
 
+use App\Models\Blog\Blog;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PresenceChannel;
@@ -15,22 +16,19 @@ class BlogCreated
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     /**
+     * The file instance.
+     *
+     * @var \App\Models\Blog\Blog
+     */
+    public $blog;
+
+    /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(Blog $blog)
     {
-        //
-    }
-
-    /**
-     * Get the channels the event should broadcast on.
-     *
-     * @return \Illuminate\Broadcasting\Channel|array
-     */
-    public function broadcastOn()
-    {
-        return new PrivateChannel('channel-name');
+        $this->blog = $blog;
     }
 }

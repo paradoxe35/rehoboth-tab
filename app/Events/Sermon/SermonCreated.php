@@ -2,6 +2,7 @@
 
 namespace App\Events\Sermon;
 
+use App\Models\Sermon;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PresenceChannel;
@@ -15,22 +16,19 @@ class SermonCreated
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     /**
+     * The sermon instance.
+     *
+     * @var \App\Models\Sermon
+     */
+    public $sermon;
+
+    /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(Sermon $sermon)
     {
-        //
-    }
-
-    /**
-     * Get the channels the event should broadcast on.
-     *
-     * @return \Illuminate\Broadcasting\Channel|array
-     */
-    public function broadcastOn()
-    {
-        return new PrivateChannel('channel-name');
+        $this->sermon = $sermon;
     }
 }

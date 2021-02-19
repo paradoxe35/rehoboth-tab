@@ -91,12 +91,12 @@ class Event extends Model
     }
 
 
-    public function guestRoute()
+    public function guestRoute($absolute = false)
     {
         return route(
             'guest.events.show',
             ['event' => $this->id, 'slug' => Str::slug($this->name)],
-            false
+            $absolute
         );
     }
 

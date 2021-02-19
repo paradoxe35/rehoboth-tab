@@ -57,12 +57,12 @@ class Blog extends Model
     }
 
 
-    public function guestRoute()
+    public function guestRoute($absolute = false)
     {
         return route(
             'guest.blog.show',
             ['blog' => $this->id, 'slug' => $this->slug],
-            false
+            $absolute
         );
     }
 

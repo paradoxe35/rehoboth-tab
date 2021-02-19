@@ -56,12 +56,12 @@ class Sermon extends Model
         return $this->formatDate($this->date);
     }
 
-    public function guestRoute()
+    public function guestRoute($absolute = false)
     {
         return route(
             'guest.sermons.show',
             ['sermon' => $this->id, 'slug' => Str::slug($this->subject)],
-            false
+            $absolute
         );
     }
 

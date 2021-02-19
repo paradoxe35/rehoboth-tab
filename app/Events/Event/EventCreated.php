@@ -2,6 +2,7 @@
 
 namespace App\Events\Event;
 
+use App\Models\Event\Event;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PresenceChannel;
@@ -15,22 +16,19 @@ class EventCreated
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     /**
+     * The file instance.
+     *
+     * @var \App\Models\Event\Event
+     */
+    public $event;
+
+    /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(Event $event)
     {
-        //
-    }
-
-    /**
-     * Get the channels the event should broadcast on.
-     *
-     * @return \Illuminate\Broadcasting\Channel|array
-     */
-    public function broadcastOn()
-    {
-        return new PrivateChannel('channel-name');
+        $this->event = $event;
     }
 }

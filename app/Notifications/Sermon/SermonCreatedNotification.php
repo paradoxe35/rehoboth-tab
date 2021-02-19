@@ -2,23 +2,30 @@
 
 namespace App\Notifications\Sermon;
 
+use App\Models\Sermon;
+use Illuminate\Bus\Batchable;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
+use NotificationChannels\WebPush\WebPushChannel;
+use NotificationChannels\WebPush\WebPushMessage;
 
-class SermonCreatedNotification extends Notification
+class SermonCreatedNotification extends Notification implements ShouldQueue
 {
-    use Queueable;
+    use Queueable, Batchable;
+
+
+    private $sermon;
 
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(Sermon $sermon)
     {
-        //
+        $this->sermon = $sermon;
     }
 
     /**
@@ -29,7 +36,7 @@ class SermonCreatedNotification extends Notification
      */
     public function via($notifiable)
     {
-        return ['mail'];
+        return [WebPushChannel::class];
     }
 
     /**
@@ -38,12 +45,23 @@ class SermonCreatedNotification extends Notification
      * @param  mixed  $notifiable
      * @return \Illuminate\Notifications\Messages\MailMessage
      */
-    public function toMail($notifiable)
+    public function toWebPush($notifiable, $notification)
     {
-        return (new MailMessage)
-                    ->line('The introduction to the notification.')
-                    ->action('Notification Action', url('/'))
-                    ->line('Thank you for using our application!');
+        $appname = config('app.name');
+        
+        $notify = (new WebPushMessage)
+            ->title("$appname - Sermon")
+            ->icon(asset('favicon/cross.png'))
+            ->body($this->sermon->subject)
+            ->action('Media', $this->sermon->guestRoute(true))
+            ->vibrate([100, 50, 100])
+            ->options(['TTL' => 5184000]);
+
+        if ($this->sermon->image) {
+            $notify->image($this->sermon->image->public_path);
+        }
+
+        return $notify;
     }
 
     /**
@@ -54,8 +72,6 @@ class SermonCreatedNotification extends Notification
      */
     public function toArray($notifiable)
     {
-        return [
-            //
-        ];
+        return [];
     }
 }
