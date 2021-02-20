@@ -1,14 +1,18 @@
 //@ts-nocheck
-import { precacheAndRoute } from 'workbox-precaching';
+import { precacheAndRoute, matchPrecache  } from 'workbox-precaching';
 import { CacheableResponsePlugin } from 'workbox-cacheable-response';
 import { StaleWhileRevalidate } from 'workbox-strategies';
 import { ExpirationPlugin } from 'workbox-expiration';
-import { registerRoute } from 'workbox-routing';
+import { registerRoute, setCatchHandler  } from 'workbox-routing';
 
 
 const assets = self.__WB_MANIFEST || []
 
-precacheAndRoute(assets);
+precacheAndRoute([...assets, {
+    revision: "383676",
+    url: "/offline.html"
+}]);
+
 
 registerRoute(
     /\/storage\/(.+)\.(?:jpeg|jpg)/,
@@ -25,6 +29,15 @@ registerRoute(
         ],
     }),
 );
+
+setCatchHandler(async ({ event }) => {
+    // Return the precached offline page if a document is being requested
+    if (event.request.destination === 'document') {
+      return matchPrecache('/offline.html');
+    }
+  
+    return Response.error();
+  });
 
 const WebPush = {
     init() {
