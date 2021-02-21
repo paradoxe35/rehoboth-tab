@@ -16,12 +16,6 @@ class SermonCreatedNotification extends Notification implements ShouldQueue
 
     private $sermon;
 
-    /**
-     * The number of seconds before the job should be made available.
-     *
-     * @var \DateTimeInterface|\DateInterval|int|null
-     */
-    public $delay = 3;
 
     /**
      * Create a new notification instance.
