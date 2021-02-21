@@ -29,7 +29,12 @@ const Submit = () => {
 
             const pictures = new FormData()
             pictures.set('cover', EVENT_DATA_FORM.cover)
-            EVENT_DATA_FORM.photos.forEach((photo) => pictures.append('photos[]', photo))
+
+            if (EVENT_DATA_FORM.photos.length) {
+                EVENT_DATA_FORM.photos.forEach((photo) => pictures.append('photos[]', photo))
+            } else {
+                pictures.set('photos[]', null)
+            }
 
             const formData = { ...EVENT_DATA_FORM }
 

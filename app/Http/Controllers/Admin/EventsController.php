@@ -299,7 +299,7 @@ class EventsController extends Controller
 
     private function storeImagesPhotos(Request $request, Event $event)
     {
-        if ($request->hasfile('photos') && is_array($request->file('photos'))) {
+        if ($request->hasfile('photos')) {
             foreach ($request->file('photos') as $file) {
                 File::storeImageMorph(
                     $file,

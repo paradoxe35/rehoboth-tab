@@ -37,8 +37,11 @@ class EventCreatedNotification extends Notification implements ShouldQueue
     {
         $notify = $this->message('Événement')
             ->body($this->event->name)
-            ->image($this->event->image->public_path)
             ->data(['url' => $this->event->guestRoute(true)]);
+
+        if ($this->event->image) {
+            $notify->image($this->event->image->public_path);
+        }
 
         return $notify;
     }

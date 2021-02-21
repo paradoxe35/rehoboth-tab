@@ -36,8 +36,11 @@ class BlogCreatedNotification extends Notification implements ShouldQueue
     {
         $notify = $this->message('Blog')
             ->body($this->blog->title)
-            ->image($this->blog->image->public_path)
             ->data(['url' => $this->blog->guestRoute(true)]);
+
+        if ($this->blog->image) {
+            $notify->image($this->blog->image->public_path);
+        }
 
         return $notify;
     }
