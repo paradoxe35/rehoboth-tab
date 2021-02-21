@@ -4,16 +4,24 @@ namespace App\Notifications\Event;
 
 use App\Models\Event\Event;
 use App\Notifications\HasWebPush;
+use Illuminate\Bus\Batchable;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class EventCreatedNotification extends Notification
+class EventCreatedNotification extends Notification implements ShouldQueue
 {
-    use Queueable, HasWebPush;
+    use Queueable, HasWebPush, Batchable;
 
     private $event;
+
+    /**
+     * The number of seconds before the job should be made available.
+     *
+     * @var \DateTimeInterface|\DateInterval|int|null
+     */
+    public $delay = 3;
 
     /**
      * Create a new notification instance.

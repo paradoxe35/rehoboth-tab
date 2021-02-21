@@ -83,7 +83,7 @@ const ImageThumbnail = ({ image, title = null, height = "auto", className = null
                     img.src = el.getAttribute('data-src');;
                     img.style.width = "100%";
                     img.style.height = height;
-                    if (height == "100%") {
+                    if (height != "auto") {
                         img.style.objectFit = "cover"
                     }
                     img.alt = title || image.caption
@@ -102,7 +102,7 @@ const ImageThumbnail = ({ image, title = null, height = "auto", className = null
         <DivThumbnail load={load} style={{ backgroundImage: `url(${image.thumbnail})` }} />
         <ImageWrapper style={{ opacity: load ? "1" : "0" }}>
             <div
-                style={{ visibility: "hidden", opacity: "0", width: "0", height: "0px", margin: "0", padding: "0" }}
+                style={{ visibility: "hidden", opacity: "0", width: "0px", height: "0px", margin: "0", padding: "0" }}
                 ref={ref}
                 data-src={image.public_path} />
         </ImageWrapper>
