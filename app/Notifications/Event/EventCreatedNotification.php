@@ -35,6 +35,8 @@ class EventCreatedNotification extends Notification implements ShouldQueue
      */
     public function toWebPush($notifiable, $notification)
     {
+        $this->event = $this->event->refresh();
+
         $notify = $this->message('Événement')
             ->body($this->event->name)
             ->data(['url' => $this->event->guestRoute(true)]);

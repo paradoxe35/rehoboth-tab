@@ -18,8 +18,11 @@ class SermonObserver
      */
     public function created(Sermon $sermon)
     {
+        $notification = new SermonCreatedNotification($sermon);
+        $notification->delay(3);
+
         WebPush::all()
-            ->each(fn (WebPush $web) => $web->notify(new SermonCreatedNotification($sermon)));
+            ->each(fn (WebPush $web) => $web->notify($notification));
     }
 
     /**

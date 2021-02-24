@@ -16,8 +16,11 @@ class BlogObserver
      */
     public function created(Blog $blog)
     {
+        $notification = new BlogCreatedNotification($blog);
+        $notification->delay(3);
+
         WebPush::all()
-            ->each(fn (WebPush $web) => $web->notify(new BlogCreatedNotification($blog)));
+            ->each(fn (WebPush $web) => $web->notify($notification));
     }
 
     /**

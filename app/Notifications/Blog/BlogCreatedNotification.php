@@ -34,6 +34,8 @@ class BlogCreatedNotification extends Notification implements ShouldQueue
      */
     public function toWebPush($notifiable, $notification)
     {
+        $this->blog = $this->blog->refresh();
+
         $notify = $this->message('Blog')
             ->body($this->blog->title)
             ->data(['url' => $this->blog->guestRoute(true)]);

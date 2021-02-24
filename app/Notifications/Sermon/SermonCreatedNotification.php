@@ -35,6 +35,8 @@ class SermonCreatedNotification extends Notification implements ShouldQueue
      */
     public function toWebPush($notifiable, $notification)
     {
+        $this->sermon = $this->sermon->refresh();
+
         $notify = $this->message('Sermon')
             ->body($this->sermon->subject)
             ->data(['url' => $this->sermon->guestRoute(true)]);

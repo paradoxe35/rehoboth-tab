@@ -16,8 +16,11 @@ class EventObserver
      */
     public function created(Event $event)
     {
+        $notification = new EventCreatedNotification($event);
+        $notification->delay(5);
+
         WebPush::all()
-            ->each(fn (WebPush $web) => $web->notify(new EventCreatedNotification($event)));
+            ->each(fn (WebPush $web) => $web->notify($notification));
     }
 
     /**
