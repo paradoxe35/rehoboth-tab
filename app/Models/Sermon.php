@@ -2,8 +2,6 @@
 
 namespace App\Models;
 
-use App\Events\Sermon\SermonCreated;
-use App\Events\Sermon\SermonDeleted;
 use App\FormattableDate;
 use App\Models\Morphs\File;
 use App\Models\Morphs\Image;
@@ -14,17 +12,6 @@ use Illuminate\Support\Str;
 class Sermon extends Model
 {
     use HasFactory, FormattableDate;
-
-
-    /**
-     * The event map for the model.
-     *
-     * @var array
-     */
-    protected $dispatchesEvents = [
-        'deleted' => SermonDeleted::class,
-        'created' => SermonCreated::class
-    ];
 
     /**
      * The attributes that should be cast.

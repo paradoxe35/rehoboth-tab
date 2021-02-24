@@ -2,7 +2,6 @@
 
 namespace App\Models\Morphs;
 
-use App\Events\Image\ImageDeleted;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
@@ -10,15 +9,6 @@ use Illuminate\Support\Facades\Storage;
 class Image extends Model
 {
     use HasFactory;
-
-    /**
-     * The event map for the model.
-     *
-     * @var array
-     */
-    protected $dispatchesEvents = [
-        'deleted' => ImageDeleted::class,
-    ];
 
     /**
      * The attributes that are mass assignable.
@@ -52,10 +42,5 @@ class Image extends Model
     public function imageable()
     {
         return $this->morphTo();
-    }
-
-
-    private function getParentPath() {
-
     }
 }

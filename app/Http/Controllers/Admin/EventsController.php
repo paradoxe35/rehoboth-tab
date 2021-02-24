@@ -326,7 +326,7 @@ class EventsController extends Controller
         $this->storeImagesPhotos($request, $event);
 
         return [
-            'message' => trace('Événement enregistré avec succès')
+            'message' => trans('Événement enregistré avec succès')
         ];
     }
 
@@ -404,7 +404,9 @@ class EventsController extends Controller
             'cover' => File::IMAGE_RULES,
         ]);
 
-        $event->image->delete();
+        if ($event->image) {
+            $event->image->delete();
+        }
 
         $this->storeImageCover($request, $event);
 
@@ -460,5 +462,13 @@ class EventsController extends Controller
         $regs = $event->registrations();
 
         return new EventRegistrationCollection($regs->paginate());
+    }
+
+
+    public function destroy(Event $event)
+    {
+        $event->delete();
+
+        return $event;
     }
 }

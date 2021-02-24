@@ -2,8 +2,6 @@
 
 namespace App\Models\Event;
 
-use App\Events\Event\EventCreated;
-use App\Events\Event\EventDeleted;
 use App\FormattableDate;
 use App\Models\Morphs\Address;
 use App\Models\Morphs\Image;
@@ -18,16 +16,6 @@ use Illuminate\Support\Str;
 class Event extends Model
 {
     use HasFactory, FormattableDate;
-
-    /**
-     * The event map for the model.
-     *
-     * @var array
-     */
-    protected $dispatchesEvents = [
-        'deleted' => EventDeleted::class,
-        'created' => EventCreated::class
-    ];
 
     /**
      * The attributes that should be cast.

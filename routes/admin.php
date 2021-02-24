@@ -40,7 +40,10 @@ Route::prefix('dash')
                 ]);
                 Route::post('sermons/update/{sermon}', [SermonsController::class, 'update'])->name('sermons.update');
 
-                Route::resource('/events', EventsController::class);
+                Route::resource('/events', EventsController::class)->only([
+                    'index', 'create', 'show', 'store', 'destroy'
+                ]);
+
                 Route::post('/events/{event}/updateEvent', [EventsController::class, 'updateEvent'])->name('events.updateEvent');
                 Route::get('/events/{event}/registrations', [EventsController::class, 'registrations'])->name('events.registrations');
 
@@ -80,7 +83,7 @@ Route::prefix('dash')
                 Route::get('settings/programmes', [SettingsController::class, 'programmes'])->name('settings.programmes');
                 Route::post('settings/programmes', [SettingsController::class, 'storeProgrammes']);
                 Route::delete('settings/programmes/{programme}', [SettingsController::class, 'deleteProgramme'])->name('settings.programmes.destroy');
-                    
+
                 Route::get('settings/tags', [SettingsController::class, 'tags'])->name('settings.tags');
                 Route::get('settings/organizers', [SettingsController::class, 'organizers'])->name('settings.organizers');
             });

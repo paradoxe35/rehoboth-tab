@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Events\Profile\ProfileDeleted;
 use App\Models\Morphs\Image;
 use App\Searchable\FullTextSearchable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -17,15 +16,6 @@ class Profil extends Model
      * The columns of the full text index
      */
     protected $searchable = ['name'];
-
-    /**
-     * The event map for the model.
-     *
-     * @var array
-     */
-    protected $dispatchesEvents = [
-        'deleted' => ProfileDeleted::class,
-    ];
 
     /**
      * The attributes that are mass assignable.

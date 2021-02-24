@@ -16,7 +16,7 @@ import { Notifier } from '/@/utils/notifier'
 const ITab = () => {
     // @ts-ignore
     let $event = window.$event;
-    
+
     // @ts-ignore
     const [photos, setPhotos] = useState(window.$event?.photos || [])
     // @ts-ignore
@@ -69,7 +69,7 @@ const ITab = () => {
                         <div className="col-lg-6 mb-3">
                             <h5>Image de couverture</h5>
 
-                            <ImageThumbnail key={image.id} image={image} />
+                            {image && <ImageThumbnail key={image.id} image={image} />}
                         </div>
                         <div className="col-lg-6 mb-3">
                             <h5>Photos</h5>

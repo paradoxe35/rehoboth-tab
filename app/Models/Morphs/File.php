@@ -2,7 +2,6 @@
 
 namespace App\Models\Morphs;
 
-use App\Events\File\FileDeleted;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
@@ -10,17 +9,6 @@ use Illuminate\Support\Facades\Storage;
 class File extends Model
 {
     use HasFactory;
-
-
-    /**
-     * The event map for the model.
-     *
-     * @var array
-     */
-    protected $dispatchesEvents = [
-        'deleted' => FileDeleted::class,
-    ];
-
 
     /**
      * The attributes that are mass assignable.

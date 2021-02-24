@@ -2,8 +2,6 @@
 
 namespace App\Models\Blog;
 
-use App\Events\Blog\BlogCreated;
-use App\Events\Blog\BlogDeleted;
 use App\FormattableDate;
 use App\Models\Morphs\Image;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -12,17 +10,6 @@ use Illuminate\Database\Eloquent\Model;
 class Blog extends Model
 {
     use HasFactory, FormattableDate;
-
-
-    /**
-     * The event map for the model.
-     *
-     * @var array
-     */
-    protected $dispatchesEvents = [
-        'deleted' => BlogDeleted::class,
-        'created' => BlogCreated::class
-    ];
 
     /**
      * The accessors to append to the model's array form.
