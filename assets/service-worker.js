@@ -30,7 +30,7 @@ registerRoute(/^((?!(\/storage|rehoboth-tab\.s3\.us-east-2\.amazonaws\.com|socke
 );
 
 registerRoute(
-    /(\/storage\/|https:\/\/rehoboth-tab\.s3\.us-east-2\.amazonaws\.com\/)(.+)\.(?:jpeg|jpg|png|svg)/,
+    /(\/storage\/|https:\/\/rehoboth-tab\.s3\.us-east-2\.amazonaws\.com\/|\/favicon)(.+)\.(?:jpeg|jpg|png|svg)/,
     new StaleWhileRevalidate({
         cacheName: 'images-cache',
         plugins: [
