@@ -1,4 +1,5 @@
 //@ts-nocheck
+import "./utils/polyfill"
 import "/@/styles/dashboard.css"
 import Swup from 'swup';
 import SwupGiaPlugin from '@swup/gia-plugin';

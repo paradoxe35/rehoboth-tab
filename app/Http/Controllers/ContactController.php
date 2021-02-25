@@ -44,8 +44,8 @@ class ContactController extends Controller
 
         Message::create($data);
 
-        return [
+        return response()->json([
             'message' => trans('Votre message a été envoyé, merci!')
-        ];
+        ], 201);
     }
 }

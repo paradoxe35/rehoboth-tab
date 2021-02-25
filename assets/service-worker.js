@@ -1,9 +1,9 @@
 //@ts-nocheck
-import { precacheAndRoute, matchPrecache  } from 'workbox-precaching';
+import { precacheAndRoute, matchPrecache } from 'workbox-precaching';
 import { CacheableResponsePlugin } from 'workbox-cacheable-response';
-import { StaleWhileRevalidate } from 'workbox-strategies';
+import { StaleWhileRevalidate, NetworkFirst } from 'workbox-strategies';
 import { ExpirationPlugin } from 'workbox-expiration';
-import { registerRoute, setCatchHandler  } from 'workbox-routing';
+import { registerRoute, setCatchHandler } from 'workbox-routing';
 
 
 const assets = self.__WB_MANIFEST || []
@@ -14,16 +14,31 @@ precacheAndRoute([...assets, {
 }]);
 
 
+// Cache page navigations (html) with a Network First strategy
+registerRoute(/^((?!(\/storage|rehoboth-tab.s3.us-east-2.amazonaws.com)).)*$/,
+    // Use a Network First caching strategy
+    new NetworkFirst({
+        // Put all cached files in a cache named 'pages'
+        cacheName: 'pages-cache',
+        plugins: [
+            // Ensure that only requests that result in a 200 status are cached
+            new CacheableResponsePlugin({
+                statuses: [200],
+            }),
+        ],
+    }),
+);
+
 registerRoute(
-    /\/storage\/(.+)\.(?:jpeg|jpg)/,
+    /(\/storage\/|https:\/\/rehoboth-tab.s3.us-east-2.amazonaws.com\/)(.+)\.(?:jpeg|jpg|png|svg)/,
     new StaleWhileRevalidate({
         cacheName: 'images-cache',
         plugins: [
             new CacheableResponsePlugin({
-                statuses: [0, 200],
+                statuses: [200],
             }),
             new ExpirationPlugin({
-                maxEntries: 60,
+                maxEntries: 50,
                 maxAgeSeconds: 30 * 24 * 60 * 60, // 30 Days
             }),
         ],
@@ -33,11 +48,11 @@ registerRoute(
 setCatchHandler(async ({ event }) => {
     // Return the precached offline page if a document is being requested
     if (event.request.destination === 'document') {
-      return matchPrecache('/offline.html');
+        return matchPrecache('/offline.html');
     }
-  
+
     return Response.error();
-  });
+});
 
 const WebPush = {
     init() {

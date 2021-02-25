@@ -24,8 +24,8 @@ class SubscriberController extends Controller
             'email' => $request->email
         ]);
 
-        return [
+        return response()->json([
             'message' => trans('Votre souscription a été effectuée avec succès')
-        ];
+        ], 201);
     }
 }
