@@ -1,7 +1,7 @@
 //@ts-nocheck
 import { precacheAndRoute, matchPrecache } from 'workbox-precaching';
 import { CacheableResponsePlugin } from 'workbox-cacheable-response';
-import { StaleWhileRevalidate, NetworkFirst } from 'workbox-strategies';
+import { StaleWhileRevalidate, NetworkFirst, CacheFirst } from 'workbox-strategies';
 import { ExpirationPlugin } from 'workbox-expiration';
 import { registerRoute, setCatchHandler } from 'workbox-routing';
 
@@ -15,7 +15,7 @@ precacheAndRoute([...assets, {
 
 
 // Cache page navigations (html) with a Network First strategy
-registerRoute(/^((?!(\/storage|rehoboth-tab\.s3\.us-east-2\.amazonaws\.com|socket\.io|\/assets)).)*$/,
+registerRoute(/^((?!(\/storage|rehoboth-tab\.s3\.us-east-2\.amazonaws\.com|socket\.io)).)*$/,
     // Use a Network First caching strategy
     new NetworkFirst({
         // Put all cached files in a cache named 'pages'
@@ -43,6 +43,32 @@ registerRoute(
             }),
         ],
     }),
+);
+
+
+// Cache the Google Fonts stylesheets with a stale-while-revalidate strategy.
+registerRoute(
+    ({ url }) => url.origin === 'https://fonts.googleapis.com',
+    new StaleWhileRevalidate({
+        cacheName: 'google-fonts-stylesheets',
+    })
+);
+
+// Cache the underlying font files with a cache-first strategy for 1 year.
+registerRoute(
+    ({ url }) => url.origin === 'https://fonts.gstatic.com',
+    new CacheFirst({
+        cacheName: 'google-fonts-webfonts',
+        plugins: [
+            new CacheableResponsePlugin({
+                statuses: [0, 200],
+            }),
+            new ExpirationPlugin({
+                maxAgeSeconds: 60 * 60 * 24 * 365,
+                maxEntries: 30,
+            }),
+        ],
+    })
 );
 
 setCatchHandler(async ({ event }) => {
