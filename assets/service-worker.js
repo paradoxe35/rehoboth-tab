@@ -15,7 +15,7 @@ precacheAndRoute([...assets, {
 
 
 // Cache page navigations (html) with a Network First strategy
-registerRoute(/^((?!(\/storage|rehoboth-tab.s3.us-east-2.amazonaws.com|socket.io)).)*$/,
+registerRoute(/^((?!(\/storage|rehoboth-tab\.s3\.us-east-2\.amazonaws\.com|socket\.io)).)*$/,
     // Use a Network First caching strategy
     new NetworkFirst({
         // Put all cached files in a cache named 'pages'
@@ -30,7 +30,7 @@ registerRoute(/^((?!(\/storage|rehoboth-tab.s3.us-east-2.amazonaws.com|socket.io
 );
 
 registerRoute(
-    /(\/storage\/|https:\/\/rehoboth-tab.s3.us-east-2.amazonaws.com\/)(.+)\.(?:jpeg|jpg|png|svg)/,
+    /(\/storage\/|https:\/\/rehoboth-tab\.s3\.us-east-2\.amazonaws\.com\/)(.+)\.(?:jpeg|jpg|png|svg)/,
     new StaleWhileRevalidate({
         cacheName: 'images-cache',
         plugins: [
