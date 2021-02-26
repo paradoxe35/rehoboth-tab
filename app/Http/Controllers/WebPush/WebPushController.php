@@ -46,6 +46,6 @@ class WebPushController extends Controller
 
     public function client()
     {
-        return Str::uuid();
+        return Str::random(150);
     }
 }
