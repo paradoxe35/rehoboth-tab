@@ -186,3 +186,33 @@ export const useFormValidator = () => {
 
     return { errors, setErrors, success, setSuccess, loading, setLoading }
 }
+
+
+export const useOpenShare = (datas) => {
+    const [loading, setLoading] = useState(false)
+    const [open, setOption] = useState(0)
+
+    useEffect(() => {
+        const openShare = async () => {
+            const options = {
+                language: 'fr'
+            }
+
+            if (navigator.share) {
+                navigator.share(datas, options)
+                return
+            }
+
+            setLoading(true)
+
+            await import(/* webpackChunkName: "share-api-polyfill" */'share-api-polyfill')
+
+            navigator.share(datas, options)
+
+            setLoading(false)
+        }
+        !!open && openShare()
+    }, [open])
+
+    return { open, setOption, loading }
+}

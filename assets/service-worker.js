@@ -9,13 +9,13 @@ import { registerRoute, setCatchHandler } from 'workbox-routing';
 const assets = self.__WB_MANIFEST || []
 
 precacheAndRoute([...assets, {
-    revision: "383676",
+    revision: "3836716",
     url: "/offline.html"
 }]);
 
 
 // Cache page navigations (html) with a Network First strategy
-registerRoute(/^((?!(\/storage|rehoboth-tab\.s3\.us-east-2\.amazonaws\.com|socket\.io)).)*$/,
+registerRoute(/^((?!(\/storage|rehoboth-tab\.s3\.us-east-2\.amazonaws\.com|socket\.io|\/favicon|\/assets)).)*$/,
     // Use a Network First caching strategy
     new NetworkFirst({
         // Put all cached files in a cache named 'pages'

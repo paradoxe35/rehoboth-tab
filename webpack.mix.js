@@ -56,7 +56,7 @@ mix.react('assets/App.jsx', 'main.js')
                         '/admin', '/livewire-frame', 'slim-select', 'editorjs', 'filepond',
                         "placesjs", "admin-event-create", "admin-event-show", "admin-gallery",
                         "admin-sermon-edit", "admin-settings-church-details", "admin-settings-programmes",
-                        "pswp", "registration-event"
+                        "pswp", "registration-event", "share-api-polyfill"
                     ]
                 })
             ] : [])
