@@ -14,7 +14,7 @@ const OpenShareButton = ({ title, text, url = null }) => {
     return <Button
         onClick={() => setOption(e => e + 1)}
         color="dark"
-        className="mx-3 text-sm btn-sm"
+        className="text-sm btn-sm"
         loading={loading}
         text={
             <>

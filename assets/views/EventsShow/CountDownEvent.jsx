@@ -44,7 +44,9 @@ const CountDownEvent = ({ event }) => {
                     <div className="h-25 w-10" />
                     <ShareButton className="col-md-6 h-100 my-3 mt-lg-0">
                         <div className="d-inline-block mt-3">
-                            <OpenShareButton title="Événement" text={event.name} />
+                            <div className="mx-3">
+                                <OpenShareButton title="Événement" text={event.name} />
+                            </div>
                             {event?.enable_registration && (
                                 <div className="d-inline-block">
                                     <Suspense fallback={<Spinner sm='sm' />}>
