@@ -9,7 +9,7 @@ import { registerRoute, setCatchHandler } from 'workbox-routing';
 const assets = self.__WB_MANIFEST || []
 
 precacheAndRoute([...assets, {
-    revision: "3836716",
+    revision: "3836717",
     url: "/offline.html"
 }]);
 
