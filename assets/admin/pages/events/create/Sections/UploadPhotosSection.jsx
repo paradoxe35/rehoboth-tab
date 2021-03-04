@@ -19,6 +19,7 @@ const UploadPhotosSection = React.memo(() => {
 
     return <Card title={<H5 text="Télécharger des photos" />} bodyClass="bg-light" cardClass="my-3">
         <FilePondComponent
+            allowMultiple={true}
             onaddfile={onaddfile}
             onremovefile={onremovefile} />
     </Card>
