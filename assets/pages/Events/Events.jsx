@@ -100,7 +100,7 @@ const EventsIndex = () => {
                             <EventItem event={event} />
                         </ItemContainer>
                 })}
-                {!datas && (
+                {!datas.length && (
                     <div className="col-lg-3 col-md-5 col-8">
                         <img src={emptySvg} className="img-fluid" />
                         <div className="mt-4 text-center">
