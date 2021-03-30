@@ -44,7 +44,7 @@ const CountDownEvent = ({ event }) => {
                     <div className="h-25 w-10" />
                     <ShareButton className="col-md-6 h-100 my-3 mt-lg-0">
                         <div className="d-inline-block mt-3">
-                            <div className="mx-3">
+                            <div className="mx-3 d-inline-block">
                                 <OpenShareButton title="Événement" text={event.name} />
                             </div>
                             {event?.enable_registration && (

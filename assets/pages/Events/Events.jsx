@@ -8,7 +8,7 @@ import H5TitleLink from '/@/components/H5TitleLink';
 import { LaravelPagination } from '/@/components/Pagination'
 import { useListDataPaginator } from '/@/utils/hooks'
 import { Inertia } from '@inertiajs/inertia'
-
+import emptySvg from '/@/images/svg/no_data.svg'
 
 const ItemContainer = styled.div`
     background-color: rgba(154,136,75,0.1);
@@ -100,6 +100,14 @@ const EventsIndex = () => {
                             <EventItem event={event} />
                         </ItemContainer>
                 })}
+                {!datas && (
+                    <div className="col-lg-3 col-md-5 col-8">
+                        <img src={emptySvg} className="img-fluid" />
+                        <div className="mt-4 text-center">
+                            <span style={{ marginLeft: "1rem" }}>Aucun évènement pour le moment !</span>
+                        </div>
+                    </div>
+                )}
             </div>
             <div className="d-flex justify-content-center">
                 <LaravelPagination listData={listData} getDataPaginator={onPageChange} />

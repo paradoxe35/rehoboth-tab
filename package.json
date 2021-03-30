@@ -1,7 +1,7 @@
 {
     "private": true,
     "scripts": {
-        "dev": "concurrently \"serve.bat\" \"npm:browser-sync\" \"npm:vite-dev\" ",
+        "dev": "concurrently \"serve.bat\" \"npm:vite-dev\" ",
         "browser-sync": "browser-sync start --proxy \"http://localhost:8000\"  --files \"resources/**/*.blade.php\" --no-notify --no-open --no-ui",
         "vite-dev": "vite --port 8080",
         "assets-link": "mklink /j \".\\public\\dev\" \".\\assets\"",
