@@ -1,7 +1,5 @@
 const mix = require('laravel-mix')
 const path = require('path')
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const { InjectManifest } = require('workbox-webpack-plugin');
 
 require('laravel-mix-clean');
@@ -18,9 +16,11 @@ require('laravel-mix-versionhash')
  |
  */
 
-mix.react('assets/App.jsx', 'main.js')
-    .react('assets/Admin.js', 'admin.js')
-    .js("assets/modules/livewire-frame.js", "livewire-frame.js")
+mix.js('assets/app.jsx', '')
+    .js('assets/admin.js', '')
+    .js("assets/modules/livewire-frame.js", '')
+    .preact()
+    .sass("assets/style.scss", '')
     .setPublicPath('public/assets/')
     .setResourceRoot('/assets/')
     .options({
@@ -29,46 +29,19 @@ mix.react('assets/App.jsx', 'main.js')
         }
     })
     .webpackConfig({
-        optimization: {
-            splitChunks: {
-                cacheGroups: {
-                    styles: {
-                        name: 'main-style',
-                        test: /\.scss$/,
-                        chunks: 'all',
-                        enforce: true,
-                    },
-                },
-            },
-            minimizer: [
-                new CssMinimizerPlugin(),
-            ],
-        },
         plugins: [
-            new MiniCssExtractPlugin(),
-            ...(mix.inProduction() ? [
-                new InjectManifest({
-                    swSrc: './assets/service-worker.js',
-                    swDest: '../sw.js',
-                    maximumFileSizeToCacheInBytes: 1000000 * 3,
-                    mode: mix.inProduction() ? 'production' : 'development',
-                    excludeChunks: [
-                        '/admin', '/livewire-frame', 'slim-select', 'editorjs', 'filepond',
-                        "placesjs", "admin-event-create", "admin-event-show", "admin-gallery",
-                        "admin-sermon-edit", "admin-settings-church-details", "admin-settings-programmes",
-                        "pswp", "registration-event", "share-api-polyfill"
-                    ]
-                })
-            ] : [])
+            new InjectManifest({
+                swSrc: './assets/service-worker.js',
+                swDest: '../sw.js',
+                maximumFileSizeToCacheInBytes: 1000000 * 3,
+                excludeChunks: [
+                    '/admin', '/livewire-frame', 'slim-select', 'editorjs', 'filepond',
+                    "placesjs", "admin-event-create", "admin-event-show", "admin-gallery",
+                    "admin-sermon-edit", "admin-settings-church-details", "admin-settings-programmes",
+                    "pswp", "registration-event", "share-api-polyfill"
+                ]
+            })
         ],
-        module: {
-            rules: [
-                {
-                    test: /\.scss$/,
-                    use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader'],
-                },
-            ],
-        },
         resolve: {
             alias: {
                 "/@": path.resolve(__dirname, 'assets/'),
@@ -88,27 +61,6 @@ mix.react('assets/App.jsx', 'main.js')
         "@inertiajs/progress",
     ])
     .sourceMaps(false)
-
-
-
-mix.browserSync({
-    proxy: 'localhost:8000',
-    watch: true,
-    files: ["./resources", "./assets"],
-    // https: {
-    //     key: "./storage/app/localhost-key.pem",
-    //     cert: "./storage/app/localhost.pem"
-    // },
-    ui: false,
-    notify: false,
-    open: false,
-});
-
-if (mix.inProduction()) {
-    mix.clean()
-    mix.versionHash({
-        length: 16
-    })
-}
-
-mix.disableNotifications();
+    .disableNotifications()
+    .clean()
+    .versionHash({ length: 16 });

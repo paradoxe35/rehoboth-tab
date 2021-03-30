@@ -1,5 +1,4 @@
 import "./utils/polyfill"
-import './style.scss'
 import "./utils/devtool"
 import { App as InertiaApp } from '@inertiajs/inertia-react'
 import React from 'react'

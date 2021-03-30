@@ -46,14 +46,13 @@
 <body>
     @livewireScripts
 
-    @if (app()->environment() === "local")
-
-    @include('vite-assets', ['entries' => 'DEV_SERVER_FRAME_ENTRIES'])
-
-    @else
-    <script src="{{ mix('manifest.js', 'assets') }}"></script>
-    <script src="{{ mix('livewire-frame.js', 'assets') }}"></script>
-    @endif
+    @include('assets.assets', [
+        'entries' => 'DEV_SERVER_FRAME_ENTRIES',
+        'assets' => [
+            ['tag' => 'script', 'src' => 'manifest.js'],
+            ['tag' => 'script', 'src' => 'livewire-frame.js'],
+        ]
+    ])
 
     @livewire($component, array_merge($attribute, ['params' => $attribute]))
 

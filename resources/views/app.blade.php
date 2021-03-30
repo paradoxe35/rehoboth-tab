@@ -21,19 +21,15 @@
     <link rel="manifest" href="{{ asset('manifest.json') }}">
 
     {{-- section:assets --}}
-    @if (app()->environment() === "local")
-
-        @include('vite-assets', ['entries' => 'DEV_SERVER_ENTRIES'])
-
-    @else
-        <link href="{{ mix('main-style.css', 'assets') }}" rel="stylesheet">
-        <script src="{{ mix('main-style.js', 'assets') }}"></script>
-
-        <script src="{{ mix('manifest.js', 'assets') }}" defer></script>
-        <script src="{{ mix('vendor.js', 'assets') }}" defer></script>
-        <script src="{{ mix('main.js', 'assets') }}" defer></script>
-    @endif
-
+     @include('assets.assets', [
+        'entries' => 'DEV_SERVER_ENTRIES',
+        'assets' => [
+            ['tag' => 'link', 'src' => 'style.css'],
+            ['tag' => 'script', 'src' => 'manifest.js'],
+            ['tag' => 'script', 'src' => 'vendor.js'],
+            ['tag' => 'script', 'src' => 'app.js'],
+        ]
+    ])
     {{-- ziggy:tags --}}
     @routes('guest')
 </head>
