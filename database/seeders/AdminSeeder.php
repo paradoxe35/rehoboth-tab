@@ -18,7 +18,7 @@ class AdminSeeder extends Seeder
     public function run()
     {
         $email = env('APP_ADMIN_EMAIL');
-        $password = config('APP_ADMIN_PASSWORD');
+        $password = env('APP_ADMIN_PASSWORD');
         if (!$email || !$password) {
             throw new \Error('Admin email or password is not set');
             return;

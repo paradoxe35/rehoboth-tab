@@ -22,7 +22,7 @@ class ContactController extends Controller
         );
 
         $model = ChurchDetail::first();
-        $churchDetails = $model ? new ChurchDetails($model) : null;
+        $churchDetails = $model ? new ChurchDetails($model) : ['data' => null];
 
         return inertia('Contact/Contact', [
             'programmes' => $programmes,

@@ -75,6 +75,7 @@ const FormContact = () => {
 
     useEffect(() => {
         customerCountryApi()
+            // @ts-ignore
             .then(({ data: { country_code, country_name } }) => {
                 clientGeo.current = { country_code, country_name }
             })

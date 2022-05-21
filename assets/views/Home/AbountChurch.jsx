@@ -35,7 +35,7 @@ const AbountChurch = () => {
                     <TextMuted>
                         <P>Nous croyons au message de la fin des temps et ce message a
                         été amené par un prophète confirmé et oint de notre Dieu Jésus-Christ,
-                        le nom de notre prophète est William Marrion Branham.</P> 
+                        le nom de notre prophète est William Marrion Branham.</P>
                         <P>{appName} Tabernacle est un endroit pour vous et pour tout le monde, parce que nous croyons que le puits de la parole doit être accessible à tous. Le nom de notre pasteur est {pastorName}.</P>
                     </TextMuted>
                 </p>
