@@ -93,6 +93,7 @@ const FetchProfile = ({ name }) => {
         containerStyle={{ zIndex: "1030" }}
         padding={10}
         onClickOutside={() => setIsPopoverOpen(false)}
+        // @ts-ignore
         content={content}>
         <a href="javascript:;" onClick={() => {
             if (!(profile && !profile.data)) {

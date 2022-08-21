@@ -10,33 +10,34 @@ import registerServiceWorker from './worker/registerServiceWorker'
 import registerSwPushManager from './worker/registerSwPushManager'
 
 InertiaProgress.init({
-  color: 'var(--bs-secondary)',
+    color: 'var(--bs-secondary)',
 })
 
 const el = document.getElementById('app')
 
 const resolveComponent = name => {
-  return import(`./pages/${name}.jsx`)
-    .then(({ default: page }) => {
 
-      page.layout = page.layout === undefined ? (c) => <Layout children={c} /> : page.layout
+    return import(`./pages/${name}.jsx`)
+        .then(({ default: page }) => {
 
-      return page
-    })
+            page.layout = page.layout === undefined ? (c) => <Layout children={c} /> : page.layout
+
+            return page
+        })
 }
 
 const Main = () => (
-  <Application>
-    {/* @ts-ignore */}
-    <InertiaApp
-      initialPage={JSON.parse(el.dataset.page)}
-      resolveComponent={resolveComponent} />
-  </Application>
+    <Application>
+        {/* @ts-ignore */}
+        <InertiaApp
+            initialPage={JSON.parse(el.dataset.page)}
+            resolveComponent={resolveComponent} />
+    </Application>
 )
 
 render(<Main />, el)
 
 if (process.env.NODE_ENV === 'production' && 'serviceWorker' in navigator) {
-  registerServiceWorker()
-  registerSwPushManager()
+    registerServiceWorker()
+    registerSwPushManager()
 }
