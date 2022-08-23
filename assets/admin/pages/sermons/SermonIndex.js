@@ -42,7 +42,7 @@ export default class extends GiaComponent {
 
 
     /**
-     * @param { Object } audio 
+     * @param { Object } audio
      */
     htmlAudio(audio) {
         return /*html*/`
@@ -64,7 +64,7 @@ export default class extends GiaComponent {
     }
 
     /**
-     * @param { Object } file 
+     * @param { Object } file
      */
     htmlDocument(file) {
         return /*html*/`
@@ -94,8 +94,8 @@ export default class extends GiaComponent {
 
 
     /**
-    * @param { string } type 
-    * @param { Object } data 
+    * @param { string } type
+    * @param { Object } data
     */
     viewImageSermon(type, data) {
         const parentId = `image-${Math.random()}`
@@ -117,7 +117,7 @@ export default class extends GiaComponent {
                         ${data ? htmlDeleteModalButton(data.id) : ''}
                     </span>
                 </div>
-                
+
                 <div class="w-100 d-flex justify-content-center">
                     ${data ? /*html*/`
                         <img src="${data.public_path}" class="img-fluid img-thumbnail" />
@@ -128,8 +128,8 @@ export default class extends GiaComponent {
     }
 
     /**
-    * @param { string } type 
-    * @param { Object } data 
+    * @param { string } type
+    * @param { Object } data
     */
     viewVideoSermon(type, data) {
         const parentId = `video-${Math.random()}`
@@ -144,7 +144,7 @@ export default class extends GiaComponent {
                         ${data ? htmlDeleteModalButton(data.id) : ''}
                     </span>
                 </div>
-                
+
                 <div class="w-100 d-flex justify-content-center">
                 ${data ? ytLinkToEmbedCode(data.path) : htmlInfoModal("Aucune video enregistrée")}
                 </div>
@@ -154,8 +154,8 @@ export default class extends GiaComponent {
 
 
     /**
-     * @param { string } type 
-     * @param { Array } data 
+     * @param { string } type
+     * @param { Array } data
      */
     viewAudiosSermon(type, data) {
         const views = data.map(file => this.htmlAudio(file))
@@ -172,8 +172,8 @@ export default class extends GiaComponent {
     }
 
     /**
-     * @param { string } type 
-     * @param { Array } data 
+     * @param { string } type
+     * @param { Array } data
      */
     viewDocumentsSermon(type, data) {
         const views = data.map(file => this.htmlDocument(file))
