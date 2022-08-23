@@ -6,8 +6,10 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Filament\Models\Contracts\FilamentUser;
 
-class User extends Authenticatable
+
+class User extends Authenticatable implements FilamentUser
 {
     use HasFactory, Notifiable;
 
@@ -44,7 +46,13 @@ class User extends Authenticatable
     ];
 
 
-    public function superAdmin() {
+    public function superAdmin()
+    {
         return boolval($this->super_admin);
+    }
+
+    public function canAccessFilament(): bool
+    {
+        return $this->superAdmin();
     }
 }
