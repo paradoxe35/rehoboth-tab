@@ -1,7 +1,7 @@
 {
     "private": true,
     "scripts": {
-        "dev": "concurrently \"npm:server\" \"browser-sync\" \"npm:vite:assets\"",
+        "dev": "concurrently \"npm:server\" \"npm:browser-sync\" \"npm:vite:assets\"",
         "server": "cross-env DEV_MODE=true php artisan serve --host=0.0.0.0",
         "vite": "vite --port 8080",
         "vite:assets": "npm run assets-link && vite --port 8080",
@@ -59,7 +59,7 @@
         "animejs": "^3.2.1",
         "aos": "^2.3.4",
         "axios": "^0.21.1",
-        "bootstrap": "^5.0.0-beta1",
+        "bootstrap": "^5.2.0",
         "editorjs-drag-drop": "^0.1.1",
         "es6-shim": "^0.35.6",
         "filepond": "^4.25.1",

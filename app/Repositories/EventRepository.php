@@ -23,6 +23,6 @@ class EventRepository
 
     public function getAvailable(): ?Builder
     {
-        return $this->builder->whereDate('start_date', '>=', now())->latest();
+        return $this->builder->whereDate('end_date', '>=', now())->latest();
     }
 }

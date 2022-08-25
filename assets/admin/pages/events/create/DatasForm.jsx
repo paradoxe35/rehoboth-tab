@@ -4,7 +4,7 @@ import { setValueAtPath } from "/@/functions/functions"
 import { Notifier } from "/@/utils/notifier"
 
 
-export const EVENT_DATA_DEFAULT = {
+const EVENT_DATA_DEFAULT = {
     cover: null,
     details: {},
     tickets: {},
@@ -14,17 +14,17 @@ export const EVENT_DATA_DEFAULT = {
 }
 
 
-export let EVENT_DATA_FORM = { ...EVENT_DATA_DEFAULT }
+export let EVENT_DATA_FORM = JSON.parse(JSON.stringify(EVENT_DATA_DEFAULT))
 
 
 export function resetEventDataForm() {
-    EVENT_DATA_FORM = { ...EVENT_DATA_DEFAULT }
+    EVENT_DATA_FORM = JSON.parse(JSON.stringify(EVENT_DATA_DEFAULT))
 }
 
 
 /**
- * @param { {[x: string]: HTMLInputElement} } refs 
- * @param { string } key 
+ * @param { {[x: string]: HTMLInputElement} } refs
+ * @param { string } key
  */
 export const useSyncFormDataInputElements = (refs, key) => {
 
