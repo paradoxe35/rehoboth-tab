@@ -42,5 +42,5 @@ tasks:
       - yarn-prod
     cmds:
       - docker build -t static-app -f static-build.Dockerfile .
-      - docker cp $(docker create --name static-app-tmp static-app):/go/src/app/dist/frankenphp-linux-x86_64 .static-builds/frankenphp-linux
+      - docker cp $(docker create --name static-app-tmp static-app):/go/src/app/dist/frankenphp-linux-x86_64 .static-builds/rehoboth-linux-x86_64
       - docker rm static-app-tmp
