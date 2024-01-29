@@ -16,10 +16,10 @@ class File
     /**
      * @var array
      */
-    public const IMAGE_RULES = ['required', 'image', "max:" . (self::SIZE * 5) . "", "mimes:jpeg,png"];
+    public const IMAGE_RULES = ['required', 'image', "max:" . (self::SIZE * 10) . "", "mimes:jpeg,png"];
 
 
-    public const IMAGE_RULES_OPTIONAL = ['nullable', 'image', "max:" . (self::SIZE * 5) . "", "mimes:jpeg,png"];
+    public const IMAGE_RULES_OPTIONAL = ['nullable', 'image', "max:" . (self::SIZE * 10) . "", "mimes:jpeg,png"];
 
     /**
      * @var string MUSIC_IMG_PATH

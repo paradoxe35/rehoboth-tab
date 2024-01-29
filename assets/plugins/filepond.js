@@ -141,7 +141,7 @@ export const imageOptions = {
     maxFiles: 10,
     // @ts-ignore
     acceptedFileTypes: ['image/png', 'image/jpeg'],
-    maxFileSize: "5MB",
+    maxFileSize: "10MB",
     minFileSize: "50KB",
 }
 
