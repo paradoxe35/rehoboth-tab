@@ -1,0 +1,43 @@
+version: "3"
+
+tasks:
+  install:
+    deps:
+      - yarn-install
+      - composer-install
+
+  yarn-install:
+    cmd: yarn install
+
+  composer-install:
+    cmd: composer install
+
+  composer-install-prod:
+    cmd: composer install --optimize-autoloader --no-dev
+
+  serve:
+    cmd: npm run server
+
+  browser-sync:
+    cmd: npm run browser-sync
+
+  vite-assets:
+    cmd: npm run vite:assets
+
+  dev:
+    deps:
+      - serve
+      - browser-sync
+      - vite-assets
+    env:
+      DEV_MODE: true
+
+  yarn-prod:
+    cmds:
+      - yarn prod
+
+  static-build:
+    cmds:
+      - yarn-install
+      - yarn-prod
+      - composer install

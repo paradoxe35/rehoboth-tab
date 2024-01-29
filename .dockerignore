@@ -1,0 +1,8 @@
+node_modules/
+.git
+vendor/
+database/database.sqlite
+.env
+storage/
+public/dev
+public/storage

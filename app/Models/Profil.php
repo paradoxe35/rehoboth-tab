@@ -3,13 +3,13 @@
 namespace App\Models;
 
 use App\Models\Morphs\Image;
-use App\Searchable\FullTextSearchable;
+use App\Searchable\SimpleTextSearchable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Profil extends Model
 {
-    use HasFactory, FullTextSearchable;
+    use HasFactory, SimpleTextSearchable;
 
 
     /**

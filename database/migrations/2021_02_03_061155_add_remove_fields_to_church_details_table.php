@@ -14,9 +14,7 @@ class AddRemoveFieldsToChurchDetailsTable extends Migration
     public function up()
     {
         Schema::table('church_details', function (Blueprint $table) {
-            $table->dropColumn('address');
-            $table->dropColumn('longitude');
-            $table->dropColumn('latitude');
+            $table->dropColumn(['address', 'longitude', 'latitude']);
         });
     }
 
