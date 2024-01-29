@@ -1,0 +1,65 @@
+name: Build and Release Static App
+
+on:
+  push:
+    branches:
+      - main
+    tags:
+      - "v*"
+
+jobs:
+  build-and-release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v3
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Cache Docker layers
+        uses: actions/cache@v3
+        with:
+          path: /tmp/.buildx-cache
+          key: ${{ runner.os }}-buildx-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-buildx-
+
+      - name: Build static app Docker image
+        run: docker build -t static-app -f static-build.Dockerfile .
+
+      - name: Create temporary container
+        id: create_container
+        run: echo "CONTAINER_ID=$(docker create --name static-app-tmp static-app)" >> $GITHUB_ENV
+
+      - name: Copy built file from container
+        run: |
+          mkdir -p .static-builds/frankenphp-linux
+          docker cp ${{ env.CONTAINER_ID }}:/go/src/app/dist/frankenphp-linux-x86_64 .static-builds/frankenphp-linux
+
+      - name: Remove temporary container
+        run: docker rm static-app-tmp
+
+      - name: Upload release asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ github.event.release.upload_url }}
+          asset_path: ./.static-builds/frankenphp-linux/frankenphp-linux-x86_64
+          asset_name: frankenphp-linux-x86_64
+          asset_content_type: application/octet-stream
+
+      - name: Create Release
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          draft: false
+          prerelease: false
