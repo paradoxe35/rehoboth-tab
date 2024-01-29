@@ -25,11 +25,6 @@ RUN rm -rf vendor
 RUN rm -rf .env
 
 RUN cp .env.static-build .env
-RUN FILE_PATH=".admin-password"; \ 
-    [ -s "$FILE_PATH" ] && \
-    NEW_PASSWORD=$(cat "$FILE_PATH") && \
-    sed -i "s|APP_ADMIN_PASSWORD=password|APP_ADMIN_PASSWORD=${NEW_PASSWORD}|g" .env || \
-    exit 1
 
 RUN touch database/database.sqlite
 
