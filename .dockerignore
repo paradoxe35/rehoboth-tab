@@ -6,3 +6,4 @@ database/database.sqlite
 storage/
 public/dev
 public/storage
+static-build.Dockerfile
