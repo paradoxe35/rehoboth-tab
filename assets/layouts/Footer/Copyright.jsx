@@ -18,7 +18,7 @@ const Copyright = () => {
         <div className="col-auto">
             <div className="copyright">
                 <SpanStyled>© Copyright {new Date().getFullYear()}, Tous les droits sont réservés.</SpanStyled>
-                <span>Faite par <a href="javascript:;" target="_blank">@PNG_</a></span>
+                <span>Faite par <a href="https://pngwasi.me" target="_blank">@PNG_</a></span>
             </div>
         </div>
     </div>
