@@ -1,9 +1,9 @@
-const mix = require('laravel-mix')
-const path = require('path')
-const { InjectManifest } = require('workbox-webpack-plugin');
+const mix = require("laravel-mix");
+const path = require("path");
+const { InjectManifest } = require("workbox-webpack-plugin");
 
-require('laravel-mix-clean');
-require('laravel-mix-versionhash')
+require("laravel-mix-clean");
+require("laravel-mix-versionhash");
 
 /*
  |--------------------------------------------------------------------------
@@ -16,43 +16,43 @@ require('laravel-mix-versionhash')
  |
  */
 
-mix.js('assets/app.jsx', '')
-    .js('assets/admin.js', '')
-    .js("assets/modules/livewire-frame.js", '')
+mix.js("assets/app.jsx", "")
+    .js("assets/admin.js", "")
+    .js("assets/modules/livewire-frame.js", "")
     .preact()
-    .sass("assets/style.scss", '')
-    .setPublicPath('public/assets/')
-    .setResourceRoot('/assets/')
+    .sass("assets/style.scss", "")
+    .setPublicPath("public/assets/")
+    .setResourceRoot("/assets/")
     .options({
         terser: {
             extractComments: false,
-        }
+        },
     })
     .webpackConfig({
         plugins: [
-            new InjectManifest({
-                swSrc: './assets/service-worker.js',
-                swDest: '../sw.js',
-                maximumFileSizeToCacheInBytes: 1000000 * 3,
-                excludeChunks: [
-                    '/admin', '/livewire-frame', 'slim-select', 'editorjs', 'filepond',
-                    "placesjs", "admin-event-create", "admin-event-show", "admin-gallery",
-                    "admin-sermon-edit", "admin-settings-church-details", "admin-settings-programmes",
-                    "pswp", "registration-event", "share-api-polyfill"
-                ]
-            })
+            // new InjectManifest({
+            //     swSrc: './assets/service-worker.js',
+            //     swDest: '../sw.js',
+            //     maximumFileSizeToCacheInBytes: 1000000 * 3,
+            //     excludeChunks: [
+            //         '/admin', '/livewire-frame', 'slim-select', 'editorjs', 'filepond',
+            //         "placesjs", "admin-event-create", "admin-event-show", "admin-gallery",
+            //         "admin-sermon-edit", "admin-settings-church-details", "admin-settings-programmes",
+            //         "pswp", "registration-event", "share-api-polyfill"
+            //     ]
+            // })
         ],
         resolve: {
             alias: {
-                "/@": path.resolve(__dirname, 'assets/'),
-                "react": "preact/compat",
+                "/@": path.resolve(__dirname, "assets/"),
+                react: "preact/compat",
                 "react-dom/test-utils": "preact/test-utils",
                 "react-dom": "preact/compat",
             },
         },
         output: {
-            publicPath: '/assets/',
-        }
+            publicPath: "/assets/",
+        },
     })
     .extract([
         "preact",
