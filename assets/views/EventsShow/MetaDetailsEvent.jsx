@@ -57,7 +57,7 @@ const MetaDetailsEvent = ({ event }) => {
             </p>
         </Card>
 
-        <Card cardClass="mt-3">
+        {(!!schedules.length || !!organizers.length) && <Card cardClass="mt-3">
             {!!schedules.length && (
                 <>
                     <h6>Programmes</h6>
@@ -87,6 +87,7 @@ const MetaDetailsEvent = ({ event }) => {
                 </>
             )}
         </Card>
+        }
     </div>
 }
 
