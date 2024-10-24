@@ -58,7 +58,8 @@ const ImageThumbnail = ({ image, title = null, height = "auto", className = null
                 hasWidth = data.width
                 refParent.current.style.height = `${(image.height / image.width) * hasWidth}px`
             }
-            setParentHeight()
+
+            window.requestAnimationFrame(setParentHeight)
 
             let unobserve = null;
             if (hasWidth === 0) {
@@ -66,7 +67,12 @@ const ImageThumbnail = ({ image, title = null, height = "auto", className = null
                     if (hasWidth === 0 && isVisible) setParentHeight()
                 })
             }
+
             window.addEventListener('resize', throttle(setParentHeight, 50))
+
+            window.requestAnimationFrame(() => {
+                window.dispatchEvent(new Event('resize'))
+            })
             return () => {
                 window.removeEventListener('resize', throttle(setParentHeight, 50))
                 unobserve && unobserve()
