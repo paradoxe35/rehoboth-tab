@@ -247,8 +247,6 @@ export const jsonToHtml = {
 export const convertToHtml = (blocks) => {
     const jh = jsonToHtml;
 
-    console.log(blocks);
-
     return blocks
         .map((o) => {
             let output_HTML = "";
