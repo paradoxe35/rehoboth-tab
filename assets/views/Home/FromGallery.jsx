@@ -45,9 +45,9 @@ const Titles = () => {
 const GalleryContent = ({ images, setPswpIndex }) => {
     return <div className="container-fluid">
         <ContainerStyled className="pb-4">
-            <div className="container my-4 overflow-hidden" data-aos="fade-up">
+            <div className="container my-4 overflow-hidden">
                 <div className="row justify-content-center">
-                    <div className="col-lg-10">
+                    <div className="col-lg-10" data-aos="fade-up">
                         <Titles />
 
                         <Card border={false} bodyClass="p-0" className="bg-transparent">
