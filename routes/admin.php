@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\Morph\FilesController;
 use App\Http\Controllers\Admin\Morph\ImagesController;
 use App\Http\Controllers\Admin\SermonsController;
 use App\Http\Controllers\Admin\SettingsController;
+use App\Http\Controllers\Admin\RandomImagesController;
 use App\Http\Controllers\Organizers\OrganizersController;
 use App\Http\Controllers\Services\OgController;
 use App\Http\Controllers\Tags\TagsController;
@@ -36,23 +37,36 @@ Route::prefix('dash')
                 Route::get('/home', [HomeController::class, 'index'])->name('home');
 
                 Route::resource('/sermons', SermonsController::class)->only([
-                    'index', 'create', 'edit', 'store'
+                    'index',
+                    'create',
+                    'edit',
+                    'store'
                 ]);
                 Route::post('sermons/update/{sermon}', [SermonsController::class, 'update'])->name('sermons.update');
 
                 Route::resource('/events', EventsController::class)->only([
-                    'index', 'create', 'show', 'store', 'destroy'
+                    'index',
+                    'create',
+                    'show',
+                    'store',
+                    'destroy'
                 ]);
-
                 Route::post('/events/{event}/updateEvent', [EventsController::class, 'updateEvent'])->name('events.updateEvent');
                 Route::get('/events/{event}/registrations', [EventsController::class, 'registrations'])->name('events.registrations');
+
+
+                Route::post('/random-images/upload', [RandomImagesController::class, 'upload'])->name('random-images.upload');
 
                 Route::resource('/galleries', GalleriesController::class)->only(['index', 'destroy', 'store']);
                 Route::get('/galleries/images', [GalleriesController::class, 'getImages'])->name('galleries.images');
                 Route::get('/galleries/articles', [GalleriesController::class, 'articles'])->name('galleries.articles');
 
-                Route::resource('/blogs',  BlogsController::class)->only([
-                    'index', 'store', 'create', 'show', 'destroy'
+                Route::resource('/blogs', BlogsController::class)->only([
+                    'index',
+                    'store',
+                    'create',
+                    'show',
+                    'destroy'
                 ]);
                 Route::post('blogs/update/{blog}', [BlogsController::class, 'update'])->name('blogs.update');
 
@@ -61,7 +75,9 @@ Route::prefix('dash')
                 Route::get('blogs/{blog}/comments', [BlogsController::class, 'showComments'])->name('blogs.show.comments');
 
                 Route::apiResource('/blog-categories', BlogsCategoriesController::class)->only([
-                    'index', 'store', 'destroy'
+                    'index',
+                    'store',
+                    'destroy'
                 ]);
 
                 Route::resource('/messages', MessagesController::class)->only(['index', 'update']);

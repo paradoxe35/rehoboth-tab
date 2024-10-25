@@ -10,11 +10,11 @@ import LinkTool from "@editorjs/link";
 import List from "@editorjs/list";
 import Marker from "@editorjs/marker";
 import ImageTool from "@editorjs/image";
-import SimpleImage from "@editorjs/simple-image";
 import Underline from "@editorjs/underline";
 import DragDrop from "editorjs-drag-drop";
 import Table from "@editorjs/table";
 import "./style.css";
+import { ApiRequest } from "/@/api/api";
 
 /**
  * @param { EditorConfig } configuration
@@ -56,14 +56,29 @@ export const EditorJS = (configuration = {}, linkToolEndPoint) => {
             },
             underline: Underline,
             code: CodeTool,
-            // image: SimpleImage,
             image: {
                 class: ImageTool,
                 config: {
-                    // route('admin.og-meta').toString()
-                    endpoints: {
-                        byFile: "http://localhost:8008/uploadFile", // Your backend file uploader endpoint
-                        byUrl: "http://localhost:8008/fetchUrl", // Your endpoint that provides uploading by Url
+                    uploader: {
+                        uploadByFile(file) {
+                            const formData = new FormData();
+                            formData.append("image", file);
+
+                            return ApiRequest(
+                                "post",
+                                route("admin.random-images.upload").toString(),
+                                formData
+                            ).then((res) => res.data);
+                        },
+
+                        uploadByUrl(url) {
+                            return {
+                                success: 1,
+                                file: {
+                                    url,
+                                },
+                            };
+                        },
                     },
                 },
             },

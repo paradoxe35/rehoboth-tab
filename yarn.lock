@@ -1044,13 +1044,6 @@
   dependencies:
     "@codexteam/icons" "^0.0.5"
 
-"@editorjs/simple-image@^1.6.0":
-  version "1.6.0"
-  resolved "https://registry.yarnpkg.com/@editorjs/simple-image/-/simple-image-1.6.0.tgz#711c3900e17845331d6667cf0fe91793a5557f84"
-  integrity sha512-WvdGfQPlozwZd3PXQrJnRXk6gEYbv1U2vRupYJ6lTd3/UsLInXYUX5jSFcnGB5ZMH3bd0JDZfcb4d4Sv1/1big==
-  dependencies:
-    "@codexteam/icons" "^0.0.6"
-
 "@editorjs/table@^2.4.2":
   version "2.4.2"
   resolved "https://registry.yarnpkg.com/@editorjs/table/-/table-2.4.2.tgz#99a2b3f9ea8f39c9ca4df80b8e63bff6e21d0193"

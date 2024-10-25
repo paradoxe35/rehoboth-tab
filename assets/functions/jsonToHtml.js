@@ -26,26 +26,33 @@ export const jsonToHtml = {
     },
 
     makeImage(obj) {
+        let url = obj.data.url;
+
+        if (obj.data.file && "url" in obj.data.file) {
+            url = obj.data.file.url;
+        }
+
         const caption = obj.data.caption
             ? `<div class="blog_caption">
                                 <p class="text-sm">${obj.data.caption}</p>
                             </div>`
             : "";
-        return obj.data.withBackground
-            ? `
-            <div class="cdx-simple-image__picture cdx-simple-image__picture--with-background">
-                <img src="${obj.data.url}" class="img-cover-full" alt="${obj.data.caption}" />
-            </div>
-            <small><em>${caption}</em></small>
-        `
-            : `
-            <div class="d-flex justify-content-center">
+
+        if (obj.data.withBackground) {
+            return `<div class="cdx-simple-image__picture cdx-simple-image__picture--with-background">
+                    <img src="${url}" class="img-cover-full" alt="${obj.data.caption}" />
+                </div>
+                <small>
+                    <em>${caption}</em>
+                </small>`;
+        }
+
+        return `<div class="d-flex justify-content-center">
                 <article style="max-height: 550px;max-width:80%">
-                    <img src="${obj.data.url}" class="img-cover-full" alt="${obj.data.caption}" />
+                    <img src="${url}" class="img-cover-full" alt="${obj.data.caption}" />
                     <small><em>${caption}</em></small>
                 </article>
-            </div>
-        `;
+            </div>`;
     },
 
     makeEmbed(obj) {
@@ -246,6 +253,8 @@ export const jsonToHtml = {
  */
 export const convertToHtml = (blocks) => {
     const jh = jsonToHtml;
+
+    console.log("convertToHtml.blocks: ", blocks);
 
     return blocks
         .map((o) => {
