@@ -1,5 +1,5 @@
 import SlimSelect from "slim-select";
-import "../../node_modules/slim-select/dist/slimselect.css";
+import "slim-select/styles";
 
 /**
  * @param { HTMLElement|Element } element
@@ -8,7 +8,9 @@ import "../../node_modules/slim-select/dist/slimselect.css";
 export const slim = (element, option = {}) => {
     return new SlimSelect({
         select: element,
-        searchPlaceholder: "Recherche",
+        settings: {
+            searchPlaceholder: "Recherche",
+        },
         ...option,
     });
 };

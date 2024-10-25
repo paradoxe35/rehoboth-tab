@@ -17,9 +17,9 @@
             </div>
 
             <div class="mb-3">
-                <label for="categories">
-                    {{ __('Catégories') }}
-                    <button type="button" g-ref="categoryBtn" class="btn btn-secondary btn-sm text-white mb-2">
+                <label for="categories" class="d-flex align-items-center gap-1 mb-2">
+                    <span>{{ __('Catégories') }}</span>
+                    <button type="button" g-ref="categoryBtn" class="btn btn-secondary btn-sm text-white">
                         {{ __('Ajouter') }}
                     </button>
                 </label>
