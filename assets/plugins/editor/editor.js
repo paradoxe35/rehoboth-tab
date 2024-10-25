@@ -72,12 +72,12 @@ export const EditorJS = (configuration = {}, linkToolEndPoint) => {
                         },
 
                         uploadByUrl(url) {
-                            return {
+                            return Promise.resolve({
                                 success: 1,
                                 file: {
                                     url,
                                 },
-                            };
+                            });
                         },
                     },
                 },
