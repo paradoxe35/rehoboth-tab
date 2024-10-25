@@ -33,7 +33,7 @@ export default class extends GiaComponent {
     }
 
     mount() {
-        this.deleteCateroryEvent(this.element)
+        this.deleteCategoryEvent(this.element)
 
         this.ref.store
             .addEventListener('submit', this.storeFetch.bind(this))
@@ -55,15 +55,15 @@ export default class extends GiaComponent {
     /**
      * @param { HTMLElement | Element | DocumentFragment } element 
      */
-    deleteCateroryEvent(element) {
+    deleteCategoryEvent(element) {
         Array.from(element.querySelectorAll('[data-category-del]'))
-            .forEach((el) => el.addEventListener('click', this.deleteCateroryFetch.bind(this, el)))
+            .forEach((el) => el.addEventListener('click', this.deleteCategoryFetch.bind(this, el)))
     }
 
     /**
      * @param { HTMLButtonElement } el 
      */
-    deleteCateroryFetch(el) {
+    deleteCategoryFetch(el) {
         if (!confirmed()) return
 
         const url = route('admin.blog-categories.destroy', {
@@ -129,7 +129,7 @@ export default class extends GiaComponent {
         this.removeChildren(parentTable.children)
 
         htmlText.forEach(el => {
-            this.deleteCateroryEvent(el)
+            this.deleteCategoryEvent(el)
             parentTable.appendChild(el)
         })
     }
