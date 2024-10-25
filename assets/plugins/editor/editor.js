@@ -9,6 +9,7 @@ import InlineCode from "@editorjs/inline-code";
 import LinkTool from "@editorjs/link";
 import List from "@editorjs/list";
 import Marker from "@editorjs/marker";
+import ImageTool from "@editorjs/image";
 import SimpleImage from "@editorjs/simple-image";
 import Underline from "@editorjs/underline";
 import DragDrop from "editorjs-drag-drop";
@@ -55,7 +56,17 @@ export const EditorJS = (configuration = {}, linkToolEndPoint) => {
             },
             underline: Underline,
             code: CodeTool,
-            image: SimpleImage,
+            // image: SimpleImage,
+            image: {
+                class: ImageTool,
+                config: {
+                    // route('admin.og-meta').toString()
+                    endpoints: {
+                        byFile: "http://localhost:8008/uploadFile", // Your backend file uploader endpoint
+                        byUrl: "http://localhost:8008/fetchUrl", // Your endpoint that provides uploading by Url
+                    },
+                },
+            },
             telegramPost: TelegramPost,
             linkTool: {
                 class: LinkTool,

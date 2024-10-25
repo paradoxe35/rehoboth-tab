@@ -76,7 +76,7 @@ class BlogsController extends Controller
 
         return [
             'message' => trans("L'article a été créé avec succès"),
-            'redirect_url' => route('admin.blogs.show', ['blog' =>  $blog->id], false)
+            'redirect_url' => route('admin.blogs.show', ['blog' => $blog->id], false)
         ];
     }
 
@@ -99,7 +99,10 @@ class BlogsController extends Controller
     {
         $request->validate([
             'title' => [
-                'required', 'string', 'min:5', 'max:255',
+                'required',
+                'string',
+                'min:5',
+                'max:255',
                 Rule::unique('blogs')->ignore($blog->id)
             ],
             'author' => ['required', 'string', 'max:255'],
@@ -127,7 +130,7 @@ class BlogsController extends Controller
 
         return [
             'message' => trans("L'article a été modifié avec succès"),
-            'redirect_url' => route('admin.blogs.show', ['blog' =>  $blog->id], false)
+            'redirect_url' => route('admin.blogs.create', ['article' => $blog->id], false)
         ];
     }
 

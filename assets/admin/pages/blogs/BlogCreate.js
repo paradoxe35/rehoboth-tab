@@ -179,14 +179,28 @@ export default class extends GiaComponent {
 
         Btn.loading(FormBtn(target))
 
+        // @ts-expect-error
+        const editMode = target.action.includes('blogs/update')
+
         // @ts-ignore
         ApiRequest('post', target.action, datas, true)
             .then(({ data: { message, redirect_url } }) => {
+                window.setTimeout(() => {
+                    window.scrollTo({ top: 0, left: 0, behavior: "smooth" })
+                }, 1000)
+
                 Notifier.success(message)
-                    .then(() => redirect_url && $swup.loadPage({ url: redirect_url }, true))
-                this.editor.clear()
-                this.clearInput(target)
-                this.pond && this.pond.removeFile(0)
+                    .then(() => {
+                        if(redirect_url) {
+                            $swup.loadPage({ url: redirect_url }, true)
+                        }
+                    })
+
+                if(!editMode) {
+                    this.editor.clear()
+                    this.clearInput(target)
+                    this.pond && this.pond.removeFile(0)
+                }
             })
             .finally(() => Btn.hide())
     }
