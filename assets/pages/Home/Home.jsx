@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import BodyClassName from 'react-body-classname';
-import AbountChurch from '/@/views/Home/AbountChurch';
+import AbountChurch from '../../views/Home/AboutChurch';
 import FromGallery from '/@/views/Home/FromGallery';
 import HomeHero from '/@/views/Home/HomeHero';
 import LatestBlog from '/@/views/Home/LatestBlog';
@@ -17,6 +17,7 @@ const Home = () => {
     useEffect(() => {
         aos.init({ once: true })
     }, [])
+
     // @ts-ignore
     return <BodyClassName className="nav--muted">
         <>

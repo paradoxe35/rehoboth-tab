@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react'
 import { InertiaLink } from '@inertiajs/inertia-react'
-import { FiFacebook, FiTwitter, FiInstagram } from "react-icons/fi";
 import LogoApp from './LogoApp';
 import { NavHeader, SocialLinks, ToggleButton } from './NavHeader';
 import { Inertia } from '@inertiajs/inertia';

@@ -17,6 +17,11 @@
             ],
         }
     },
-    "include": ["assets/**/*"],
-    "exclude": ["node_modules", "**/node_modules/*"]
+    "include": [
+        "assets/**/*"
+    ],
+    "exclude": [
+        "node_modules",
+        "**/node_modules/*"
+    ]
 }

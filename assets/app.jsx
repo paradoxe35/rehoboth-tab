@@ -1,7 +1,9 @@
 import "./utils/polyfill"
 import "./utils/devtool"
+// @ts-ignore
 import { App as InertiaApp } from '@inertiajs/inertia-react'
-import React from 'react'
+import { Inertia } from '@inertiajs/inertia'
+import React, { useEffect } from 'react'
 import { render } from 'react-dom'
 import { InertiaProgress } from '@inertiajs/progress'
 import Layout from './layouts/Layout'
@@ -26,14 +28,20 @@ const resolveComponent = name => {
         })
 }
 
-const Main = () => (
-    <Application>
+const Main = () => {
+    useEffect(() => {
+        Inertia.on('success', () =>
+            window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
+        )
+    }, [])
+
+    return <Application>
         {/* @ts-ignore */}
         <InertiaApp
             initialPage={JSON.parse(el.dataset.page)}
             resolveComponent={resolveComponent} />
     </Application>
-)
+}
 
 render(<Main />, el)
 
